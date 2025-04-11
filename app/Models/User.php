@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,8 +19,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'phone',
-        'address',
         'email',
         'password',
     ];
@@ -42,6 +40,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
+
+    // Mối quan hệ ngược từ User tới Client
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+    // Define the relationship with FavoriteTour
+    public function favoriteTours()
+    {
+        return $this->belongsToMany(Tour::class, 'favorite_tours', 'user_id', 'tour_id');
+    }
 }
