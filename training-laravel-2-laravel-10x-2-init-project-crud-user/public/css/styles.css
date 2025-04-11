@@ -1,0 +1,70 @@
+
+    body {
+        background-image: url('{{ asset("images/conDao.jpg") }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+    
+    .form-control {
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ced4da;
+    }
+    
+    .btn-primary {
+        background-color: #6777ef;
+        border-color: #6777ef;
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+    }
+    
+    .btn-primary:hover {
+        background-color: #5568e2;
+        border-color: #5568e2;
+    }
+    
+    .text-danger {
+        font-size: 0.875rem;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+    
+    .form-control {
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ced4da;
+    }
+    
+    .btn-primary {
+        background-color: #6777ef;
+        border-color: #6777ef;
+        border-radius: 5px;
+        padding: 0.75rem 1rem;
+    }
+    
+    .btn-primary:hover {
+        background-color: #5568e2;
+        border-color: #5568e2;
+    }
+    
+    .text-danger {
+        font-size: 0.875rem;
+    }
+
