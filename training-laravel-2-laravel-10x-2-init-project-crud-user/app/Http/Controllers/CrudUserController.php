@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Location;
+use Illuminate\Support\Facades\DB;
 
 /**
  * CRUD User controller
@@ -44,8 +45,8 @@ class CrudUserController extends Controller
     }
     public function create()
     {
-        $locations = Location::all(); // Truy vấn tất cả locations
-        $guides = Guide::all(); // Truy vấn tất cả guides
+        $locations = Location::all();
+        $guides = DB::table('guides')->get();
         return view('crud_user.addtour', compact('locations', 'guides')); // Truyền dữ liệu sang view
     }
 
