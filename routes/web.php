@@ -1,8 +1,18 @@
 <?php
 
+use App\Http\Controllers\AddTourController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CrudUserController;
-
+use App\Models\Tour;
+use App\Http\Controllers\LienKetTrangController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FavoriteTourController;
+use App\Http\Controllers\AddLocationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,27 +24,35 @@ use App\Http\Controllers\CrudUserController;
 |
 */
 
-Route::get('dashboard', [CrudUserController::class, 'dashboard']);
 
-Route::get('login', [CrudUserController::class, 'login'])->name('login');
-Route::post('login', [CrudUserController::class, 'authUser'])->name('user.authUser');
+//USER ĐÃ CÓ TÀI KHOẢN
 
-Route::get('create', [CrudUserController::class, 'createUser'])->name('user.createUser');
-Route::post('create', [CrudUserController::class, 'postUser'])->name('user.postUser');
+//-------Hiển thị tour theo địa điểm - user
+Route::get('/user/tour_location/{location_id}', [LienKetTrangController::class, 'userHienThiTourTheoDiaDiem'])->name('user.tour.location');
 
-Route::get('read', [CrudUserController::class, 'readUser'])->name('user.readUser');
 
-Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.deleteUser');
+//-------Hiển thị chi tiết tour - user
+Route::get('/user/booking/{tour_id}', [LienKetTrangController::class, 'userHienThiChiTietTuor'])->name('user.tour.readmore');
 
-Route::get('update', [CrudUserController::class, 'updateUser'])->name('user.updateUser');
-Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('user.postUpdateUser');
 
-Route::get('list', [CrudUserController::class, 'listUser'])->name('user.list');
+//-------Tìm và hiển thị kết quả tìm kiếm - admin
+Route::get('/user/result', [LienKetTrangController::class, 'userSearch'])->name('searchUser');
 
-Route::get('signout', [CrudUserController::class, 'signOut'])->name('signout');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/add-tour', [CrudUserController::class, 'create'])->name('add.tour');
-Route::post('/add-tour', [CrudUserController::class, 'store'])->name('add.tour.store');
+// Route::get('/booking/{tour_id}', [BookingController::class, 'showBooking'])->name('booking');
+
+Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking');
+Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'show'])->name('tour.booking');
+
+
+Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('history');
+
+// booking
+// Route::get('/user/{id}', [BookingController::class, 'show'])->name('booking.show');
+Route::post('/user/{booking_tour_id}/{booking_user_id?}', [BookingController::class, 'store'])->name('booking.store');
+
+Route::post('/vnpay_payment', [CheckoutController::class, 'vnpay_payment']);
+
+Route::get('/package', [LienKetTrangController::class, 'index'])->defaults('page', 'user.package');
+
+
