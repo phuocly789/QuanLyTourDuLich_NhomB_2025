@@ -8,21 +8,25 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description');
+            $table->increments('id'); // Đổi thành 'id' (viết thường)
+            $table->string('location_name');
+            $table->string('location_image');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('locations');
     }

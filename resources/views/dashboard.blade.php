@@ -8,15 +8,6 @@
 </head>
 <body>
 
-<div class="container my-3 text-center border py-2">
-    <a href="{{ url('/') }}">Home</a>
-    @guest
-        | <a href="{{ route('login') }}">Login</a>
-        | <a href="{{ route('user.createUser') }}">Create User</a>
-    @else
-        | <a href="{{ route('signout') }}">Đăng xuất</a>
-    @endguest
-</div>
 
 @yield('content')
 </body>

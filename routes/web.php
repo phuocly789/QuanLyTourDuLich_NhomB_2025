@@ -29,7 +29,7 @@ Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.dele
 Route::get('update', [CrudUserController::class, 'updateUser'])->name('user.updateUser');
 Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('user.postUpdateUser');
 
-Route::get('list', [CrudUserController::class, 'listUser'])->name('user.list');
+Route::get('admin/tours', [CrudUserController::class, 'listTour'])->name('admin.tours.list');
 
 Route::get('signout', [CrudUserController::class, 'signOut'])->name('signout');
 
@@ -38,3 +38,4 @@ Route::get('/', function () {
 });
 Route::get('/add-tour', [CrudUserController::class, 'create'])->name('add.tour');
 Route::post('/add-tour', [CrudUserController::class, 'store'])->name('add.tour.store');
+Route::get('/home', [CrudUserController::class, 'home'])->name('home');

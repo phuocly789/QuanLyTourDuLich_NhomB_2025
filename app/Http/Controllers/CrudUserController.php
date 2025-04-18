@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Location;
 use Illuminate\Support\Facades\DB;
+use App\Models\Tour; // Thêm dòng này để sử dụng Model Tour
+use App\Models\Guide; // Có thể bạn cũng cần import Model Guide nếu chưa có
 
 /**
  * CRUD User controller
@@ -19,15 +21,18 @@ class CrudUserController extends Controller
     /**
      * Login page
      */
-    public function login()
-    {
-        return view('crud_user.login');
-    }
-
-    /**
-     * User submit form login
-     */
-    public function authUser(Request $request)
+        public function login()
+        {
+            return view('crud_user.login');
+        }
+        public function home()
+{
+    return view('crud_user.home');
+}
+        /**
+         * User submit form login
+         */
+        public function authUser(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -37,22 +42,30 @@ class CrudUserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('list')
-                ->withSuccess('Signed in');
+            $request->session()->regenerate();
+
+            // Chuyển hướng đến route 'home'
+            return redirect()->route('home')->withSuccess('Đăng nhập thành công!');
         }
 
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withSuccess('Thông tin đăng nhập không chính xác');
     }
+        // public function index()
+        // {
+        //     $tours = Tour::orderBy('tour_id', 'desc')->with(['location', 'guide'])->get();
+        //     return view('crud_user.listtour', compact('tours'));
+        // }
     public function create()
     {
-        $locations = Location::all();
-        $guides = DB::table('guides')->get();
-        return view('crud_user.addtour', compact('locations', 'guides')); // Truyền dữ liệu sang view
+        $locations = Location::all(); // Lấy tất cả locations từ database
+        $guides = Guide::all();     // Lấy tất cả guides từ database
+        $tours = Tour::with(['location', 'guide'])->get();
+        return view('crud_user.addtour', compact('locations', 'guides', 'tours'));
+        // Đảm bảo 'locations' và 'guides' có trong hàm compact()
     }
 
     public function store(Request $request)
     {
-        // Validate dữ liệu form
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'transport' => 'required|string|max:255',
@@ -67,18 +80,29 @@ class CrudUserController extends Controller
             'description' => 'required|string',
             'itinerary' => 'required|string',
         ]);
-
-        // Xử lý upload hình ảnh (nếu có)
+    
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('tours', 'public');
-            $validatedData['image'] = $imagePath;
+        } else {
+            $imagePath = null; // Hoặc giá trị mặc định khác
         }
-
-        // Tạo mới tour
-        Tour::create($validatedData);
-
-        // Chuyển hướng hoặc trả về response
-        return redirect()->route('tours.index')->with('success', 'Tour đã được thêm thành công!');
+    
+        Tour::create([
+            'tour_name' => $validatedData['name'],
+            'tour_image' => $imagePath,
+            'start_day' => $validatedData['start_date'],
+            'time' => $validatedData['duration'],
+            'star_from' => $validatedData['start_location'],
+            'price' => $validatedData['price'],
+            'vehicle' => $validatedData['transport'],
+            'tour_description' => $validatedData['description'],
+            'tour_schedule' => $validatedData['itinerary'],
+            'tour_sale' => $validatedData['discount'],
+            'location_id' => $validatedData['location_id'],
+            'guide_id' => $validatedData['guide_id'],
+        ]);
+    
+        return redirect()->route('admin.tours.list')->with('success', 'Tour đã được thêm thành công!');
     }
 
     /**
@@ -110,12 +134,8 @@ class CrudUserController extends Controller
 
         $check = User::create([
             'name' => $data['name'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'avatar' => $avatarPath,
-            'website' => $request->website,
         ]);
 
         return redirect("login");
@@ -161,8 +181,6 @@ class CrudUserController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
             'email' => 'required|email|unique:users,id,'.$input['id'],
             'password' => 'required|min:6',
         ]);
@@ -171,27 +189,23 @@ class CrudUserController extends Controller
        $user->name = $input['name'];
        $user->email = $input['email'];
        $user->password = $input['password'];
-       $user->phone = $input['phone'];
-       $user->address = $input['address'];
-       $user->avatar = $input['avatar'];
-       $user->website = $input['website'];
        $user->save();
 
-        return redirect("list")->withSuccess('You have signed-in');
+    return redirect("list")->withSuccess('You have signed-in');
     }
 
     /**
      * List of users
      */
-    public function listUser()
-    {
-        if(Auth::check()){
-            $users = User::all();
-            return view('crud_user.list', ['users' => $users]);
-        }
-
-        return redirect("login")->withSuccess('You are not allowed to access');
+    public function listTour()
+{
+    if(Auth::check()){
+        $tours = Tour::orderBy('tour_id', 'desc')->with(['location', 'guide'])->get();
+        return view('crud_user.listtour', ['tours' => $tours]);
     }
+
+    return redirect("login")->withSuccess('You are not allowed to access');
+}
 
     /**
      * Sign out

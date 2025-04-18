@@ -263,8 +263,13 @@
             <a href="#">Liên hệ</a>
         </div>
         <div class="auth-buttons">
-            <a href="{{ route('login') }}">Đăng nhập</a>
-            <a href="{{ route('user.createUser') }}">Đăng ký</a>
+            @auth
+                <span>Xin chào, {{ Auth::user()->name }}</span>
+                <a href="{{ route('signout') }}" style="margin-left: 1rem; background-color: #f44336; color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; text-decoration: none;">Đăng xuất</a>
+            @else
+                <a href="{{ route('login') }}">Đăng nhập</a>
+                <a href="{{ route('user.createUser') }}">Đăng ký</a>
+            @endauth
         </div>
     </header>
     <div class="content">

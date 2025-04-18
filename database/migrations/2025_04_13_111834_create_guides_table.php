@@ -8,21 +8,28 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('guides', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('content');
+            $table->increments('id'); // Đổi thành 'id' (viết thường)
+            $table->text('guide_Name');
+            $table->text('guide_Pno');
+            $table->text('guide_Img');
+            $table->text('guide_Mail');
+            $table->text('guide_Intro');
             $table->timestamps();
-            });
+        });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('guides');
     }
