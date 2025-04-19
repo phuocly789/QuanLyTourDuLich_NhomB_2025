@@ -14,6 +14,15 @@ class Tour extends Model
     protected $fillable = [
         'ten_tour',
         'dia_diem',
-        'gia',
+        'noi_xuat_phat',
+        'cho_nghi',
+        'mo_ta',
+        'lich_trinh',
+        'gia', 10, 2,
+        'so_cho_trong',
+        'anh',
+        'ngay_bat_dau',
+        'thoi_gian',
+        'giam_gia'
     ];
 }

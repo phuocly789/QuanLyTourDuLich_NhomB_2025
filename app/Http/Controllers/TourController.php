@@ -2,67 +2,92 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Tour;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TourController extends Controller
 {
-    // Hiển thị form thêm tour và danh sách tour
-    public function create()
-    {
-        $tours = Tour::all();
-        return view('crud_user.login', compact('tours')); // Dùng login.blade.php để hiển thị luôn danh sách
-    }
-
-    // Lưu tour vào database
-    public function store(Request $request)
-    {
-        $request->validate([
-            'ten_tour' => 'required|string|max:255',
-            'dia_diem' => 'required|string|max:255',
-            'gia' => 'required|numeric',
-        ]);
-
-        if ($request->hasFile('hinh_anh')) {
-            $imagePath = $request->file('hinh_anh')->store('tours', 'public');
-        } else {
-            $imagePath = null;
-        }
-        
-        Tour::create([
-            'ten_tour' => $request->ten_tour,
-            'dia_diem' => $request->dia_diem,
-            'gia' => $request->gia,
-            'thoi_gian' => $request->thoi_gian,
-            'hinh_anh' => $imagePath,
-            'mo_ta' => $request->mo_ta
-        ]);
-        
-
-        return redirect()->route('tour.create')->with('success', 'Đã thêm tour thành công!');
-    }
-
-    // Dành riêng nếu muốn hiển thị danh sách tour độc lập
     public function index()
     {
         $tours = Tour::all();
-        return view('tour.index', compact('tours'));
+        return view('themtour', compact('tours'));
     }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'ten_tour' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'noi_xuat_phat' => 'required|string|max:255',
+            'cho_nghi' => 'required|string|max:255',
+            'mo_ta' => 'required|string',
+            'lich_trinh' => 'required|string',
+            'gia' => 'required|numeric|min:0',
+            'so_cho_trong' => 'required|integer|min:1',
+            'ngay_bat_dau' => 'required|date',
+            'thoi_gian' => 'required|string',
+            'giam_gia' => 'nullable|integer|min:0',
+            'anh' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('anh')) {
+            $data['anh'] = $request->file('anh')->store('tours', 'public');
+        }
+
+        Tour::create($data);
+
+        return redirect()->route('tours.index')->with('success', 'Đã thêm tour thành công!');
+    }
+
     public function edit($id)
-{
-    $tour = Tour::findOrFail($id);
-    return view('tour.edit', compact('tour')); // bạn cần tạo view tour/edit.blade.php
-}
-
-public function destroy($id)
-{
-    $tour = Tour::findOrFail($id);
-
-    if ($tour->hinh_anh && \Storage::disk('public')->exists($tour->hinh_anh)) {
-        \Storage::disk('public')->delete($tour->hinh_anh);
+    {
+        $tour = Tour::findOrFail($id);
+        return view('edittour', compact('tour'));
     }
 
-    $tour->delete();
-    return redirect()->route('login')->with('success', 'Xóa tour thành công!');
-}
+    public function update(Request $request, $id)
+    {
+        $tour = Tour::findOrFail($id);
+
+        $data = $request->validate([
+            'ten_tour' => 'required|string|max:255',
+            'dia_diem' => 'required|string|max:255',
+            'noi_xuat_phat' => 'required|string|max:255',
+            'cho_nghi' => 'required|string|max:255',
+            'mo_ta' => 'required|string',
+            'lich_trinh' => 'required|string',
+            'gia' => 'required|numeric|min:0',
+            'so_cho_trong' => 'required|integer|min:1',
+            'ngay_bat_dau' => 'required|date',
+            'thoi_gian' => 'required|string',
+            'giam_gia' => 'nullable|integer|min:0',
+            'anh' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('anh')) {
+            // Xóa ảnh cũ nếu có
+            if ($tour->anh) {
+                Storage::disk('public')->delete($tour->anh);
+            }
+            $data['anh'] = $request->file('anh')->store('tours', 'public');
+        }
+
+        $tour->update($data);
+
+        return redirect()->route('tours.index')->with('success', 'Cập nhật tour thành công!');
+    }
+
+    public function destroy($id)
+    {
+        $tour = Tour::findOrFail($id);
+
+        if ($tour->anh) {
+            Storage::disk('public')->delete($tour->anh);
+        }
+
+        $tour->delete();
+
+        return redirect()->route('tours.index')->with('success', 'Xóa tour thành công!');
+    }
 }
