@@ -21,10 +21,10 @@ class LienKetTrangController extends Controller
     public function index($page = "index")
     {
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-        $tours = Tour::orderByRaw('CAST(REPLACE(tour_sale, "%", "") AS UNSIGNED) DESC')->paginate(6);
-
+        $tours = Tour::orderBy('tour_id')->paginate(6);
         $user = User::orderBy('id')->get();
         $guide = Guide::orderBy('guide_Id')->get();
+        $location = Location::orderBy('location_id')->get();
         $client = Client::orderBy('client_id')->get();
 
         // Lấy các tour yêu thích của người dùng hiện tại
@@ -34,6 +34,7 @@ class LienKetTrangController extends Controller
             'user_main' => $user_main,
             'data' => $tours,
             'data_guide' => $guide,
+            'data_location' => $location,
             'decentralization' => $user,
             'data_comment' => $client,
             // 'favoriteTours' => $favoriteTours, // Truyền danh sách các tour yêu thích vào view
@@ -42,41 +43,45 @@ class LienKetTrangController extends Controller
     public function hienThi($id)
     {
         $client = Client::orderBy('client_id')->get();
-         $tours = Tour::orderByRaw('CAST(tour_sale AS UNSIGNED) DESC')->get();
+        $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
         return view('booking', ['value' => $tour, 'data' => $tours, 'data_comment' => $client]);
     }
     public function hienThiUser($id)
     {
-         $tours = Tour::orderByRaw('CAST(tour_sale AS UNSIGNED) DESC')->get();
+        $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
         return view('user.booking', ['value' => $tour, 'data' => $tours]);
     }
 
+    public function hienThiTourTheoDiaDiem($id)
+    {
+        // $tours = Tour::orderBy('location_id')->get();
+        // $tour = Tour::findOrFail($id);
+        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
+        $tours = Tour::where('location_id', $id)->get();
+        $location = Location::find($id);
+        return view('tour_location', compact('tours', 'location'));
+    }
+    public function userHienThiTourTheoDiaDiem($id)
+    {
+        // $tours = Tour::orderBy('location_id')->get();
+        // $tour = Tour::findOrFail($id);
+        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
+        $tours = Tour::where('location_id', $id)->get();
+        $location = Location::find($id);
+        return view('user.tour_location', compact('tours', 'location'));
+    }
 
     public function userHienThiChiTietTuor($id)
     {
         $client = Client::orderBy('client_id')->get();
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-         $tours = Tour::orderByRaw('CAST(tour_sale AS UNSIGNED) DESC')->get();
+        $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
         return view('user.booking', ['user_main' => $user_main, 'value' => $tour, 'data' => $tours, 'data_comment' => $client]);
     }
 
-
-    // AMIN
-
-
-    public function adminHienThiChiTietTuor($id)
-    {
-        $client = Client::orderBy('client_id')->get();
-        $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-         $tours = Tour::orderByRaw('CAST(tour_sale AS UNSIGNED) DESC')->get();
-        $tour = Tour::findOrFail($id);
-        return view('admin.booking', ['user_main' => $user_main, 'value' => $tour, 'data' => $tours, 'data_comment' => $client]);
-    }
-
-    //search
     public function userSearch(Request $request)
     {
         $search = $request->usersearch;
@@ -85,22 +90,43 @@ class LienKetTrangController extends Controller
         })->get();
         return view('user.result', compact('tours'));
     }
-    public function adminSearch(Request $request)
-    {
-        $search = $request->input('adminsearch');
-        $tours = $search
-            ? Tour::where('tour_name', 'like', "%$search%")->paginate(9)
-            : Tour::paginate(9);
 
-        return view('admin.result', compact('tours'));
-    }
     public function search(Request $request)
     {
+
         $search = $request->search;
         $tours = Tour::where(function ($query) use ($search) {
             $query->where('tour_name', 'like', "%$search%");
         })->get();
-        return view('search', compact('tours'));
+        return view('result', compact('tours'));
     }
 
+    // AMIN
+    public function adminHienThiTourTheoDiaDiem($id)
+    {
+        // $tours = Tour::orderBy('location_id')->get();
+        // $tour = Tour::findOrFail($id);
+        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
+        $tours = Tour::where('location_id', $id)->get();
+        $location = Location::find($id);
+        return view('admin.tour_location', compact('tours', 'location'));
+    }
+
+    public function adminHienThiChiTietTuor($id)
+    {
+        $client = Client::orderBy('client_id')->get();
+        $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
+        $tours = Tour::orderBy('tour_id')->get();
+        $tour = Tour::findOrFail($id);
+        return view('admin.booking', ['user_main' => $user_main, 'value' => $tour, 'data' => $tours, 'data_comment' => $client]);
+    }
+
+    public function adminSearch(Request $request)
+    {
+        $search = $request->searchadmin;
+        $tours = Tour::where(function ($query) use ($search) {
+            $query->where('tour_name', 'like', "%$search%");
+        })->get();
+        return view('admin.result', compact('tours'));
+    }
 }
