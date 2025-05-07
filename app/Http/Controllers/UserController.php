@@ -28,12 +28,12 @@ class UserController extends Controller
 
             if ($userType == 'user') {
                 $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-                $tours = Tour::orderBy('tour_id')->get();
+                $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guide = Guide::orderBy('guide_Id')->get();
                 $client = Client::orderBy('client_id')->get();
                 return view('user.home', ['user_main' => $user_main,'data' => $tours, 'data_guide' => $guide, 'data_comment' => $client]);
             } else if ($userType == 'admin') {
-                $tours = Tour::orderBy('tour_id')->get();
+                $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guide = Guide::orderBy('guide_Id')->get();
                 $client = Client::orderBy('client_id')->get();
                 return view('admin.home', ['data' => $tours, 'data_guide' => $guide, 'data_comment' => $client]);

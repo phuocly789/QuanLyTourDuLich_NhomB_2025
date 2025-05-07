@@ -21,7 +21,7 @@ class LienKetTrangController extends Controller
     public function index($page = "index")
     {
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-        $tours = Tour::orderBy('tour_id')->paginate(6);
+        $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
         $user = User::orderBy('id')->get();
         $guide = Guide::orderBy('guide_Id')->get();
         $location = Location::orderBy('location_id')->get();
