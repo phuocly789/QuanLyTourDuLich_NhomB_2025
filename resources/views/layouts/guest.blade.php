@@ -37,7 +37,7 @@
                             <h1 class="text-primary text-center m-0"><i class="fa fa-map-marker-alt me-3"></i></h1>
                         </a></h1>
                     <h1><a href="./">
-                            <h1 class="text-primary m-0">Discovery</h1>
+                            <h1 class="text-primary m-0">HHTP</h1>
                         </a></h1>
                 </div>
             </a>

@@ -49,7 +49,7 @@ class LienKetTrangController extends Controller
     }
     public function hienThiUser($id)
     {
-        $tours = Tour::orderBy('tour_id')->get();
+        $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
         $tour = Tour::findOrFail($id);
         return view('user.booking', ['value' => $tour, 'data' => $tours]);
     }

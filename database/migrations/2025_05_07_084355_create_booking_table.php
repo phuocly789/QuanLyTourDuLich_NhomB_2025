@@ -35,4 +35,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('booking');
     }
+    // public function d()
+    // {
+    //     Schema::dropIfExists('booking');
+    // }
 };

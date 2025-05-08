@@ -33,4 +33,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('hotel');
     }
+
+//    public function d()
+//    {
+//        Schema::dropIfExists('hotel');
+//    }
 };
