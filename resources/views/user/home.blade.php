@@ -234,17 +234,15 @@
                                     <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 0 0 0 0;">Đặt
                                         ngay</a>
-                                    {{-- <!-- <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
-                                    <button type="submit" class="btn btn-sm btn-primary px-3 favorite-btn" style="border-radius: 0 30px 30px 0;">
+                                    <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
+                                        <button type="submit" class="btn btn-sm btn-primary px-3 favorite-btn"
+                                            style="border-radius: 0 30px 30px 0;" data-tour-id="{{ $row->tour_id }}">
+                                            <i class="far fa-heart " id="favorite-btn-{{ $row->tour_id }}"></i>
+                                        </button>
+                                    </form>
 
-                                    </button>
-                                </form> --> --}}
-                                    <div class="btn-sm btn-primary px-3 border-end btn-far"
-                                        style="border-radius: 0 30px 30px 0;" data-tour-id="{{ $row->tour_id }}">
-                                        <i class="far fa-heart text-white" id="favorite-btn-{{ $row->tour_id }}"></i>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -389,70 +387,85 @@
             setInterval(changeImage, 2000);
         });
     </script>
-
-    {{-- <!-- Favorite tour javascript -->
+    <!-- Favorite tour javascript -->
     <script>
         $(document).ready(function() {
+            // Lấy danh sách tour yêu thích khi tải trang
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('favorite.favoriteList') }}", // Route của Laravel
-                method: 'POST', // Phương thức HTTP
-                dataType: 'json', // Loại dữ liệu trả về
+                url: "{{ route('favorite.favoriteList') }}",
+                method: 'POST',
+                dataType: 'json',
                 success: function(response) {
-                    // const fav_btn = $("#favorite-btn-" + response.tour_id);
-                    // Xử lý phản hồi từ máy chủ;
-                    $.each(response, function(index, element) {
-                        $("#favorite-btn-" + element.tour_id).removeClass("far").addClass(
-                        "fas");
+                    // Duyệt qua danh sách tour yêu thích và cập nhật biểu tượng trái tim
+                    $.each(response, function(index, tour) {
+                        const fav_btn = $("#favorite-btn-" + tour.tour_id);
+                        if (fav_btn.length) {
+                            fav_btn.removeClass("far").addClass("fas");
+                        }
                     });
                 },
                 error: function(xhr, status, error) {
-                    // Xử lý lỗi nếu có
-                    console.error('Error:', error);
+                    console.error('Error fetching favorite list:', error);
                 }
             });
-            // Sự kiện click hoặc sự kiện khác để kích hoạt Ajax
-            $(".btn-far").each(function() {
 
-                $(this).on("click", function() {
-                    const id = $(this).data("tourId");
-                    const fav_btn = $("#favorite-btn-" + id);
-                    const dataToSend = {
-                        tourId: id,
-                        // Các dữ liệu khác nếu cần
-                    };
-                    // Gửi yêu cầu Ajax khi button được click
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ route('favorite.saveData') }}", // Route của Laravel
-                        method: 'POST', // Phương thức HTTP
-                        data: dataToSend,
-                        dataType: 'json', // Loại dữ liệu trả về
-                        success: function(response) {
+            // Xử lý sự kiện submit form yêu thích
+            $(".favorite-form").on("submit", function(e) {
+                e.preventDefault(); // Ngăn chặn submit form mặc định
+                const form = $(this);
+                const tour_id = form.find('input[name="tour_id"]').val();
+                const fav_btn = $("#favorite-btn-" + tour_id);
+                const button = form.find('button[type="submit"]');
 
-                            // Xử lý phản hồi từ máy chủ;
-                            console.log(response);
-                            if (response.tour_id != null) {
-                                fav_btn.removeClass("far").addClass("fas");
+                // Vô hiệu hóa nút để ngăn click liên tiếp
+                button.prop('disabled', true);
 
-                            } else {
-                                console.log("cmm")
-                                fav_btn.removeClass("fas").addClass("far");
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            // Xử lý lỗi nếu có
-                            console.error('Error:', error);
+                // Lưu trạng thái ban đầu để hoàn tác nếu lỗi
+                const isInitiallyFar = fav_btn.hasClass("far");
+
+                // Tạm thời cập nhật giao diện
+                if (isInitiallyFar) {
+                    fav_btn.removeClass("far").addClass("fas");
+                } else {
+                    fav_btn.removeClass("fas").addClass("far");
+                }
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('favorite.add') }}",
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        // Xác nhận trạng thái từ server
+                        if (response.status === 'added') {
+                            fav_btn.removeClass("far").addClass("fas");
+                        } else if (response.status === 'removed') {
+                            fav_btn.removeClass("fas").addClass("far");
                         }
-                    });
+                        // Kích hoạt lại nút sau khi xử lý
+                        button.prop('disabled', false);
+                    },
+                    error: function(xhr, status, error) {
+                        // Hoàn tác thay đổi giao diện nếu lỗi
+                        if (isInitiallyFar) {
+                            fav_btn.removeClass("fas").addClass("far");
+                        } else {
+                            fav_btn.removeClass("far").addClass("fas");
+                        }
+                        console.error('Error toggling favorite:', error);
+                        // Kích hoạt lại nút
+                        button.prop('disabled', false);
+                    }
                 });
             });
         });
-    </script> --}}
+    </script>
     <!-- Thêm Font Awesome -->
     <!-- <script>
         $(document).ready(function() {

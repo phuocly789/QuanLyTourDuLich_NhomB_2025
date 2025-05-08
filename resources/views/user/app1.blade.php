@@ -97,11 +97,12 @@
                         class="nav-item nav-link {{ request()->is('user.package') ? 'active' : '' }}">Tour</a>
                     <div class="nav-item dropdown">
                         <a href="#"
-                            class="nav-link dropdown-toggle {{ request()->is('user.team','user.destination') ? 'active' : '' }}"
+                            class="nav-link dropdown-toggle {{ request()->is('user.team','user.destination','user.favorite') ? 'active' : '' }}"
                             data-bs-toggle="dropdown">Danh mục</a>
                         <div class="dropdown-menu m-0">
                             <a href="{{ url('/user.team') }}" class="dropdown-item">Hướng dẫn viên</a>
                             <a href="{{ url('/user.destination') }}" class="dropdown-item">Điểm đến</a>
+                            <a href="{{ route('user.favorite') }}" class="dropdown-item">Tour yêu thích</a>
                         </div>
                     </div>
                     <a href="{{ url('/contact') }}"
