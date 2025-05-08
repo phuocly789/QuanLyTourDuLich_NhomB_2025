@@ -43,7 +43,7 @@ class LienKetTrangController extends Controller
     public function hienThi($id)
     {
         $client = Client::orderBy('client_id')->get();
-        $tours = Tour::orderBy('tour_id')->get();
+        $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
         $tour = Tour::findOrFail($id);
         return view('booking', ['value' => $tour, 'data' => $tours, 'data_comment' => $client]);
     }
@@ -56,20 +56,14 @@ class LienKetTrangController extends Controller
 
     public function hienThiTourTheoDiaDiem($id)
     {
-        // $tours = Tour::orderBy('location_id')->get();
-        // $tour = Tour::findOrFail($id);
-        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
         $tours = Tour::where('location_id', $id)->get();
-        $location = Location::find($id);
+        $location = Location::findOrFail($id);
         return view('tour_location', compact('tours', 'location'));
     }
     public function userHienThiTourTheoDiaDiem($id)
     {
-        // $tours = Tour::orderBy('location_id')->get();
-        // $tour = Tour::findOrFail($id);
-        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
         $tours = Tour::where('location_id', $id)->get();
-        $location = Location::find($id);
+        $location = Location::findOrFail($id);
         return view('user.tour_location', compact('tours', 'location'));
     }
 
@@ -85,30 +79,27 @@ class LienKetTrangController extends Controller
     public function userSearch(Request $request)
     {
         $search = $request->usersearch;
-        $tours = Tour::where(function ($query) use ($search) {
-            $query->where('tour_name', 'like', "%$search%");
-        })->get();
-        return view('user.result', compact('tours'));
+        $tours = Tour::where('tour_name', 'like', "%$search%")
+        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+        ->get();
+        return view('user.result', compact('tours','search'));
     }
 
     public function search(Request $request)
     {
 
         $search = $request->search;
-        $tours = Tour::where(function ($query) use ($search) {
-            $query->where('tour_name', 'like', "%$search%");
-        })->get();
-        return view('result', compact('tours'));
+        $tours = Tour::where('tour_name', 'like', "%$search%")
+        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+        ->get();
+        return view('result', compact('tours','search'));
     }
 
     // AMIN
     public function adminHienThiTourTheoDiaDiem($id)
     {
-        // $tours = Tour::orderBy('location_id')->get();
-        // $tour = Tour::findOrFail($id);
-        // return view('tour_location', ['value'=>$tour,'data'=>$tours]);
         $tours = Tour::where('location_id', $id)->get();
-        $location = Location::find($id);
+        $location = Location::findOrFail($id);
         return view('admin.tour_location', compact('tours', 'location'));
     }
 
@@ -124,9 +115,9 @@ class LienKetTrangController extends Controller
     public function adminSearch(Request $request)
     {
         $search = $request->searchadmin;
-        $tours = Tour::where(function ($query) use ($search) {
-            $query->where('tour_name', 'like', "%$search%");
-        })->get();
-        return view('admin.result', compact('tours'));
+        $tours = Tour::where('tour_name', 'like', "%$search%")
+        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+        ->get();
+        return view('admin.result', compact('tours','search'));
     }
 }

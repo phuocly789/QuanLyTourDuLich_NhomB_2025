@@ -30,4 +30,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('locations');
     }
+    // public function hello(){
+
+    // }
 };
