@@ -95,7 +95,8 @@ Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour
 
 Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking');
 Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'show'])->name('tour.booking');
-
+Route::get('/user/package', [AddTourController::class, 'userHienThiTour'])->name('user.package');
+Route::get('/package', [AddTourController::class, 'hienThiTour'])->name('package');
 
 Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('history');
 

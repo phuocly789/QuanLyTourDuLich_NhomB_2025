@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Discovery</title>
+    <title>HHTP</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -46,7 +46,7 @@
 
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+    <div class="container-fluid bg-dark px-5 d-none d-lg-block" id="header">
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
@@ -79,7 +79,7 @@
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
             <a href="{{ url('/user.home') }}" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>HTTP</h1>
+                <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>HHTP</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -97,12 +97,12 @@
                         class="nav-item nav-link {{ request()->is('user.package') ? 'active' : '' }}">Tour</a>
                     <div class="nav-item dropdown">
                         <a href="#"
-                            class="nav-link dropdown-toggle {{ request()->is('user.team','user.destination','user.favorite') ? 'active' : '' }}"
+                            class="nav-link dropdown-toggle {{ request()->is('user.team', 'user.destination', 'user.favorite') ? 'active' : '' }}"
                             data-bs-toggle="dropdown">Danh mục</a>
                         <div class="dropdown-menu m-0">
                             <a href="{{ url('/user.team') }}" class="dropdown-item">Hướng dẫn viên</a>
                             <a href="{{ url('/user.destination') }}" class="dropdown-item">Điểm đến</a>
-                            <a href="{{ route('user.favorite') }}" class="dropdown-item">Tour yêu thích</a>
+                            <a href="{{ url('/user.favorite') }}" class="dropdown-item">Tour yêu thích</a>
                         </div>
                     </div>
                     <a href="{{ url('/contact') }}"

@@ -16,6 +16,55 @@ use Illuminate\Support\Facades\Auth;
 
 class AddTourController extends Controller
 {
+    //lọc tour
+    public function showTourLocation($locationId, Request $request)
+    {
+        // Lấy thông tin địa điểm
+        $location = Location::findOrFail($locationId);
+
+        // Xây dựng query để lấy danh sách tour
+        $query = Tour::where('location_id', $locationId);
+
+        // Lọc theo giá
+        if ($request->has('min_price') && is_numeric($request->min_price)) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->has('max_price') && is_numeric($request->max_price)) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Lọc theo ngày bắt đầu
+        if ($request->has('start_day') && !empty($request->start_day)) {
+            $query->where('start_day', '>=', $request->start_day);
+        }
+
+        // Lọc theo thời gian tour
+        if ($request->has('time') && !empty($request->time)) {
+            switch ($request->time) {
+                case '1 ngày':
+                    $query->where('time', '1 ngày');
+                    break;
+                case '2-3 ngày':
+                    $query->whereIn('time', ['2 ngày', '3 ngày']);
+                    break;
+                case '4-7 ngày':
+                    $query->where('time', 'like', '%ngày%')
+                        ->whereRaw('CAST(REGEXP_REPLACE(time, "[^0-9]", "") AS UNSIGNED) BETWEEN 4 AND 7');
+                    break;
+                case '7 ngày trở lên':
+                    $query->where('time', 'like', '%ngày%')
+                        ->whereRaw('CAST(REGEXP_REPLACE(time, "[^0-9]", "") AS UNSIGNED) > 7');
+                    break;
+            }
+        }
+
+        // Lấy danh sách tour
+        $tours = $query->get();
+
+        // Trả về view với dữ liệu
+        return view('user.tour_location', compact('location', 'tours'));
+    }
+
     // add tour
     public function store(Request $request)
     {
@@ -157,7 +206,7 @@ class AddTourController extends Controller
     //-------------------------------------------------------------------------------------
 
 
-    public function 
+    public function
     storeGuide(Request $request)
     {
         // Validate form data
@@ -207,7 +256,8 @@ class AddTourController extends Controller
         return view('admin.editGuide', compact('guide'));
     }
 
-    public function showCRUDGuide() {
+    public function showCRUDGuide()
+    {
         $guide = Guide::orderByDesc('guide_Id')->get();
 
         // Lấy các tour yêu thích của người dùng hiện tại
@@ -252,5 +302,67 @@ class AddTourController extends Controller
         $guide->save();
 
         return redirect()->route('admin.guide')->with('success', 'Thông tin hướng dẫn viên đã được cập nhật thành công!');
+    }
+    public function userHienThiTour(Request $request)
+    {
+        $query = Tour::query();
+
+        // Filter by destination (search in tour_name or tour_description)
+        if ($request->filled('destination')) {
+            $destination = $request->input('destination');
+            $query->where(function ($q) use ($destination) {
+                $q->where('tour_name', 'like', '%' . $destination . '%')
+                    ->orWhere('tour_description', 'like', '%' . $destination . '%');
+            });
+        }
+
+        // Filter by price range
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->input('price_max'));
+        }
+
+        // Filter by start date
+        if ($request->filled('start_date')) {
+            $query->whereDate('start_day', '>=', $request->input('start_date'));
+        }
+
+        // Paginate the results
+        $data = $query->paginate(6); // Adjust per-page value as needed
+
+        return view('user.package', compact('data'));
+    }
+    public function hienThiTour(Request $request)
+    {
+        $query = Tour::query();
+
+        // Filter by destination (search in tour_name or tour_description)
+        if ($request->filled('destination')) {
+            $destination = $request->input('destination');
+            $query->where(function ($q) use ($destination) {
+                $q->where('tour_name', 'like', '%' . $destination . '%')
+                    ->orWhere('tour_description', 'like', '%' . $destination . '%');
+            });
+        }
+
+        // Filter by price range
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->input('price_max'));
+        }
+
+        // Filter by start date
+        if ($request->filled('start_date')) {
+            $query->whereDate('start_day', '>=', $request->input('start_date'));
+        }
+
+        // Paginate the results
+        $data = $query->paginate(6); // Adjust per-page value as needed
+
+        return view('package', compact('data'));
     }
 }

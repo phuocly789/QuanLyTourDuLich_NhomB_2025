@@ -31,7 +31,7 @@ class UserController extends Controller
                 $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guide = Guide::orderBy('guide_Id')->get();
                 $client = Client::orderBy('client_id')->get();
-                return view('user.home', ['user_main' => $user_main,'data' => $tours, 'data_guide' => $guide, 'data_comment' => $client]);
+                return view('user.home', ['user_main' => $user_main, 'data' => $tours, 'data_guide' => $guide, 'data_comment' => $client]);
             } else if ($userType == 'admin') {
                 $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guide = Guide::orderBy('guide_Id')->get();
@@ -42,11 +42,10 @@ class UserController extends Controller
     }
     public function favorite()
     {
-        
+
         $user_main = Auth::user();
-         $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+        $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
         // Sau đó, chuyển hướng người dùng đến trang "Tour yêu thích"
         return view('user.favorite', ['favoriteTours' => $favoriteTours,]);
-        
     }
 }

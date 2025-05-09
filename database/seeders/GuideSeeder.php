@@ -17,7 +17,7 @@ class GuideSeeder extends Seeder
     {
         DB::table('guides')->insert([
             [
-                'guide_Name' => 'Hồ Sĩ Minh Trí',
+                'guide_Name' => 'Lý Minh Phước',
                 'guide_Pno' => '035863586',
                 'guide_Img' => 'team-1.jpg',
                 'guide_Mail' => 'hsmt@gmail.com',
@@ -27,7 +27,7 @@ class GuideSeeder extends Seeder
             ],
 
             [
-                'guide_Name' => 'Mai Trần Anh Tuấn',
+                'guide_Name' => 'HIEUTHUHAI',
                 'guide_Pno' => '8356238965',
                 'guide_Img' => 'team-2.jpg',
                 'guide_Mail' => 'mtat@gmail.com',
@@ -37,7 +37,7 @@ class GuideSeeder extends Seeder
             ],
 
             [
-                'guide_Name' => 'Trịnh Viết Ký',
+                'guide_Name' => 'Trịnh Trần Phương Tuấn',
                 'guide_Pno' => '4257895',
                 'guide_Img' => 'team-3.jpg',
                 'guide_Mail' => 'tvk@gmail.com',
@@ -47,7 +47,7 @@ class GuideSeeder extends Seeder
             ],
 
             [
-                'guide_Name' => 'Nguyễn Thành Tài',
+                'guide_Name' => 'Võ Cao Thùy Huyên',
                 'guide_Pno' => '329528956',
                 'guide_Img' => 'team-4.jpg',
                 'guide_Mail' => 'ntt@gmail.com',

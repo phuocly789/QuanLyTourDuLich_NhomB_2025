@@ -22,6 +22,54 @@
     <!-- Navbar & Hero End -->
 
 
+    <!-- Filter Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
+                <h3 class="text-primary fw-bold">Lọc Tour Du Lịch</h3>
+                <p class="text-muted">Tìm tour phù hợp với nhu cầu của bạn</p>
+            </div>
+            <form method="GET" action="{{ route('package') }}" class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <label for="destination" class="form-label fw-medium text-dark">Điểm đến</label>
+                    <input type="text" name="destination" id="destination" class="form-control shadow-sm"
+                        placeholder="Nhập điểm đến" value="{{ request('destination') }}" aria-describedby="destinationHelp">
+                    <small id="destinationHelp" class="form-text text-muted">Ví dụ: Đà Lạt, Phú Quốc</small>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label for="price_min" class="form-label fw-medium text-dark">Giá tối thiểu (VNĐ)</label>
+                    <input type="number" name="price_min" id="price_min" class="form-control shadow-sm"
+                        placeholder="Giá tối thiểu" value="{{ request('price_min') }}" min="0"
+                        aria-describedby="priceMinHelp">
+                    <small id="priceMinHelp" class="form-text text-muted">Nhập giá thấp nhất</small>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label for="price_max" class="form-label fw-medium text-dark">Giá tối đa (VNĐ)</label>
+                    <input type="number" name="price_max" id="price_max" class="form-control shadow-sm"
+                        placeholder="Giá tối đa" value="{{ request('price_max') }}" min="0"
+                        aria-describedby="priceMaxHelp">
+                    <small id="priceMaxHelp" class="form-text text-muted">Nhập giá cao nhất</small>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label for="start_date" class="form-label fw-medium text-dark">Ngày khởi hành</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control shadow-sm"
+                        value="{{ request('start_date') }}" aria-describedby="startDateHelp">
+                    <small id="startDateHelp" class="form-text text-muted">Chọn ngày khởi hành</small>
+                </div>
+                <div class="col-auto align-self-end mt-4">
+                    <button type="submit" class="btn btn-primary px-4 py-2 fw-medium me-2"
+                        style="transition: all 0.3s ease;">
+                        <i class="bi bi-funnel me-1"></i> Lọc
+                    </button>
+                    <a href="{{ route('package') }}" class="btn btn-outline-secondary px-4 py-2 fw-medium"
+                        style="transition: all 0.3s ease;">
+                        <i class="bi bi-x-circle me-1"></i> Xóa bộ lọc
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Filter End -->
     <!-- Package Start -->
     <div class="container-xxl py-5">
         <div class="container">
