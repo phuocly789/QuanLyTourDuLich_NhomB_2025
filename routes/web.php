@@ -13,170 +13,89 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FavoriteTourController;
 use App\Http\Controllers\AddLocationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Đây là nơi đăng ký các tuyến đường web cho ứng dụng. Các tuyến đường này
+| được tải bởi RouteServiceProvider và tất cả sẽ thuộc nhóm middleware "web".
+| Hãy tạo ra một ứng dụng tuyệt vời!
 |
 */
 
-// Route::get('/trangchu', function () {
-//     return view('home');
-// })->middleware(['auth', 'verified'])->name('home');
+// Nhập file xác thực
+require __DIR__ . '/auth.php';
 
+// Tuyến đường xác thực (Yêu cầu đăng nhập)
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit'); // Chỉnh sửa hồ sơ
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // Cập nhật hồ sơ
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // Xóa hồ sơ
+    Route::get('/user/home', [UserController::class, 'index'])->name('user.home'); // Trang chủ người dùng
 });
 
-require __DIR__ . '/auth.php';
-// Tìm kiếm của user không tài khoản
-Route::get('/search', [LienKetTrangController::class, 'search']);
+// Tuyến đường khôi phục mật khẩu
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request'); // Hiển thị form quên mật khẩu
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email'); // Gửi email đặt lại mật khẩu
+Route::get('/auth/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('auth.otp'); // Hiển thị form nhập OTP
+Route::get('/auth/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset'); // Hiển thị form đặt lại mật khẩu
+Route::post('/check-otp', [ForgotPasswordController::class, 'checkOtp'])->name('password.checkOtp'); // Kiểm tra mã OTP
+Route::post('/auth/reset-password', [ForgotPasswordController::class, 'update'])->name('password.updated'); // Cập nhật mật khẩu mới
 
+// Tuyến đường chung (Không yêu cầu xác thực)
+Route::get('/{page?}', [LienKetTrangController::class, 'index']); // Trang mặc định
+Route::get('/search', [LienKetTrangController::class, 'search']); // Tìm kiếm
+Route::get('/package', [AddTourController::class, 'hienThiTour'])->name('package'); // Hiển thị danh sách tour
+Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking'); // Hiển thị thông tin tour để đặt
+Route::get('/tour_location/{location_id}', [LienKetTrangController::class, 'hienThiTourTheoDiaDiem'])->name('tour.location'); // Hiển thị tour theo địa điểm
+Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'hienThiUser'])->name('tour.readmore'); // Xem chi tiết tour
 
-Route::get('/user/home', [UserController::class, 'index'])->name('user.home');
-Route::get('/admin/home', [UserController::class, 'index'])->name('home');
+// Tuyến đường cho người dùng đã đăng nhập
+Route::get('/user/package', [AddTourController::class, 'userHienThiTour'])->name('user.package'); // Hiển thị danh sách tour cho người dùng
+Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'show'])->name('tour.booking'); // Hiển thị tour để đặt cho người dùng
+Route::get('/user/tour_location/{location_id}', [LienKetTrangController::class, 'userHienThiTourTheoDiaDiem'])->name('user.tour.location'); // Hiển thị tour theo địa điểm cho người dùng
+Route::get('/user/booking/{tour_id}', [LienKetTrangController::class, 'userHienThiChiTietTuor'])->name('user.tour.readmore'); // Xem chi tiết tour cho người dùng
+Route::get('/user/result', [LienKetTrangController::class, 'userSearch'])->name('searchUser'); // Kết quả tìm kiếm cho người dùng
+Route::get('/user/favorite', [UserController::class, 'favorite'])->name('user.favorite'); // Danh sách tour yêu thích
+Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('history'); // Lịch sử đặt tour
 
-//USER CHƯA CÓ TÀI KHOẢN
+// Tuyến đường cho quản trị viên
+Route::get('/admin/home', [UserController::class, 'index'])->name('home'); // Trang chủ quản trị
+Route::get('/admin/crud', [AddTourController::class, 'showCRUD'])->name('admin.showcrud'); // Hiển thị trang CRUD
+Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour'); // Hiển thị danh sách tour quản trị
+Route::get('/admin/information', [AddTourController::class, 'showInformation'])->name('admin.information'); // Hiển thị thông tin quản trị
+Route::get('/admin/tour_location/{location_id}', [LienKetTrangController::class, 'adminHienThiTourTheoDiaDiem'])->name('admin.tour.location'); // Hiển thị tour theo địa điểm cho quản trị
+Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore'); // Xem chi tiết tour cho quản trị
+Route::get('/admin/result', [LienKetTrangController::class, 'adminSearch'])->name('searchAdmin'); // Kết quả tìm kiếm cho quản trị
+Route::get('/guide/crud', [AddTourController::class, 'showCRUDGuide'])->name('admin.guide'); // Hiển thị trang CRUD hướng dẫn viên
 
-//-------Hiển thị tour theo địa điểm
-Route::get('/tour_location/{location_id}', [LienKetTrangController::class, 'hienThiTourTheoDiaDiem'])->name('tour.location');
+// Tuyến đường quản lý tour
+Route::post('/tours', [AddTourController::class, 'store'])->name('tours.store'); // Thêm tour
+Route::delete('/tours/{id}', [AddTourController::class, 'destroy'])->name('tours.destroy'); // Xóa tour
+Route::get('/tours/{id}/edit', [AddTourController::class, 'edit'])->name('tours.edit'); // Chỉnh sửa tour
+Route::put('/tours/{id}', [AddTourController::class, 'update'])->name('tours.update'); // Cập nhật tour
 
-//-------Hiển thị chi tiết tour
-Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'hienThiUser'])->name('tour.readmore');
+// Tuyến đường quản lý hướng dẫn viên
+Route::post('/guide', [AddTourController::class, 'storeGuide'])->name('guide.store'); // Thêm hướng dẫn viên
+Route::delete('/guide/{id}', [AddTourController::class, 'destroyGuide'])->name('guide.destroy'); // Xóa hướng dẫn viên
+Route::get('/guide/{id}/edit', [AddTourController::class, 'editGuide'])->name('guide.edit'); // Chỉnh sửa hướng dẫn viên
+Route::put('/guide/{id}', [AddTourController::class, 'updateGuide'])->name('guide.update'); // Cập nhật hướng dẫn viên
 
-//-------Tìm và hiển thị kết quả tìm kiếm
-Route::get('/search', [LienKetTrangController::class, 'search']);
+// Tuyến đường quản lý người dùng
+Route::delete('/xoaUser/{id}', [AdminController::class, 'xoaUser'])->name('tours.xoaUser'); // Xóa người dùng
+Route::post('/update-usertype', [AdminController::class, 'updateUsertype'])->name('tours.suaUser'); // Cập nhật quyền người dùng
 
+// Tuyến đường bình luận
+Route::post('/submit-comment', [ClientController::class, 'store'])->name('submit_comment'); // Gửi bình luận
 
+// Tuyến đường đặt tour
+Route::post('/user/{booking_tour_id}/{booking_user_id?}', [BookingController::class, 'store'])->name('booking.store'); // Đặt tour
 
-
-
-//USER ĐÃ CÓ TÀI KHOẢN
-
-//-------Hiển thị tour theo địa điểm - user
-Route::get('/user/tour_location/{location_id}', [LienKetTrangController::class, 'userHienThiTourTheoDiaDiem'])->name('user.tour.location');
-
-
-//-------Hiển thị chi tiết tour - user
-Route::get('/user/booking/{tour_id}', [LienKetTrangController::class, 'userHienThiChiTietTuor'])->name('user.tour.readmore');
-
-
-//-------Tìm và hiển thị kết quả tìm kiếm - admin
-Route::get('/user/result', [LienKetTrangController::class, 'userSearch'])->name('searchUser');
-
-
-//ADMIN
-
-//-------Hiển thị tour theo địa điểm - admin
-Route::get('/admin/tour_location/{location_id}', [LienKetTrangController::class, 'adminHienThiTourTheoDiaDiem'])->name('admin.tour.location');
-
-// -------Hiển thị chi tiết tour - admin
-Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore');
-
-//-------Tìm và hiển thị kết quả tìm kiếm - admin
-Route::get('/admin/result', [LienKetTrangController::class, 'adminSearch'])->name('searchAdmin');
-
-//-------Quay lại trang CRUD sau khi edit tour - admin
-// Route::get('/admin/crud', [LienKetTrangController::class, 'index'])->name('crud');
-// 
-Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour');
-
-
-
-
-
-// Route::get('/booking/{tour_id}', [BookingController::class, 'showBooking'])->name('booking');
-
-Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking');
-Route::get('/user/tour/{tour_id}', [LienKetTrangController::class, 'show'])->name('tour.booking');
-Route::get('/user/package', [AddTourController::class, 'userHienThiTour'])->name('user.package');
-Route::get('/package', [AddTourController::class, 'hienThiTour'])->name('package');
-
-Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('history');
-
-
-// thêm tour
-Route::post('/tours', [AddTourController::class, 'store'])->name('tours.store');
-// xóa tour
-Route::delete('/tours/{id}', [AddTourController::class, 'destroy'])->name('tours.destroy');
-// chỉnh sửa tour
-Route::get('/tours/{id}/edit', [AddTourController::class, 'edit'])->name('tours.edit');
-// cập nhật tour
-Route::put('/tours/{id}', [AddTourController::class, 'update'])->name('tours.update');
-
-Route::get('/admin/crud', [AddTourController::class, 'showCRUD'])->name('admin.showcrud');
-
-// thêm guide
-Route::post('/guide', [AddTourController::class, 'storeGuide'])->name('guide.store');
-// xóa guide
-Route::delete('/guide/{id}', [AddTourController::class, 'destroyGuide'])->name('guide.destroy');
-// chỉnh sửa guide
-Route::get('/guide/{id}/edit', [AddTourController::class, 'editGuide'])->name('guide.edit');
-// cập nhật guide
-Route::put('/guide/{id}', [AddTourController::class, 'updateGuide'])->name('guide.update');
-Route::get('/guide/crud', [AddTourController::class, 'showCRUDGuide'])->name('admin.guide');
-
-
-// Xóa thông tin user
-Route::delete('/xoaUser/{id}', [AdminController::class, 'xoaUser'])->name('tours.xoaUser');
-// Sửa quyền user
-Route::post('/update-usertype',  [AdminController::class, 'updateUsertype'])->name('tours.suaUser');
-// Đăng ký thông báo user
-// Route::post('/notice', [NoticeController::class, 'store'])->name('notice.store');
-// comment
-Route::post('/submit-comment', [ClientController::class, 'store'])->name('submit_comment');
-
-// booking
-// Route::get('/user/{id}', [BookingController::class, 'show'])->name('booking.show');
-Route::post('/user/{booking_tour_id}/{booking_user_id?}', [BookingController::class, 'store'])->name('booking.store');
-
-// Route::post('/vnpay_payment', [CheckoutController::class, 'vnpay_payment']);
-
-Route::get('/{page?}', [LienKetTrangController::class, 'index']);
-
-Route::get('/user/home', [UserController::class, 'index'])->name('user.home')->middleware('auth');
-
-
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-
-// Route cho trang quên mật khẩu
-Route::get('/auth/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('auth.otp');
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
-    ->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-    ->name('password.email');
-
-// Route cho trang nhập mã OTP
-Route::get('/auth/reset-password', [ForgotPasswordController::class, 'showResetForm'])
-    ->name('password.reset');
-Route::post('/check-otp', [ForgotPasswordController::class, 'checkOtp'])
-    ->name('password.checkOtp');
-
-// Route cho trang đặt lại mật khẩu
-Route::post('/auth/reset-password', [ForgotPasswordController::class, 'update'])
-    ->name('password.updated');
-
-
-Route::post('/favorite/add', [FavoriteTourController::class, 'add'])->name('favorite.add');
-
-Route::post('/favorite/saveData', [FavoriteTourController::class, 'saveData'])->name('favorite.saveData');
-Route::post('/favorite/favoriteList', [FavoriteTourController::class, 'favoriteList'])->name('favorite.favoriteList');
-
-Route::get('/user/favorite', [UserController::class, 'favorite'])->name('user.favorite');
-
-// // thêm location
-// Route::post('/locations', [AddLocationController::class, 'store'])->name('location.store');
-// // xóa location
-// Route::delete('/locations/{id}', [AddLocationController::class, 'destroy'])->name('location.destroy');
-// // chỉnh sửa location
-// Route::get('/locations/{id}/edit', [AddLocationController::class, 'edit'])->name('location.edit');
-// // cập nhật location
-// Route::put('/locations/{id}', [AddLocationController::class, 'update'])->name('location.update');
-// Route::get('/locations/crud', [AddLocationController::class, 'showCrudLocation'])->name('admin.location-crud');
+// Tuyến đường yêu thích
+Route::post('/favorite/add', [FavoriteTourController::class, 'add'])->name('favorite.add'); // Thêm tour vào yêu thích
+Route::post('/favorite/saveData', [FavoriteTourController::class, 'saveData'])->name('favorite.saveData'); // Lưu dữ liệu yêu thích
+Route::post('/favorite/favoriteList', [FavoriteTourController::class, 'favoriteList'])->name('favorite.favoriteList'); // Hiển thị danh sách yêu thích

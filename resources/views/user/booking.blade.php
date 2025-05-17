@@ -21,7 +21,6 @@
     </div>
     <!-- Navbar & Hero End -->
 
-
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
@@ -68,12 +67,10 @@
 
                         <div class="col-sm-6">
                             <p class="mb-0"><i class="fa fa-chair text-primary me-2"></i>Số chỗ còn trống</p>
-
                         </div>
                         <div class="col-sm-6">
                             <p class="mb-0 text-danger">{{ $value->total_seats - $value->booked_seats }} <i
                                     class="fa fa-chair text-primary me-2"></i></p>
-
                         </div>
 
                         <form action="{{ route('booking.store', [$value->tour_id, Auth::user()->id]) }}"
@@ -112,20 +109,19 @@
                                     <span class="amount mb-0 text-danger" id="subtotal">0 vnđ</span>
                                 </td>
                             </div>
-                            <button name="redirect" id="bookingButton"
-                                class="col-sm-4 btn btn-primary rounded-pill py-3 px-5 mt-2" href="#">Đặt
-                                ngay</button>
+                            <div class="d-flex align-items-center">
+                                <button name="redirect" id="bookingButton"
+                                    class="col-sm-4 btn btn-primary rounded-pill py-3 px-5 mt-2" href="#">Đặt
+                                    ngay</button>
+
+                            </div>
                         </form>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
     <!-- About End -->
-
 
     <!-- Team Start -->
     <div class="container-xxl py-5">
@@ -167,9 +163,7 @@
                             <h4 class=" text-primary fw-bold flex-fill text-center py-2" style="height: 50px;">
                                 {{ $row->tour_name }}</h4>
                             <div class="text-center pt-2">
-
                                 <h5 class="mb-0 mt-3 text-danger">{{ number_format($row->price, 0, ',', '.') }} vnđ</h5>
-
                                 <div class="mb-3">
                                     <small class="fa fa-star text-primary"></small>
                                     <small class="fa fa-star text-primary"></small>
@@ -179,25 +173,26 @@
                                 </div>
                                 <?php
                                 $tourDescription = $row->tour_description;
-                                
-                                // Chia chuỗi thành mảng các từ
                                 $words = explode(' ', $tourDescription);
-                                
-                                // Lấy 100 từ đầu tiên
                                 $mota = implode(' ', array_slice($words, 0, 50));
                                 ?>
                                 <p style="height: 130px;">{{ $mota }} ... </p>
-
                                 <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                     {{ $row->total_seats - $row->booked_seats }} chỗ</p>
-
                                 <div class="d-flex justify-content-center mb-2 pb-2">
                                     <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end"
                                         style="border-radius: 30px 0 0 30px;">Xem thêm</a>
                                     <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end">Đặt ngay</a>
-
+                                    <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
+                                        <button type="submit" class="btn btn-sm btn-primary px-3 favorite-btn"
+                                            style="border-radius: 0 30px 30px 0;" data-tour-id="{{ $row->tour_id }}">
+                                            <i class="far fa-heart" id="favorite-btn-{{ $row->tour_id }}"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -215,101 +210,7 @@
     </div>
     <!-- Package End -->
 
-
-    <script>
-        document.getElementById('quantityInput').addEventListener('input', function() {
-            const quantityInput = this;
-            const phoneInput = document.getElementById('phoneInput');
-            const bookingButton = document.getElementById('bookingButton');
-            const voucherDisplay = document.getElementById('voucher');
-            const subtotalDisplay = document.getElementById('subtotal');
-
-            // Parse inputs
-            let quantity = parseInt(quantityInput.value) || 0;
-            const price = parseFloat("{{ $value->price }}");
-            const availableSeats = parseInt("{{ $value->total_seats - $value->booked_seats }}");
-
-            // Ensure quantity is non-negative and within available seats
-            if (quantity < 0) {
-                quantity = 0;
-                quantityInput.value = 0;
-            }
-            if (quantity > availableSeats) {
-                quantity = availableSeats;
-                quantityInput.value = availableSeats;
-                alert(`Chỉ còn ${availableSeats} chỗ trống. Vui lòng chọn lại số lượng.`);
-            }
-
-            // Voucher calculation
-            let voucher = 1; // Default: no discount
-            let voucherText = '';
-            if (quantity === 1) {
-                voucher = 0.9; // 10% discount
-                voucherText = 'Giảm giá 10%';
-            } else if (quantity === 2) {
-                voucher = 0.85; // 15% discount
-                voucherText = 'Giảm giá 15%';
-            } else if (quantity >= 3) {
-                voucher = 0.8; // 20% discount
-                voucherText = 'Giảm giá 20%';
-            }
-
-            // Update voucher display
-            voucherDisplay.textContent = voucherText;
-
-            // Calculate subtotal
-            const subtotal = quantity * price * voucher;
-            subtotalDisplay.textContent = formatCurrency(subtotal) + ' vnđ';
-
-            // Validate form and enable/disable button
-            updateButtonState(quantity, phoneInput.value, bookingButton);
-        });
-
-        document.getElementById('phoneInput').addEventListener('input', function() {
-            const quantityInput = document.getElementById('quantityInput');
-            const phoneInput = this;
-            const bookingButton = document.getElementById('bookingButton');
-
-            // Validate form and enable/disable button
-            updateButtonState(parseInt(quantityInput.value) || 0, phoneInput.value, bookingButton);
-        });
-
-        function updateButtonState(quantity, phone, button) {
-            const phoneRegex = /^[0-9]{10,11}$/; // Basic phone validation (10-11 digits)
-            const isValidPhone = phoneRegex.test(phone);
-            const isValidQuantity = quantity > 0 && quantity <= parseInt(
-                "{{ $value->total_seats - $value->booked_seats }}");
-
-            button.disabled = !(isValidPhone && isValidQuantity);
-        }
-
-        document.getElementById('bookingButton').addEventListener('click', function(event) {
-            const quantityInput = document.getElementById('quantityInput');
-            const phoneInput = document.getElementById('phoneInput');
-            const quantity = parseInt(quantityInput.value) || 0;
-            const phone = phoneInput.value;
-            const phoneRegex = /^[0-9]{10,11}$/;
-
-            if (quantity <= 0) {
-                event.preventDefault();
-                alert('Vui lòng nhập số lượng người lớn hơn 0.');
-            } else if (!phoneRegex.test(phone)) {
-                event.preventDefault();
-                alert('Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).');
-            } else if (quantity > parseInt("{{ $value->total_seats - $value->booked_seats }}")) {
-                event.preventDefault();
-                alert('Số chỗ còn lại không đủ. Vui lòng chọn lại số lượng.');
-            }
-        });
-
-        function formatCurrency(amount) {
-            return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
-        }
-    </script>
-
-
-
-
+    <!-- Comment Section -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-1">
@@ -334,8 +235,159 @@
                         <hr>
                     @endif
                 @endfor
-
             </div>
-        </div>
-    </div>
-@endsection
+
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                // JavaScript cho tính năng đặt tour (giữ nguyên)
+                document.getElementById('quantityInput').addEventListener('input', function() {
+                    const quantityInput = this;
+                    const phoneInput = document.getElementById('phoneInput');
+                    const bookingButton = document.getElementById('bookingButton');
+                    const voucherDisplay = document.getElementById('voucher');
+                    const subtotalDisplay = document.getElementById('subtotal');
+
+                    let quantity = parseInt(quantityInput.value) || 0;
+                    const price = parseFloat("{{ $value->price }}");
+                    const availableSeats = parseInt("{{ $value->total_seats - $value->booked_seats }}");
+
+                    if (quantity < 0) {
+                        quantity = 0;
+                        quantityInput.value = 0;
+                    }
+                    if (quantity > availableSeats) {
+                        quantity = availableSeats;
+                        quantityInput.value = availableSeats;
+                        alert(`Chỉ còn ${availableSeats} chỗ trống. Vui lòng chọn lại số lượng.`);
+                    }
+
+                    let voucher = 1;
+                    let voucherText = '';
+                    if (quantity === 1) {
+                        voucher = 0.9;
+                        voucherText = 'Giảm giá 10%';
+                    } else if (quantity === 2) {
+                        voucher = 0.85;
+                        voucherText = 'Giảm giá 15%';
+                    } else if (quantity >= 3) {
+                        voucher = 0.8;
+                        voucherText = 'Giảm giá 20%';
+                    }
+
+                    voucherDisplay.textContent = voucherText;
+                    const subtotal = quantity * price * voucher;
+                    subtotalDisplay.textContent = formatCurrency(subtotal) + ' vnđ';
+
+                    updateButtonState(quantity, phoneInput.value, bookingButton);
+                });
+
+                document.getElementById('phoneInput').addEventListener('input', function() {
+                    const quantityInput = document.getElementById('quantityInput');
+                    const phoneInput = this;
+                    const bookingButton = document.getElementById('bookingButton');
+
+                    updateButtonState(parseInt(quantityInput.value) || 0, phoneInput.value, bookingButton);
+                });
+
+                function updateButtonState(quantity, phone, button) {
+                    const phoneRegex = /^[0-9]{10,11}$/;
+                    const isValidPhone = phoneRegex.test(phone);
+                    const isValidQuantity = quantity > 0 && quantity <= parseInt(
+                        "{{ $value->total_seats - $value->booked_seats }}");
+
+                    button.disabled = !(isValidPhone && isValidQuantity);
+                }
+
+                document.getElementById('bookingButton').addEventListener('click', function(event) {
+                    const quantityInput = document.getElementById('quantityInput');
+                    const phoneInput = document.getElementById('phoneInput');
+                    const quantity = parseInt(quantityInput.value) || 0;
+                    const phone = phoneInput.value;
+                    const phoneRegex = /^[0-9]{10,11}$/;
+
+                    if (quantity <= 0) {
+                        event.preventDefault();
+                        alert('Vui lòng nhập số lượng người lớn hơn 0.');
+                    } else if (!phoneRegex.test(phone)) {
+                        event.preventDefault();
+                        alert('Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).');
+                    } else if (quantity > parseInt("{{ $value->total_seats - $value->booked_seats }}")) {
+                        event.preventDefault();
+                        alert('Số chỗ còn lại không đủ. Vui lòng chọn lại số lượng.');
+                    }
+                });
+
+                function formatCurrency(amount) {
+                    return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+                }
+            </script>
+
+            <!-- Favorite tour javascript -->
+            <script>
+                $(document).ready(function() {
+                    // Lấy danh sách tour yêu thích khi tải trang
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('favorite.favoriteList') }}",
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function(response) {
+                            $.each(response, function(index, tour) {
+                                const fav_btn = $("#favorite-btn-" + tour.tour_id);
+                                if (fav_btn.length) {
+                                    fav_btn.removeClass("far").addClass("fas");
+                                }
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching favorite list:', error);
+                        }
+                    });
+
+                    // Xử lý sự kiện submit form yêu thích
+                    $(".favorite-form").on("submit", function(e) {
+                        e.preventDefault();
+                        const form = $(this);
+                        const tour_id = form.find('input[name="tour_id"]').val();
+                        const fav_btn = $("#favorite-btn-" + tour_id);
+                        const button = form.find('button[type="submit"]');
+                        button.prop('disabled', true);
+                        const isInitiallyFar = fav_btn.hasClass("far");
+                        if (isInitiallyFar) {
+                            fav_btn.removeClass("far").addClass("fas");
+                        } else {
+                            fav_btn.removeClass("fas").addClass("far");
+                        }
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ route('favorite.add') }}",
+                            method: 'POST',
+                            data: form.serialize(),
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.status === 'added') {
+                                    fav_btn.removeClass("far").addClass("fas");
+                                } else if (response.status === 'removed') {
+                                    fav_btn.removeClass("fas").addClass("far");
+                                }
+                                button.prop('disabled', false);
+                            },
+                            error: function(xhr, status, error) {
+                                if (isInitiallyFar) {
+                                    fav_btn.removeClass("fas").addClass("far");
+                                } else {
+                                    fav_btn.removeClass("far").addClass("fas");
+                                }
+                                console.error('Error toggling favorite:', error);
+                                button.prop('disabled', false);
+                            }
+                        });
+                    });
+                });
+            </script>
+        @endsection

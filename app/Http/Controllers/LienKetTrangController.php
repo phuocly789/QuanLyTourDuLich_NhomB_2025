@@ -18,28 +18,56 @@ use App\Models\FavoriteTour;
 class LienKetTrangController extends Controller
 {
 
-    public function index($page = "index")
+
+    public function index()
     {
-        $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
+        if (Auth::id()) {
+            $userType = Auth()->user()->usertype;
+
+            if ($userType == 'user') {
+                $user_main = Auth::user();
+                $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
+                $guides = Guide::orderBy('guide_Id')->get();
+                $clients = Client::orderBy('client_id')->get();
+                $location = Location::orderBy('location_id')->get();
+                $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+
+                return view('susser.home', [
+                    'user_main' => $user_main,
+                    'data' => $tours,
+                    'data_guide' => $guides,
+                    'data_location' => $location,
+                    'data_comment' => $clients,
+                    'favoriteTours' => $favoriteTours
+                ]);
+            } elseif ($userType == 'admin') {
+                $total_tours = Tour::count();
+                $total_users = User::count();
+                $total_guides = Guide::count();
+                $total_bookings = Booking::count();
+                $bookings_today = Booking::whereDate('created_at', today())->count();
+                $tours = Tour::orderBy('tour_id')->paginate(10);
+                $guides = Guide::orderBy('guide_Id')->paginate(10);
+                $users = User::orderBy('id')->paginate(10);
+                $bookings = Booking::orderBy('created_at', 'desc')->paginate(10);
+
+                return view('admin.home', compact('total_tours', 'total_users', 'total_guides', 'total_bookings', 'bookings_today', 'tours', 'users', 'guides', 'bookings'));
+            }
+        }
+
+        // Trường hợp không đăng nhập: trả về view index.blade.php
         $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
-        $user = User::orderBy('id')->get();
-        $guide = Guide::orderBy('guide_Id')->get();
+        $guides = Guide::orderBy('guide_Id')->get();
+        $clients = Client::orderBy('client_id')->get();
         $location = Location::orderBy('location_id')->get();
-        $client = Client::orderBy('client_id')->get();
-
-        // Lấy các tour yêu thích của người dùng hiện tại
-        // $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
-
-        return view($page, [
-            'user_main' => $user_main,
+        return view('index', [
             'data' => $tours,
-            'data_guide' => $guide,
-            'data_location' => $location,
-            'decentralization' => $user,
-            'data_comment' => $client,
-            // 'favoriteTours' => $favoriteTours, // Truyền danh sách các tour yêu thích vào view
+            'data_guide' => $guides,
+            'data_comment' => $clients,
+            'data_location' => $location
         ]);
     }
+
     public function hienThi($id)
     {
         $client = Client::orderBy('client_id')->get();
@@ -53,7 +81,7 @@ class LienKetTrangController extends Controller
         $tour = Tour::findOrFail($id);
         return view('user.booking', ['value' => $tour, 'data' => $tours]);
     }
- 
+
 
     public function hienThiTourTheoDiaDiem($id)
     {
@@ -74,16 +102,31 @@ class LienKetTrangController extends Controller
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
         $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
-        return view('user.booking', ['user_main' => $user_main, 'value' => $tour, 'data' => $tours, 'data_comment' => $client]);
+
+        // Khởi tạo mảng rỗng cho favoriteTours
+        $favoriteTours = collect();
+
+        // Kiểm tra nếu người dùng đã đăng nhập
+        if ($user_main) {
+            $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+        }
+
+        return view('user.booking', [
+            'user_main' => $user_main,
+            'value' => $tour,
+            'data' => $tours,
+            'data_comment' => $client,
+            'favoriteTours' => $favoriteTours
+        ]);
     }
 
     public function userSearch(Request $request)
     {
         $search = $request->usersearch;
         $tours = Tour::where('tour_name', 'like', "%$search%")
-        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
-        ->get();
-        return view('user.result', compact('tours','search'));
+            ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+            ->get();
+        return view('user.result', compact('tours', 'search'));
     }
 
     public function search(Request $request)
@@ -91,9 +134,9 @@ class LienKetTrangController extends Controller
 
         $search = $request->search;
         $tours = Tour::where('tour_name', 'like', "%$search%")
-        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
-        ->get();
-        return view('result', compact('tours','search'));
+            ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+            ->get();
+        return view('result', compact('tours', 'search'));
     }
 
     // AMIN
@@ -117,8 +160,8 @@ class LienKetTrangController extends Controller
     {
         $search = $request->searchadmin;
         $tours = Tour::where('tour_name', 'like', "%$search%")
-        ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
-        ->get();
-        return view('admin.result', compact('tours','search'));
+            ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+            ->get();
+        return view('admin.result', compact('tours', 'search'));
     }
 }

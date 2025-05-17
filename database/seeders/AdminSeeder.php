@@ -17,40 +17,33 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->insert([
             [
-                'username' => 'trinhvietky',
+                'username' => 'lyminhphuoc',
                 'password' => '123456',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
             [
-                'username' => 'maitrananhtuan',
+                'username' => 'thuyhuyen',
                 'password' => '123456',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
             [
-                'username' => 'nguyenthanhtai',
+                'username' => 'nguyenngochiep',
                 'password' => '123456',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
             [
-                'username' => 'hosiminhtri',
+                'username' => 'hieuthuhai',
                 'password' => '123456',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
 
-            [
-                'username' => 'vulehuytruong',
-                'password' => '123456',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-        ]);   
+        ]);
     }
 }

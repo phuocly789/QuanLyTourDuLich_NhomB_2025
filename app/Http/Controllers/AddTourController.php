@@ -204,7 +204,11 @@ class AddTourController extends Controller
         ]);
     }
     //-------------------------------------------------------------------------------------
-
+    public function showInformation()
+    {
+        $decentralization = User::all(); // Lấy danh sách users
+        return view('admin.information', compact('decentralization'));
+    }
 
     public function
     storeGuide(Request $request)
