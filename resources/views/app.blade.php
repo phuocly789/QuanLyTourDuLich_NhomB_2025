@@ -147,7 +147,7 @@
                             <img class="img-fluid bg-light p-1" src="{{$row->tour_image}}" alt="">
                         </div>
                         @endforeach
-                     
+
                         <div class="col-4">
                             <img class="img-fluid bg-light p-1" src="{{asset('img/package-2.jpg')}}" alt="">
                         </div>

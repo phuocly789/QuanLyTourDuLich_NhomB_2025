@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BookingsExport;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Models\Tour;
@@ -368,5 +370,49 @@ class AddTourController extends Controller
         $data = $query->paginate(6); // Adjust per-page value as needed
 
         return view('package', compact('data'));
+    }
+    public function history(Request $request)
+    {
+        $query = Booking::query();
+
+        // Tìm kiếm theo tên khách hàng
+        if ($search = $request->search) {
+            $query->where('booking_customer_name', 'like', "%$search%");
+        }
+
+        // Lọc theo tour
+        if ($tour_id = $request->tour_id) {
+            if (\App\Models\Tour::where('tour_id', $tour_id)->exists()) {
+                $query->where('booking_tour_id', $tour_id);
+            }
+        }
+
+        // Lọc theo khoảng ngày
+        if ($date_from = $request->date_from) {
+            $query->whereDate('created_at', '>=', $date_from);
+        }
+        if ($date_to = $request->date_to) {
+            $query->whereDate('created_at', '<=', $date_to);
+        }
+
+        // Sắp xếp
+        if ($sort = $request->sort) {
+            $order = $request->order ?? 'asc';
+            $query->orderBy($sort, $order);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $bookings = $query->with('tour')->paginate(10);
+
+        // Cache danh sách tour
+        $tours = \Illuminate\Support\Facades\Cache::remember('booked_tours', 3600, function () {
+            return \App\Models\Booking::distinct()->pluck('booking_tour_id')
+                ->map(function ($tour_id) {
+                    return \App\Models\Tour::find($tour_id);
+                })->filter()->sortBy('tour_name');
+        });
+
+        return view('admin.history', compact('bookings', 'tours'));
     }
 }

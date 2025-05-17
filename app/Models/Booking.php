@@ -11,10 +11,11 @@ class Booking extends Model
     protected $primaryKey = 'booking_id';
     public function user()
     {
-        return $this->belongsTo(Location::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
     public function tour()
     {
-        return $this->belongsTo(Location::class, 'tour_id', 'tour_id');
+        return $this->belongsTo(Tour::class, 'booking_tour_id', 'tour_id');
     }
 }

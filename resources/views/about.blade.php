@@ -7,7 +7,7 @@
         <div class="container py-5">
             <div class="row justify-content-center py-5">
                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white animated slideInDown">Discovery</h1>
+                    <h1 class="display-3 text-white animated slideInDown">HHTP</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a href={{ '/index' }}>Trang chủ</a></li>
@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                <h1 class="mb-4">Chào mừng bạn đến với <span class="text-primary">Discovery</span></h1>
-                <p class="mb-4">Đưa bạn đến với những vùng đất mới lạ trên thế giới, Discovery hứa hẹn sẽ là điểm đến lý tưởng cho những ai đam mê du lịch.</p>Tại đây, bạn sẽ khám phá hàng loạt điểm đến hấp dẫn trên khắp thế giới, từ những thành phố sôi động đến vùng nông thôn yên bình. Discovery sẽ cung cấp dịch vụ đặt phòng khách sạn tiện lợi, hướng dẫn du lịch chi tiết và các hoạt động xã hội tích cực. Với Discovery, hành trình của bạn sẽ bắt đầu từ đây. Chào mừng đến với thế giới của chúng tôi, nơi những giấc mơ trở thành hiện thực.</p>
+                <h1 class="mb-4">Chào mừng bạn đến với <span class="text-primary">HHTP</span></h1>
+                <p class="mb-4">Đưa bạn đến với những vùng đất mới lạ trên thế giới, HHTP hứa hẹn sẽ là điểm đến lý tưởng cho những ai đam mê du lịch.</p>Tại đây, bạn sẽ khám phá hàng loạt điểm đến hấp dẫn trên khắp thế giới, từ những thành phố sôi động đến vùng nông thôn yên bình. HHTP sẽ cung cấp dịch vụ đặt phòng khách sạn tiện lợi, hướng dẫn du lịch chi tiết và các hoạt động xã hội tích cực. Với HHTP, hành trình của bạn sẽ bắt đầu từ đây. Chào mừng đến với thế giới của chúng tôi, nơi những giấc mơ trở thành hiện thực.</p>
                 <div class="row gy-2 gx-4 mb-4">
                     <div class="col-sm-6">
                         <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Chuyến bay hạng nhất</p>

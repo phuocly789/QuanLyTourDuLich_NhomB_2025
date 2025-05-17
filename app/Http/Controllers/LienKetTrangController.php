@@ -14,15 +14,17 @@ use Ramsey\Uuid\Guid\Guid;
 
 // use Ramsey\Uuid\Guid\Guide;
 use App\Models\FavoriteTour;
+use Carbon\Carbon;
 
 class LienKetTrangController extends Controller
 {
 
 
-    public function index()
+    public function index($page = "index")
     {
-        if (Auth::id()) {
-            $userType = Auth()->user()->usertype;
+        $user = Auth::user();
+        if ($user) {
+            $userType =  $user->usertype;
 
             if ($userType == 'user') {
                 $user_main = Auth::user();
@@ -32,7 +34,7 @@ class LienKetTrangController extends Controller
                 $location = Location::orderBy('location_id')->get();
                 $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
-                return view('susser.home', [
+                return view($page, [
                     'user_main' => $user_main,
                     'data' => $tours,
                     'data_guide' => $guides,
@@ -51,7 +53,37 @@ class LienKetTrangController extends Controller
                 $users = User::orderBy('id')->paginate(10);
                 $bookings = Booking::orderBy('created_at', 'desc')->paginate(10);
 
-                return view('admin.home', compact('total_tours', 'total_users', 'total_guides', 'total_bookings', 'bookings_today', 'tours', 'users', 'guides', 'bookings'));
+                // Lấy dữ liệu lịch sử đơn hàng
+                $booking_history = Booking::with('tour')->orderBy('created_at', 'desc')->paginate(10);
+
+                // Thống kê doanh thu
+                $revenue_daily = Booking::whereDate('created_at', today())->sum('booking_amount');
+                $revenue_weekly = Booking::whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ])->sum('booking_amount');
+                $revenue_monthly = Booking::whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->sum('booking_amount');
+                $revenue_yearly = Booking::whereYear('created_at', Carbon::now()->year)
+                    ->sum('booking_amount');
+
+                return view('admin.home', compact(
+                    'total_tours',
+                    'total_users',
+                    'total_guides',
+                    'total_bookings',
+                    'bookings_today',
+                    'tours',
+                    'users',
+                    'guides',
+                    'bookings',
+                    'booking_history',
+                    'revenue_daily',
+                    'revenue_weekly',
+                    'revenue_monthly',
+                    'revenue_yearly'
+                ));
             }
         }
 
@@ -60,7 +92,7 @@ class LienKetTrangController extends Controller
         $guides = Guide::orderBy('guide_Id')->get();
         $clients = Client::orderBy('client_id')->get();
         $location = Location::orderBy('location_id')->get();
-        return view('index', [
+        return view($page, [
             'data' => $tours,
             'data_guide' => $guides,
             'data_comment' => $clients,

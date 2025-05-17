@@ -34,6 +34,7 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('font-end/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('font-end/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-end/css/admin.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -78,8 +79,8 @@
 
 
     <!-- Navbar & Hero Start -->
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+    <div class="container-fluid position-relative p-0 ">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0 bg-white">
             <a href="{{ route('home') }}" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>HHTP</h1>
             </a>
@@ -101,15 +102,12 @@
                                 class="dropdown-item {{ request()->routeIs('admin.showcrud') ? 'active' : '' }}">Tour</a>
                             <a href="{{ route('admin.guide') }}"
                                 class="dropdown-item {{ request()->routeIs('admin.guide') ? 'active' : '' }}">Guide</a>
-                            <!-- Sử dụng URL tạm thời cho admin.infomation vì không có route name -->
                             <a href="{{ route('admin.information') }}"
                                 class="dropdown-item {{ request()->routeIs('admin.information') ? 'active' : '' }}">Users</a>
+                            <a href="{{ route('admin.history') }}"
+                                class="dropdown-item {{ request()->routeIs('admin.history') ? 'active' : '' }}">Bill</a>
                         </div>
                     </div>
-
-                    <!-- Liên hệ -->
-                    <a href="{{ url('/contact') }}"
-                        class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Liên hệ</a>
                 </div>
 
                 <!-- Phần user dropdown (giữ nguyên) -->
@@ -203,6 +201,7 @@
         </nav>
     </div>
     <!-- Navbar & Hero End -->
+    @include('components.confirm_delete_modal')
     @yield('content2')
     <!-- Navbar & Hero End -->
 

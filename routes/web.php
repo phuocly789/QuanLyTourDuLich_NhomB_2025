@@ -66,6 +66,7 @@ Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('h
 // Tuyến đường cho quản trị viên
 Route::get('/admin/home', [UserController::class, 'index'])->name('home'); // Trang chủ quản trị
 Route::get('/admin/crud', [AddTourController::class, 'showCRUD'])->name('admin.showcrud'); // Hiển thị trang CRUD
+Route::get('/admin/history', [AddTourController::class, 'history'])->name('admin.history'); // Hiển thị trang History
 Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour'); // Hiển thị danh sách tour quản trị
 Route::get('/admin/information', [AddTourController::class, 'showInformation'])->name('admin.information'); // Hiển thị thông tin quản trị
 Route::get('/admin/tour_location/{location_id}', [LienKetTrangController::class, 'adminHienThiTourTheoDiaDiem'])->name('admin.tour.location'); // Hiển thị tour theo địa điểm cho quản trị
