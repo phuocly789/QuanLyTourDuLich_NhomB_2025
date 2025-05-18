@@ -30,14 +30,14 @@ class UserController extends Controller
                 $user_main = Auth::user();
                 $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guides = Guide::orderBy('guide_Id')->get();
-                $clients = Client::orderBy('client_id')->get();
+                // $clients = Client::orderBy('client_id')->get();
                 $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
                 return view('user.home', [
                     'user_main' => $user_main,
                     'data' => $tours,
                     'data_guide' => $guides,
-                    'data_comment' => $clients,
+                    // 'data_comment' => $clients,
                     'favoriteTours' => $favoriteTours
                 ]);
             } elseif ($userType == 'admin') {

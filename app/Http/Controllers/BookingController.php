@@ -30,9 +30,7 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
+    public function create() {}
     public function total($booking_quantity, $tour_price)
     {
 
@@ -54,11 +52,20 @@ class BookingController extends Controller
      */
     public function store(Request $request, $booking_tour_id, $booking_user_id)
     {
-
         $user = User::findOrFail($booking_user_id);
         $tour = Tour::findOrFail($booking_tour_id);
         $booking_quantity = $request->input('booking_quantity');
+
+        // Kiểm tra số chỗ còn lại
+        $available_seats = $tour->total_seats - $tour->booked_seats;
+        if ($booking_quantity > $available_seats) {
+            return redirect()->back()->with('error', 'Không đủ chỗ cho số lượng yêu cầu!');
+        }
+
+        // Tính tổng tiền
         $amount = self::total($booking_quantity, $tour->price);
+
+        // Tạo booking
         $booking = new Booking();
         $booking->booking_customer_name = $user->name;
         $booking->booking_customer_email = $user->email;
@@ -68,28 +75,18 @@ class BookingController extends Controller
         $booking->booking_tour_id = $booking_tour_id;
         $booking->booking_user_id = $booking_user_id;
 
-        $tour->booked_seats = $tour->booked_seats + $request->input('booking_quantity');
+        // Cập nhật booked_seats
+        $tour->booked_seats += $booking_quantity;
 
-        // $tour->save();
-        // $booking->save();
-        // Lưu thông tin booking vào session
-        // Session::put('booking', $booking);
+        // Lưu vào session để xử lý sau khi thanh toán
         session_start();
         $_SESSION['booking_session'] = $booking;
         $_SESSION['tour_session'] = $tour;
 
-        // $booking_session = Session::get('booking');
-        $booking_session = $_SESSION['booking_session'];
-        // dd($booking_session);
-
-
+        // Chuyển sang thanh toán VNPay
         $checkoutController = new CheckoutController();
-        $checkoutController->vnpay_payment($booking);
-
-        // Redirect back or to a success page
-        // return redirect('/user/tour/1');
+        return $checkoutController->vnpay_payment($booking);
     }
-
     public function history(Request $request, $user_id)
     {
         // session_start();

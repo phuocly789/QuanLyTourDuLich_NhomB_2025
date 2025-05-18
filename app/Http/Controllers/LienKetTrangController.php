@@ -30,7 +30,7 @@ class LienKetTrangController extends Controller
                 $user_main = Auth::user();
                 $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guides = Guide::orderBy('guide_Id')->get();
-                $clients = Client::orderBy('client_id')->get();
+                // $clients = Client::orderBy('client_id')->get();
                 $location = Location::orderBy('location_id')->get();
                 $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
@@ -39,7 +39,7 @@ class LienKetTrangController extends Controller
                     'data' => $tours,
                     'data_guide' => $guides,
                     'data_location' => $location,
-                    'data_comment' => $clients,
+                    // 'data_comment' => $clients,
                     'favoriteTours' => $favoriteTours
                 ]);
             } elseif ($userType == 'admin') {
@@ -90,12 +90,12 @@ class LienKetTrangController extends Controller
         // Trường hợp không đăng nhập: trả về view index.blade.php
         $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
         $guides = Guide::orderBy('guide_Id')->get();
-        $clients = Client::orderBy('client_id')->get();
+        // $clients = Client::orderBy('client_id')->get();
         $location = Location::orderBy('location_id')->get();
         return view($page, [
             'data' => $tours,
             'data_guide' => $guides,
-            'data_comment' => $clients,
+            // 'data_comment' => $clients,
             'data_location' => $location
         ]);
     }
@@ -130,11 +130,11 @@ class LienKetTrangController extends Controller
 
     public function userHienThiChiTietTuor($id)
     {
-        $client = Client::orderBy('client_id')->get();
+        // $client = Client::orderBy('client_id')->get();
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
         $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
-
+        $data_comment = Client::where('tour_id', $tour->tour_id)->latest()->paginate(5);
         // Khởi tạo mảng rỗng cho favoriteTours
         $favoriteTours = collect();
 
@@ -147,7 +147,7 @@ class LienKetTrangController extends Controller
             'user_main' => $user_main,
             'value' => $tour,
             'data' => $tours,
-            'data_comment' => $client,
+           'data_comment' => $data_comment,
             'favoriteTours' => $favoriteTours
         ]);
     }
@@ -195,5 +195,60 @@ class LienKetTrangController extends Controller
             ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
             ->get();
         return view('admin.result', compact('tours', 'search'));
+    }
+    public function loadMoreTours(Request $request)
+    {
+        $skip = $request->input('skip', 0);
+        $take = $request->input('take', 8);
+
+        $tours = Tour::skip($skip)->take($take)->get();
+        $total = Tour::count();
+
+        return response()->json([
+            'tours' => $tours,
+            'total' => $total
+        ]);
+    }
+
+    public function loadMoreGuides(Request $request)
+    {
+        $skip = $request->input('skip', 0);
+        $take = $request->input('take', 8);
+
+        $guides = Guide::skip($skip)->take($take)->get();
+        $total = Guide::count();
+
+        return response()->json([
+            'guides' => $guides,
+            'total' => $total
+        ]);
+    }
+
+    public function loadMoreUsers(Request $request)
+    {
+        $skip = $request->input('skip', 0);
+        $take = $request->input('take', 8);
+
+        $users = User::skip($skip)->take($take)->get();
+        $total = User::count();
+
+        return response()->json([
+            'users' => $users,
+            'total' => $total
+        ]);
+    }
+
+    public function loadMoreBookings(Request $request)
+    {
+        $skip = $request->input('skip', 0);
+        $take = $request->input('take', 10);
+
+        $bookings = Booking::with('tour')->skip($skip)->take($take)->get();
+        $total = Booking::count();
+
+        return response()->json([
+            'bookings' => $bookings,
+            'total' => $total
+        ]);
     }
 }

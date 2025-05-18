@@ -46,6 +46,10 @@
                     <label for="price" class="form-label text-primary">Giá tour</label>
                     <input type="text" class="form-control" id="price" name="price" value="{{ $tour->price }}" placeholder="Giá tour">
                 </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label text-primary">Số chỗ ngồi</label>
+                    <input type="text" class="form-control" id="total_seats" name="total_seats" value="{{ $tour->total_seats }}" placeholder="Số chỗ ngồi">
+                </div>
             </div>
             <div class="col-md-6" style="position: relative; top: -10px; width: 500px;">
                 <div class="mb-3">

@@ -52,4 +52,16 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Tour::class, 'favorite_tours', 'user_id', 'tour_id');
     }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'booking_user_id', 'id');
+    }
+      public function replies()
+    {
+        return $this->hasMany(Reply::class, 'admin_id', 'id');
+    }
+      public function isAdmin()
+    {
+        return $this->userType === 'admin';
+    }
 }

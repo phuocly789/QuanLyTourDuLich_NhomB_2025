@@ -9,30 +9,28 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'client_id';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    protected $primaryKey = 'client_id'; // Khai báo khóa chính
     protected $fillable = [
-        'client_name',
-        'client_image',
-        'client_address',
         'client_comment',
+        'client_name',
+        'client_address',
+        'client_image',
         'user_id',
         'tour_id',
     ];
-    // Mối quan hệ với bảng User
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // Mối quan hệ với bảng Tour
     public function tour()
     {
-        return $this->belongsTo(Tour::class);
+        return $this->belongsTo(Tour::class, 'tour_id', 'tour_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'client_id', 'client_id'); 
     }
 }

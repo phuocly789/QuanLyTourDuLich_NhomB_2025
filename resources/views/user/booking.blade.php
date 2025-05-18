@@ -1,3 +1,4 @@
+
 @extends('user.app1')
 @section('content1')
     <!-- Navbar & Hero Start -->
@@ -64,7 +65,6 @@
                             <p class="mb-0 text-danger"><i
                                     class=""></i>{{ number_format($value->price, 0, ',', '.') }} vnd</p>
                         </div>
-
                         <div class="col-sm-6">
                             <p class="mb-0"><i class="fa fa-chair text-primary me-2"></i>Số chỗ còn trống</p>
                         </div>
@@ -113,7 +113,6 @@
                                 <button name="redirect" id="bookingButton"
                                     class="col-sm-4 btn btn-primary rounded-pill py-3 px-5 mt-2" href="#">Đặt
                                     ngay</button>
-
                             </div>
                         </form>
                     </div>
@@ -211,183 +210,292 @@
     <!-- Package End -->
 
     <!-- Comment Section -->
-    <div class="container-xxl py-5">
+    <div class="container-xxl py-5" id="comment-section">
         <div class="container">
-            <div class="row g-1">
-                @for ($i = count($data_comment) - 1; $i >= 0; $i--)
-                    @php
-                        $row = $data_comment[$i];
-                    @endphp
-                    @if ($value->tour_id == $row->tour_id)
-                        <div class="col-lg-1 wow fadeInUp mt-0 mb-0" data-wow-delay="0.1s" style="min-height: 50px;">
-                            <div class="position-relative h-20">
-                                <img class="img-fluid position-absolute mt-3"
-                                    src="{{ asset('img/' . $row->client_image) }}" alt=""
-                                    style="width: 50px; height: 50px;">
-                            </div>
-                        </div>
-                        <div class="col-lg-11 wow fadeInUp mt-3 mb-0" data-wow-delay="0.3s">
-                            <h4 class="mb-0"><span class="text-primary">{{ $row->client_name }}</span></h4>
-                            <h6 class="mb-0"><span class="text-primary">{{ $row->client_address }}</span></h6>
-                            <p class="mb-0" style="font-size: 20px;">{{ $row->client_comment }}</p>
-                            <p class="mb-0" style="font-size: 20px;">{{ $row->created_at }}</p>
-                        </div>
-                        <hr>
-                    @endif
-                @endfor
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="text-center text-primary px-3">Đánh giá</h1>
             </div>
 
+            <!-- Form gửi đánh giá -->
+            @if (Auth::check() && Auth::user()->bookings()->where('booking_tour_id', $value->tour_id)->exists())
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <form action="{{ route('clients.store') }}" method="POST" enctype="multipart/form-data"
+                    class="mb-5">
+                    @csrf
+                    <input type="hidden" name="tour_id" value="{{ $value->tour_id }}">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label for="client_comment" class="form-label">Bình luận</label>
+                            <textarea name="client_comment" id="client_comment" class="form-control" rows="4" required></textarea>
+                            @error('client_comment')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="client_address" class="form-label">Địa chỉ</label>
+                            <input type="text" name="client_address" id="client_address" class="form-control"
+                                required>
+                            @error('client_address')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="client_image" class="form-label">Ảnh (tùy chọn)</label>
+                            <input type="file" name="client_image" id="client_image" class="form-control"
+                                accept="image/*">
+                            @error('client_image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary rounded-pill py-2 px-4">Gửi đánh giá</button>
+                        </div>
+                    </div>
+                </form>
+            @elseif (Auth::check())
+                <p class="text-center mb-5">Bạn cần <a
+                        href="{{ route('booking.store', [$value->tour_id, Auth::user()->id]) }}">đặt tour</a> để gửi đánh
+                    giá.</p>
+            @else
+                <p class="text-center mb-5">Vui lòng <a href="{{ route('login') }}">đăng nhập</a> và đặt tour để gửi đánh
+                    giá.</p>
+            @endif
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                // JavaScript cho tính năng đặt tour (giữ nguyên)
-                document.getElementById('quantityInput').addEventListener('input', function() {
-                    const quantityInput = this;
-                    const phoneInput = document.getElementById('phoneInput');
-                    const bookingButton = document.getElementById('bookingButton');
-                    const voucherDisplay = document.getElementById('voucher');
-                    const subtotalDisplay = document.getElementById('subtotal');
+            <!-- Danh sách bình luận -->
+           <!-- Danh sách bình luận -->
+            <div class="row g-1">
+                @if ($data_comment->isEmpty())
+                    <p class="text-center">Chưa có đánh giá nào cho tour này.</p>
+                @else
+                    @foreach ($data_comment->reverse() as $row)
+                        @if ($value->tour_id == $row->tour_id)
+                            <div class="col-lg-1 wow fadeInUp mt-0 mb-0" data-wow-delay="0.1s" style="min-height: 50px;">
+                                <div class="position-relative h-20">
+                                    <img class="img-fluid position-absolute mt-3"
+                                        src="{{ asset('img/' . $row->client_image) }}" alt=""
+                                        style="width: 50px; height: 50px;">
+                                </div>
+                            </div>
+                            <div class="col-lg-11 wow fadeInUp mt-3 mb-0" data-wow-delay="0.3s">
+                                <h4 class="mb-0"><span class="text-primary">{{ $row->client_name }}</span></h4>
+                                <h6 class="mb-0"><span class="text-primary">{{ $row->client_address }}</span></h6>
+                                <p class="mb-0" style="font-size: 20px;">{{ $row->client_comment }}</p>
+                                <p class="mb-0" style="font-size: 16px; color: #666;">
+                                    {{ $row->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</p>
 
-                    let quantity = parseInt(quantityInput.value) || 0;
-                    const price = parseFloat("{{ $value->price }}");
-                    const availableSeats = parseInt("{{ $value->total_seats - $value->booked_seats }}");
+                                <!-- Hiển thị các câu trả lời của admin -->
+                                @if ($row->replies->isNotEmpty())
+                                    <div class="replies mt-3" style="margin-left: 20px;">
+                                        @foreach ($row->replies as $reply)
+                                            <div class="reply">
+                                                <h6 class="mb-0"><span class="text-success">Admin ({{ $reply->admin->name }})</span></h6>
+                                                <p class="mb-0" style="font-size: 16px;">{{ $reply->reply_content }}</p>
+                                                <p class="mb-0" style="font-size: 14px; color: #666;">
+                                                    {{ $reply->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</p>
+                                            </div>
+                                            <hr>
+                                        @endforeach
+                                    </div>
+                                @endif
 
-                    if (quantity < 0) {
-                        quantity = 0;
-                        quantityInput.value = 0;
-                    }
-                    if (quantity > availableSeats) {
-                        quantity = availableSeats;
-                        quantityInput.value = availableSeats;
-                        alert(`Chỉ còn ${availableSeats} chỗ trống. Vui lòng chọn lại số lượng.`);
-                    }
+                                {{-- <!-- Form trả lời cho admin -->
+                                @if (Auth::check() && Auth::user()->isAdmin())
+                                    <form action="{{ route('replies.store') }}" method="POST" class="mt-3">
+                                        @csrf
+                                        <input type="hidden" name="client_id" value="{{ $row->id }}">
+                                        <div class="row g-3">
+                                            <div class="col-md-12">
+                                                <label for="reply_content_{{ $row->id }}" class="form-label">Trả lời</label>
+                                                <textarea name="reply_content" id="reply_content_{{ $row->id }}" class="form-control" rows="3" required></textarea>
+                                                @error('reply_content')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-success rounded-pill py-2 px-4">Gửi trả lời</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endif --}}
+                            </div>
+                            <hr>
+                        @endif
+                    @endforeach
+                @endif
+                {{ $data_comment->links() }}
+            </div>
+        </div>
+    </div>
+    <!-- Comment Section End -->
 
-                    let voucher = 1;
-                    let voucherText = '';
-                    if (quantity === 1) {
-                        voucher = 0.9;
-                        voucherText = 'Giảm giá 10%';
-                    } else if (quantity === 2) {
-                        voucher = 0.85;
-                        voucherText = 'Giảm giá 15%';
-                    } else if (quantity >= 3) {
-                        voucher = 0.8;
-                        voucherText = 'Giảm giá 20%';
-                    }
+    <!-- JavaScript hiện có -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JavaScript cho tính năng đặt tour
+        document.getElementById('quantityInput').addEventListener('input', function() {
+            const quantityInput = this;
+            const phoneInput = document.getElementById('phoneInput');
+            const bookingButton = document.getElementById('bookingButton');
+            const voucherDisplay = document.getElementById('voucher');
+            const subtotalDisplay = document.getElementById('subtotal');
 
-                    voucherDisplay.textContent = voucherText;
-                    const subtotal = quantity * price * voucher;
-                    subtotalDisplay.textContent = formatCurrency(subtotal) + ' vnđ';
+            let quantity = parseInt(quantityInput.value) || 0;
+            const price = parseFloat("{{ $value->price }}");
+            const availableSeats = parseInt("{{ $value->total_seats - $value->booked_seats }}");
 
-                    updateButtonState(quantity, phoneInput.value, bookingButton);
-                });
+            if (quantity < 0) {
+                quantity = 0;
+                quantityInput.value = 0;
+            }
+            if (quantity > availableSeats) {
+                quantity = availableSeats;
+                quantityInput.value = availableSeats;
+                alert(`Chỉ còn ${availableSeats} chỗ trống. Vui lòng chọn lại số lượng.`);
+            }
 
-                document.getElementById('phoneInput').addEventListener('input', function() {
-                    const quantityInput = document.getElementById('quantityInput');
-                    const phoneInput = this;
-                    const bookingButton = document.getElementById('bookingButton');
+            let voucher = 1;
+            let voucherText = '';
+            if (quantity === 1) {
+                voucher = 0.9;
+                voucherText = 'Giảm giá 10%';
+            } else if (quantity === 2) {
+                voucher = 0.85;
+                voucherText = 'Giảm giá 15%';
+            } else if (quantity >= 3) {
+                voucher = 0.8;
+                voucherText = 'Giảm giá 20%';
+            }
 
-                    updateButtonState(parseInt(quantityInput.value) || 0, phoneInput.value, bookingButton);
-                });
+            voucherDisplay.textContent = voucherText;
+            const subtotal = quantity * price * voucher;
+            subtotalDisplay.textContent = formatCurrency(subtotal) + ' vnđ';
 
-                function updateButtonState(quantity, phone, button) {
-                    const phoneRegex = /^[0-9]{10,11}$/;
-                    const isValidPhone = phoneRegex.test(phone);
-                    const isValidQuantity = quantity > 0 && quantity <= parseInt(
-                        "{{ $value->total_seats - $value->booked_seats }}");
+            updateButtonState(quantity, phoneInput.value, bookingButton);
+        });
 
-                    button.disabled = !(isValidPhone && isValidQuantity);
+        document.getElementById('phoneInput').addEventListener('input', function() {
+            const quantityInput = document.getElementById('quantityInput');
+            const phoneInput = this;
+            const bookingButton = document.getElementById('bookingButton');
+
+            updateButtonState(parseInt(quantityInput.value) || 0, phoneInput.value, bookingButton);
+        });
+
+        function updateButtonState(quantity, phone, button) {
+            const phoneRegex = /^[0-9]{10,11}$/;
+            const isValidPhone = phoneRegex.test(phone);
+            const isValidQuantity = quantity > 0 && quantity <= parseInt(
+                "{{ $value->total_seats - $value->booked_seats }}");
+
+            button.disabled = !(isValidPhone && isValidQuantity);
+        }
+
+        document.getElementById('bookingButton').addEventListener('click', function(event) {
+            const quantityInput = document.getElementById('quantityInput');
+            const phoneInput = document.getElementById('phoneInput');
+            const quantity = parseInt(quantityInput.value) || 0;
+            const phone = phoneInput.value;
+            const phoneRegex = /^[0-9]{10,11}$/;
+
+            if (quantity <= 0) {
+                event.preventDefault();
+                alert('Vui lòng nhập số lượng người lớn hơn 0.');
+            } else if (!phoneRegex.test(phone)) {
+                event.preventDefault();
+                alert('Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).');
+            } else if (quantity > parseInt("{{ $value->total_seats - $value->booked_seats }}")) {
+                event.preventDefault();
+                alert('Số chỗ còn lại không đủ. Vui lòng chọn lại số lượng.');
+            }
+        });
+
+        function formatCurrency(amount) {
+            return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+        }
+
+        // JavaScript để cuộn đến phần bình luận khi trang tải
+        @if (session('scroll_to_comments'))
+            document.addEventListener('DOMContentLoaded', function() {
+                const commentSection = document.getElementById('comment-section');
+                if (commentSection) {
+                    commentSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
+            });
+        @endif
+    </script>
 
-                document.getElementById('bookingButton').addEventListener('click', function(event) {
-                    const quantityInput = document.getElementById('quantityInput');
-                    const phoneInput = document.getElementById('phoneInput');
-                    const quantity = parseInt(quantityInput.value) || 0;
-                    const phone = phoneInput.value;
-                    const phoneRegex = /^[0-9]{10,11}$/;
-
-                    if (quantity <= 0) {
-                        event.preventDefault();
-                        alert('Vui lòng nhập số lượng người lớn hơn 0.');
-                    } else if (!phoneRegex.test(phone)) {
-                        event.preventDefault();
-                        alert('Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).');
-                    } else if (quantity > parseInt("{{ $value->total_seats - $value->booked_seats }}")) {
-                        event.preventDefault();
-                        alert('Số chỗ còn lại không đủ. Vui lòng chọn lại số lượng.');
-                    }
-                });
-
-                function formatCurrency(amount) {
-                    return amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
-                }
-            </script>
-
-            <!-- Favorite tour javascript -->
-            <script>
-                $(document).ready(function() {
-                    // Lấy danh sách tour yêu thích khi tải trang
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ route('favorite.favoriteList') }}",
-                        method: 'POST',
-                        dataType: 'json',
-                        success: function(response) {
-                            $.each(response, function(index, tour) {
-                                const fav_btn = $("#favorite-btn-" + tour.tour_id);
-                                if (fav_btn.length) {
-                                    fav_btn.removeClass("far").addClass("fas");
-                                }
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error fetching favorite list:', error);
+    <!-- Favorite tour javascript -->
+    <script>
+        $(document).ready(function() {
+            // Lấy danh sách tour yêu thích khi tải trang
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('favorite.favoriteList') }}",
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    $.each(response, function(index, tour) {
+                        const fav_btn = $("#favorite-btn-" + tour.tour_id);
+                        if (fav_btn.length) {
+                            fav_btn.removeClass("far").addClass("fas");
                         }
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching favorite list:', error);
+                }
+            });
 
-                    // Xử lý sự kiện submit form yêu thích
-                    $(".favorite-form").on("submit", function(e) {
-                        e.preventDefault();
-                        const form = $(this);
-                        const tour_id = form.find('input[name="tour_id"]').val();
-                        const fav_btn = $("#favorite-btn-" + tour_id);
-                        const button = form.find('button[type="submit"]');
-                        button.prop('disabled', true);
-                        const isInitiallyFar = fav_btn.hasClass("far");
-                        if (isInitiallyFar) {
+            // Xử lý sự kiện submit form yêu thích
+            $(".favorite-form").on("submit", function(e) {
+                e.preventDefault();
+                const form = $(this);
+                const tour_id = form.find('input[name="tour_id"]').val();
+                const fav_btn = $("#favorite-btn-" + tour_id);
+                const button = form.find('button[type="submit"]');
+                button.prop('disabled', true);
+                const isInitiallyFar = fav_btn.hasClass("far");
+                if (isInitiallyFar) {
+                    fav_btn.removeClass("far").addClass("fas");
+                } else {
+                    fav_btn.removeClass("fas").addClass("far");
+                }
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('favorite.add') }}",
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'added') {
                             fav_btn.removeClass("far").addClass("fas");
-                        } else {
+                        } else if (response.status === 'removed') {
                             fav_btn.removeClass("fas").addClass("far");
                         }
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: "{{ route('favorite.add') }}",
-                            method: 'POST',
-                            data: form.serialize(),
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.status === 'added') {
-                                    fav_btn.removeClass("far").addClass("fas");
-                                } else if (response.status === 'removed') {
-                                    fav_btn.removeClass("fas").addClass("far");
-                                }
-                                button.prop('disabled', false);
-                            },
-                            error: function(xhr, status, error) {
-                                if (isInitiallyFar) {
-                                    fav_btn.removeClass("fas").addClass("far");
-                                } else {
-                                    fav_btn.removeClass("far").addClass("fas");
-                                }
-                                console.error('Error toggling favorite:', error);
-                                button.prop('disabled', false);
-                            }
-                        });
-                    });
+                        button.prop('disabled', false);
+                    },
+                    error: function(xhr, status, error) {
+                        if (isInitiallyFar) {
+                            fav_btn.removeClass("fas").addClass("far");
+                        } else {
+                            fav_btn.removeClass("far").addClass("fas");
+                        }
+                        console.error('Error toggling favorite:', error);
+                        button.prop('disabled', false);
+                    }
                 });
-            </script>
-        @endsection
+            });
+        });
+    </script>
+@endsection
+

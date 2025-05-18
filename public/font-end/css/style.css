@@ -83,7 +83,7 @@
     position: relative;
     margin-right: 25px;
     padding: 35px 0;
-    color: #FFFFFF !important;
+    color: var(--dark) !important;
     font-size: 18px;
     font-weight: 600;
     outline: none;
@@ -112,7 +112,7 @@
 @media (max-width: 991.98px) {
     .sticky-top.navbar-light {
         position: relative;
-        background: #FFFFFF;
+         color: var(--dark) !important;
     }
 
     .navbar-light .navbar-collapse {
@@ -141,7 +141,7 @@
         border-bottom: 1px solid rgba(256, 256, 256, .1);
         z-index: 999;
     }
-    
+
     .sticky-top.navbar-light {
         position: fixed;
         background: #FFFFFF;

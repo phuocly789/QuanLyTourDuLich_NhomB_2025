@@ -1,34 +1,218 @@
 @extends('admin.app2')
 @section('content2')
-    
-
     <script>
-        // Function to scroll smoothly to a section
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+        // Function to format number as VND (matching PHP's number_format)
+        function formatVND(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' VNĐ';
         }
 
-        // Auto-scroll to section based on URL hash when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash;
-            if (hash) {
-                const sectionId = hash.replace('#', '');
-                scrollToSection(sectionId);
-            }
-        });
+        // Function to format date as dd/mm/yyyy
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        // Function to load more tours
+        function loadMoreTours() {
+            const button = document.getElementById('load-more-tours');
+            const current = parseInt(button.getAttribute('data-current'));
+            const perPage = 8;
+
+            fetch('{{ route('admin.loadMoreTours') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        skip: current,
+                        take: perPage
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('tours-tbody');
+                    if (data.tours.length > 0) {
+                        data.tours.forEach(tour => {
+                            const row = `
+                    <tr>
+                        <td>${tour.tour_id}</td>
+                        <td>${tour.tour_name}</td>
+                        <td>${formatVND(tour.price)}</td>
+                        <td>${tour.total_seats - tour.booked_seats}</td>
+                    </tr>`;
+                            tbody.insertAdjacentHTML('beforeend', row);
+                        });
+
+                        button.setAttribute('data-current', current + data.tours.length);
+
+                        if (data.tours.length < perPage || current + data.tours.length >= data.total) {
+                            button.style.display = 'none';
+                        }
+                    } else {
+                        button.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải thêm tour:', error);
+                    alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                });
+        }
+
+        // Function to load more guides
+        function loadMoreGuides() {
+            const button = document.getElementById('load-more-guides');
+            const current = parseInt(button.getAttribute('data-current'));
+            const perPage = 8;
+
+            fetch('{{ route('admin.loadMoreGuides') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        skip: current,
+                        take: perPage
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('guides-tbody');
+                    if (data.guides.length > 0) {
+                        data.guides.forEach(guide => {
+                            const row = `
+                    <tr>
+                        <td>${guide.guide_Id}</td>
+                        <td>${guide.guide_Name}</td>
+                        <td>${guide.guide_Mail}</td>
+                        <td>${guide.guide_Pno}</td>
+                    </tr>`;
+                            tbody.insertAdjacentHTML('beforeend', row);
+                        });
+
+                        button.setAttribute('data-current', current + data.guides.length);
+
+                        if (data.guides.length < perPage || current + data.guides.length >= data.total) {
+                            button.style.display = 'none';
+                        }
+                    } else {
+                        button.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải thêm hướng dẫn viên:', error);
+                    alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                });
+        }
+
+        // Function to load more users
+        function loadMoreUsers() {
+            const button = document.getElementById('load-more-users');
+            const current = parseInt(button.getAttribute('data-current'));
+            const perPage = 8;
+
+            fetch('{{ route('admin.loadMoreUsers') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        skip: current,
+                        take: perPage
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('users-tbody');
+                    if (data.users.length > 0) {
+                        data.users.forEach(user => {
+                            const row = `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>
+                            <input type="text" value="${user.usertype}" class="usertype-input form-control" data-id="${user.id}" style="border-radius: 5px; padding: 5px;">
+                        </td>
+                    </tr>`;
+                            tbody.insertAdjacentHTML('beforeend', row);
+                        });
+
+                        button.setAttribute('data-current', current + data.users.length);
+
+                        if (data.users.length < perPage || current + data.users.length >= data.total) {
+                            button.style.display = 'none';
+                        }
+                    } else {
+                        button.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải thêm người dùng:', error);
+                    alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                });
+        }
+
+        // Function to load more bookings
+        function loadMoreBookings() {
+            const button = document.getElementById('load-more-bookings');
+            const current = parseInt(button.getAttribute('data-current'));
+            const perPage = 10;
+
+            fetch('{{ route('admin.loadMoreBookings') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        skip: current,
+                        take: perPage
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('bookings-tbody');
+                    if (data.bookings.length > 0) {
+                        data.bookings.forEach(booking => {
+                            const row = `
+                    <tr>
+                        <td>${booking.booking_id}</td>
+                        <td>${booking.booking_customer_name}</td>
+                        <td>${booking.tour ? booking.tour.tour_name : 'N/A'}</td>
+                        <td>${booking.booking_customer_quantity}</td>
+                        <td>${formatVND(booking.booking_amount)}</td>
+                        <td>${formatDate(booking.created_at)}</td>
+                    </tr>`;
+                            tbody.insertAdjacentHTML('beforeend', row);
+                        });
+
+                        button.setAttribute('data-current', current + data.bookings.length);
+
+                        if (data.bookings.length < perPage || current + data.bookings.length >= data.total) {
+                            button.style.display = 'none';
+                        }
+                    } else {
+                        button.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải thêm đơn hàng:', error);
+                    alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                });
+        }
     </script>
 
     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
         <div class="container py-5">
             <div class="row justify-content-center py-5">
                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">QUẢN LÝ THÔNG TIN TOUR CỦA BẠN</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">QUẢN LÍ THÔNG TIN TOUR CỦA BẠN</h1>
                 </div>
             </div>
         </div>
@@ -137,7 +321,7 @@
                     <div class="alert alert-info">Không có dữ liệu tour.</div>
                 @else
                     <div class="table-modern">
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-bordered mb-0" id="tours-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -146,7 +330,7 @@
                                     <th>Số chỗ còn</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tours-tbody">
                                 @foreach ($tours as $tour)
                                     <tr>
                                         <td>{{ $tour->tour_id }}</td>
@@ -161,32 +345,8 @@
                     @if ($tours->total() > 8)
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
-                                <ul class="pagination">
-                                    @if ($tours->onFirstPage())
-                                        <li class="page-item disabled">
-                                            <span class="page-link">«</span>
-                                        </li>
-                                    @else
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $tours->previousPageUrl() }}#tours-section">«</a>
-                                        </li>
-                                    @endif
-                                    @foreach ($tours->getUrlRange(1, $tours->lastPage()) as $page => $url)
-                                        <li class="page-item {{ $page == $tours->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url }}#tours-section">{{ $page }}</a>
-                                        </li>
-                                    @endforeach
-                                    @if ($tours->hasMorePages())
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $tours->nextPageUrl() }}#tours-section">»</a>
-                                        </li>
-                                    @else
-                                        <li class="page-item disabled">
-                                            <span class="page-link">»</span>
-                                        </li>
-                                    @endif
-                                </ul>
+                                <button class="btn btn-primary" onclick="loadMoreTours()" data-current="8"
+                                    id="load-more-tours">Xem thêm</button>
                             </div>
                         </div>
                     @endif
@@ -203,7 +363,7 @@
                     <div class="alert alert-info">Không có dữ liệu hướng dẫn viên.</div>
                 @else
                     <div class="table-modern">
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-bordered mb-0" id="guides-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -212,7 +372,7 @@
                                     <th>Số điện thoại</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="guides-tbody">
                                 @foreach ($guides as $guide)
                                     <tr>
                                         <td>{{ $guide->guide_Id }}</td>
@@ -227,33 +387,8 @@
                     @if ($guides->total() > 8)
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
-                                <ul class="pagination">
-                                    @if ($guides->onFirstPage())
-                                        <li class="page-item disabled">
-                                            <span class="page-link">«</span>
-                                        </li>
-                                    @else
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="{{ $guides->previousPageUrl() }}#guides-section">«</a>
-                                        </li>
-                                    @endif
-                                    @foreach ($guides->getUrlRange(1, $guides->lastPage()) as $page => $url)
-                                        <li class="page-item {{ $page == $guides->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url }}#guides-section">{{ $page }}</a>
-                                        </li>
-                                    @endforeach
-                                    @if ($guides->hasMorePages())
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $guides->nextPageUrl() }}#guides-section">»</a>
-                                        </li>
-                                    @else
-                                        <li class="page-item disabled">
-                                            <span class="page-link">»</span>
-                                        </li>
-                                    @endif
-                                </ul>
+                                <button class="btn btn-primary" onclick="loadMoreGuides()" data-current="8"
+                                    id="load-more-guides">Xem thêm</button>
                             </div>
                         </div>
                     @endif
@@ -270,16 +405,19 @@
                     <div class="alert alert-info">Không có dữ liệu người dùng.</div>
                 @else
                     <div class="table-modern">
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-bordered mb-0" id="users-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th -webkit-user-select: none; -webkit-user-select: none; -ms-user-select: none;
+                                        user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select:
+                                        none; -webkit-user-select: none; -ms-user-select: none; user-select: none; <th>Email
+                                    </th>
                                     <th>Quyền</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="users-tbody">
                                 @foreach ($users as $row)
                                     <tr>
                                         <td>{{ $row->id }}</td>
@@ -298,33 +436,8 @@
                     @if ($users->total() > 8)
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
-                                <ul class="pagination">
-                                    @if ($users->onFirstPage())
-                                        <li class="page-item disabled">
-                                            <span class="page-link">«</span>
-                                        </li>
-                                    @else
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="{{ $users->previousPageUrl() }}#users-section">«</a>
-                                        </li>
-                                    @endif
-                                    @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
-                                        <li class="page-item {{ $page == $users->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url }}#users-section">{{ $page }}</a>
-                                        </li>
-                                    @endforeach
-                                    @if ($users->hasMorePages())
-                                        <li class="page-item">
-                                            <a class="page-link" href="{{ $users->nextPageUrl() }}#users-section">»</a>
-                                        </li>
-                                    @else
-                                        <li class="page-item disabled">
-                                            <span class="page-link">»</span>
-                                        </li>
-                                    @endif
-                                </ul>
+                                <button class="btn btn-primary" onclick="loadMoreUsers()" data-current="8"
+                                    id="load-more-users">Xem thêm</button>
                             </div>
                         </div>
                     @endif
@@ -341,7 +454,7 @@
                     <div class="alert alert-info">Không có dữ liệu lịch sử đơn hàng.</div>
                 @else
                     <div class="table-modern">
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-bordered mb-0" id="bookings-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -352,7 +465,7 @@
                                     <th>Ngày đặt</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="bookings-tbody">
                                 @foreach ($booking_history as $booking)
                                     <tr>
                                         <td>{{ $booking->booking_id }}</td>
@@ -369,35 +482,8 @@
                     @if ($booking_history->total() > 10)
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
-                                <ul class="pagination">
-                                    @if ($booking_history->onFirstPage())
-                                        <li class="page-item disabled">
-                                            <span class="page-link">«</span>
-                                        </li>
-                                    @else
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="{{ $booking_history->previousPageUrl() }}#bookings-section">«</a>
-                                        </li>
-                                    @endif
-                                    @foreach ($booking_history->getUrlRange(1, $booking_history->lastPage()) as $page => $url)
-                                        <li
-                                            class="page-item {{ $page == $booking_history->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link"
-                                                href="{{ $url }}#bookings-section">{{ $page }}</a>
-                                        </li>
-                                    @endforeach
-                                    @if ($booking_history->hasMorePages())
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="{{ $booking_history->nextPageUrl() }}#bookings-section">»</a>
-                                        </li>
-                                    @else
-                                        <li class="page-item disabled">
-                                            <span class="page-link">»</span>
-                                        </li>
-                                    @endif
-                                </ul>
+                                <button class="btn btn-primary" onclick="loadMoreBookings()" data-current="10"
+                                    id="load-more-bookings">Xem thêm</button>
                             </div>
                         </div>
                     @endif

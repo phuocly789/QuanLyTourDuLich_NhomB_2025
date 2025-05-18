@@ -105,8 +105,8 @@
                             <a href="{{ url('/user.favorite') }}" class="dropdown-item">Tour yêu thích</a>
                         </div>
                     </div>
-                    <a href="{{ url('/contact') }}"
-                        class="nav-item nav-link {{ request()->is('contact') ? 'active' : '' }}">Liên hệ</a>
+                    <a href="{{ url('/user.contact') }}"
+                        class="nav-item nav-link {{ request()->is('user.contact') ? 'active' : '' }}">Liên hệ</a>
                 </div>
                 <nav x-data="{ open: false }">
                     <!-- Primary Navigation Menu -->
@@ -271,11 +271,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    @if (session('success'))
-                        <div class="alert alert-success text-center" style="font-size: 30px;">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                   
                     <h4 class="text-white mb-3">Bản tin</h4>
                     <p>Để nhận được bản tin về du lịch, bạn vui lòng nhập email đăng ký với chúng tôi.</p>
                     {{-- <form action="{{ route('notice.store') }}" method="POST">

@@ -106,6 +106,8 @@
                                 class="dropdown-item {{ request()->routeIs('admin.information') ? 'active' : '' }}">Users</a>
                             <a href="{{ route('admin.history') }}"
                                 class="dropdown-item {{ request()->routeIs('admin.history') ? 'active' : '' }}">Bill</a>
+                            <a href="{{ route('admin.reviews') }}"
+                                class="dropdown-item {{ request()->routeIs('admin.reviews') ? 'active' : '' }}">Reply</a>
                         </div>
                     </div>
                 </div>

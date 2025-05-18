@@ -12,6 +12,7 @@ class Tour extends Model
     protected $fillable = [
         'tour_name',
         'tour_image',
+        'location_id',
         'start_day',
         'time',
         'star_from',
@@ -26,15 +27,23 @@ class Tour extends Model
     {
         return $this->belongsTo(Guide::class, 'guide_id', 'guide_Id');
     }
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id', 'location_id');
+    }
+
     // Mối quan hệ ngược từ Tour tới Client
     public function clients()
     {
-        return $this->hasMany(Client::class);
+        return $this->hasMany(Client::class, 'tour_id', 'tour_id');
     }
     // Define the relationship with FavoriteTour
     public function favoriteByUsers()
     {
         return $this->belongsToMany(User::class, 'favorite_tours', 'tour_id', 'user_id');
     }
-    
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'booking_tour_id', 'tour_id');
+    }
 }

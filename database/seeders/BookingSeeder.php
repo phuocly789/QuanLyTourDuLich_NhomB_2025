@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tour;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -290,6 +291,13 @@ class BookingSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+        }
+        // Cập nhật booked_seats trong bảng tours
+        foreach ($tours as $tour_id => $tour_data) {
+            $total_booked = DB::table('bookings')
+                ->where('booking_tour_id', $tour_id)
+                ->sum('booking_customer_quantity');
+            Tour::where('tour_id', $tour_id)->update(['booked_seats' => $total_booked]);
         }
     }
 }
