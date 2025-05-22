@@ -18,8 +18,8 @@
         // Function to load more tours
         function loadMoreTours() {
             const button = document.getElementById('load-more-tours');
-            const current = parseInt(button.getAttribute('data-current'));
-            const perPage = 8;
+            let current = parseInt(button.getAttribute('data-current')) || 0;
+            const perPage = 10;
 
             fetch('{{ route('admin.loadMoreTours') }}', {
                     method: 'POST',
@@ -34,21 +34,27 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Dữ liệu tour:', data.tours);
                     const tbody = document.getElementById('tours-tbody');
-                    if (data.tours.length > 0) {
+                    if (data.tours && data.tours.length > 0) {
+                        const existingIds = Array.from(tbody.querySelectorAll('tr td:first-child'))
+                            .map(td => parseInt(td.textContent));
+
                         data.tours.forEach(tour => {
-                            const row = `
-                    <tr>
-                        <td>${tour.tour_id}</td>
-                        <td>${tour.tour_name}</td>
-                        <td>${formatVND(tour.price)}</td>
-                        <td>${tour.total_seats - tour.booked_seats}</td>
-                    </tr>`;
-                            tbody.insertAdjacentHTML('beforeend', row);
+                            if (!existingIds.includes(tour.tour_id)) {
+                                const row = `
+                        <tr>
+                            <td>${tour.tour_id}</td>
+                            <td>${tour.tour_name}</td>
+                            <td>${formatVND(tour.price)}</td>
+                            <td>${tour.total_seats - tour.booked_seats}</td>
+                        </tr>`;
+                                tbody.insertAdjacentHTML('beforeend', row);
+                                existingIds.push(tour.tour_id);
+                            }
                         });
 
                         button.setAttribute('data-current', current + data.tours.length);
-
                         if (data.tours.length < perPage || current + data.tours.length >= data.total) {
                             button.style.display = 'none';
                         }
@@ -65,7 +71,7 @@
         // Function to load more guides
         function loadMoreGuides() {
             const button = document.getElementById('load-more-guides');
-            const current = parseInt(button.getAttribute('data-current'));
+            let current = parseInt(button.getAttribute('data-current')) || 0;
             const perPage = 8;
 
             fetch('{{ route('admin.loadMoreGuides') }}', {
@@ -81,21 +87,27 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Dữ liệu guides:', data.guides);
                     const tbody = document.getElementById('guides-tbody');
-                    if (data.guides.length > 0) {
+                    if (data.guides && data.guides.length > 0) {
+                        const existingIds = Array.from(tbody.querySelectorAll('tr td:first-child'))
+                            .map(td => parseInt(td.textContent));
+
                         data.guides.forEach(guide => {
-                            const row = `
-                    <tr>
-                        <td>${guide.guide_Id}</td>
-                        <td>${guide.guide_Name}</td>
-                        <td>${guide.guide_Mail}</td>
-                        <td>${guide.guide_Pno}</td>
-                    </tr>`;
-                            tbody.insertAdjacentHTML('beforeend', row);
+                            if (!existingIds.includes(guide.guide_Id)) {
+                                const row = `
+                        <tr>
+                            <td>${guide.guide_Id}</td>
+                            <td>${guide.guide_Name}</td>
+                            <td>${guide.guide_Mail}</td>
+                            <td>${guide.guide_Pno}</td>
+                        </tr>`;
+                                tbody.insertAdjacentHTML('beforeend', row);
+                                existingIds.push(guide.guide_Id);
+                            }
                         });
 
                         button.setAttribute('data-current', current + data.guides.length);
-
                         if (data.guides.length < perPage || current + data.guides.length >= data.total) {
                             button.style.display = 'none';
                         }
@@ -112,7 +124,7 @@
         // Function to load more users
         function loadMoreUsers() {
             const button = document.getElementById('load-more-users');
-            const current = parseInt(button.getAttribute('data-current'));
+            let current = parseInt(button.getAttribute('data-current')) || 0;
             const perPage = 8;
 
             fetch('{{ route('admin.loadMoreUsers') }}', {
@@ -128,23 +140,29 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Dữ liệu users:', data.users);
                     const tbody = document.getElementById('users-tbody');
-                    if (data.users.length > 0) {
+                    if (data.users && data.users.length > 0) {
+                        const existingIds = Array.from(tbody.querySelectorAll('tr td:first-child'))
+                            .map(td => parseInt(td.textContent));
+
                         data.users.forEach(user => {
-                            const row = `
-                    <tr>
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>
-                            <input type="text" value="${user.usertype}" class="usertype-input form-control" data-id="${user.id}" style="border-radius: 5px; padding: 5px;">
-                        </td>
-                    </tr>`;
-                            tbody.insertAdjacentHTML('beforeend', row);
+                            if (!existingIds.includes(user.id)) {
+                                const row = `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <input type="text" value="${user.usertype}" class="usertype-input form-control" data-id="${user.id}" style="border-radius: 5px; padding: 5px;">
+                            </td>
+                        </tr>`;
+                                tbody.insertAdjacentHTML('beforeend', row);
+                                existingIds.push(user.id);
+                            }
                         });
 
                         button.setAttribute('data-current', current + data.users.length);
-
                         if (data.users.length < perPage || current + data.users.length >= data.total) {
                             button.style.display = 'none';
                         }

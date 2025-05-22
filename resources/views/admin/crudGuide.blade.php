@@ -21,28 +21,54 @@
 
             <!-- Add Guide Form -->
             <div class="mb-4">
-                <form action="{{ route('guide.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('guide.store') }}" method="POST" enctype="multipart/form-data" id="addGuideForm">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="guide_name" name="guide_name"
-                                placeholder="Tên hướng dẫn viên">
+                                placeholder="Tên hướng dẫn viên" value="{{ old('guide_name') }}" required>
+                            @error('guide_name')
+                                <span class="text-danger" id="guide_name_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_name_error"></span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="guide_pno" name="guide_pno"
-                                placeholder="Số điện thoại">
+                            <input type="number" class="form-control" id="guide_pno" name="guide_pno"
+                                placeholder="Số điện thoại" value="{{ old('guide_pno') }}" required>
+                            @error('guide_pno')
+                                <span class="text-danger" id="guide_pno_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_pno_error"></span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
-                            <input type="file" class="form-control" id="guide_image" name="guide_image">
+                            <input type="file" class="form-control" id="guide_image" name="guide_image" accept="image/*"
+                                required>
+                            @error('guide_image')
+                                <span class="text-danger" id="guide_image_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_image_error"></span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="guide_mail" name="guide_mail"
-                                placeholder="Email">
+                            <input type="email" class="form-control" id="guide_mail" name="guide_mail" placeholder="Email"
+                                value="{{ old('guide_mail') }}" required>
+                            @error('guide_mail')
+                                <span class="text-danger" id="guide_mail_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_mail_error"></span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row g-3 mt-2">
                         <div class="col-md-9">
-                            <textarea class="form-control" id="guide_intro" name="guide_intro" placeholder="Giới thiệu"></textarea>
+                            <textarea class="form-control" id="guide_intro" name="guide_intro" placeholder="Giới thiệu" required>{{ old('guide_intro') }}</textarea>
+                            @error('guide_intro')
+                                <span class="text-danger" id="guide_intro_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_intro_error"></span>
+                            @enderror
                         </div>
                         <div class="col-md-3 text-end">
                             <button type="submit" class="btn btn-primary">Thêm</button>
@@ -104,4 +130,97 @@
             </div>
         </div>
     </div>
+    <script>
+        // Hàm kiểm tra định dạng số điện thoại
+        function isValidPhoneNumber(value) {
+            return /^0\d{9}$/.test(value); // Kiểm tra 10 chữ số
+        }
+
+        // Hàm kiểm tra định dạng email
+        function isValidEmail(value) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        // Hàm kiểm tra định dạng ảnh
+        function isValidImage(file) {
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+            return file && validTypes.includes(file.type);
+        }
+
+        // Validate guide_name
+        document.getElementById('guide_name').addEventListener('input', function() {
+            const value = this.value.trim();
+            const errorElement = document.getElementById('guide_name_error');
+            if (value === '') {
+                errorElement.textContent = 'Tên hướng dẫn viên không được để trống!';
+            } else if (value.length > 255) {
+                errorElement.textContent = 'Tên hướng dẫn viên không được vượt quá 255 ký tự!';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+
+        // Validate guide_pno
+        document.getElementById('guide_pno').addEventListener('input', function() {
+            const value = this.value.trim();
+            const errorElement = document.getElementById('guide_pno_error');
+            if (value === '') {
+                errorElement.textContent = 'Số điện thoại không được để trống!';
+            } else if (!isValidPhoneNumber(value)) {
+                errorElement.textContent = 'Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0!';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+
+        // Validate guide_image
+        document.getElementById('guide_image').addEventListener('change', function() {
+            const file = this.files[0];
+            const errorElement = document.getElementById('guide_image_error');
+            if (!file) {
+                errorElement.textContent = 'Hình ảnh không được để trống!';
+            } else if (!isValidImage(file)) {
+                errorElement.textContent = 'Hình ảnh phải có định dạng jpeg, png, jpg hoặc gif!';
+                this.value = '';
+            } else if (file.size > 2 * 1024 * 1024) {
+                errorElement.textContent = 'Hình ảnh không được vượt quá 2MB!';
+                this.value = '';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+
+        // Validate guide_mail
+        document.getElementById('guide_mail').addEventListener('input', function() {
+            const value = this.value.trim();
+            const errorElement = document.getElementById('guide_mail_error');
+            if (value === '') {
+                errorElement.textContent = 'Email không được để trống!';
+            } else if (!isValidEmail(value)) {
+                errorElement.textContent = 'Email không đúng định dạng!';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+
+        // Validate guide_intro
+        document.getElementById('guide_intro').addEventListener('input', function() {
+            const value = this.value.trim();
+            const errorElement = document.getElementById('guide_intro_error');
+            if (value === '') {
+                errorElement.textContent = 'Giới thiệu không được để trống!';
+            } else {
+                errorElement.textContent = '';
+            }
+        });
+
+        // Vô hiệu hóa submit nếu có lỗi
+        document.getElementById('addGuideForm').addEventListener('submit', function(e) {
+            const errors = document.querySelectorAll('.text-danger:not(:empty)');
+            if (errors.length > 0) {
+                e.preventDefault();
+                alert('Vui lòng sửa các lỗi trước khi gửi form!');
+            }
+        });
+    </script>
 @endsection

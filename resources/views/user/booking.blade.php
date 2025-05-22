@@ -1,4 +1,3 @@
-
 @extends('user.app1')
 @section('content1')
     <!-- Navbar & Hero Start -->
@@ -7,14 +6,8 @@
             <div class="container py-5">
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                        <h1 class="display-3 text-white animated slideInDown">Discovery</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                <li class="breadcrumb-item"><a href="#">trang</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">Đặt vé</li>
-                            </ol>
-                        </nav>
+                        <h1 class="display-3 text-white animated slideInDown">Chi Tiết Tour</h1>
+
                     </div>
                 </div>
             </div>
@@ -129,7 +122,7 @@
                 <h1 class="text-center text-primary px-3">Lịch trình cụ thể</h1>
             </div>
         </div>
-        <div style="color: black; font-weight: 400; font-size: 17px;">
+        <div style="color: black; font-weight: 400; font-size: 17px;text-align: justify;padding: 10px">
             {!! $value->tour_schedule !!}
         </div>
     </div>
@@ -266,7 +259,7 @@
             @endif
 
             <!-- Danh sách bình luận -->
-           <!-- Danh sách bình luận -->
+            <!-- Danh sách bình luận -->
             <div class="row g-1">
                 @if ($data_comment->isEmpty())
                     <p class="text-center">Chưa có đánh giá nào cho tour này.</p>
@@ -292,10 +285,14 @@
                                     <div class="replies mt-3" style="margin-left: 20px;">
                                         @foreach ($row->replies as $reply)
                                             <div class="reply">
-                                                <h6 class="mb-0"><span class="text-success">Admin ({{ $reply->admin->name }})</span></h6>
-                                                <p class="mb-0" style="font-size: 16px;">{{ $reply->reply_content }}</p>
+                                                <h6 class="mb-0"><span class="text-success">Admin
+                                                        ({{ $reply->admin->name }})
+                                                    </span></h6>
+                                                <p class="mb-0" style="font-size: 16px;">{{ $reply->reply_content }}
+                                                </p>
                                                 <p class="mb-0" style="font-size: 14px; color: #666;">
-                                                    {{ $reply->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</p>
+                                                    {{ $reply->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}
+                                                </p>
                                             </div>
                                             <hr>
                                         @endforeach
@@ -332,7 +329,7 @@
     </div>
     <!-- Comment Section End -->
 
-    <!-- JavaScript hiện có -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // JavaScript cho tính năng đặt tour
@@ -381,16 +378,34 @@
             const quantityInput = document.getElementById('quantityInput');
             const phoneInput = this;
             const bookingButton = document.getElementById('bookingButton');
+            const phoneError = document.getElementById('phoneError') || document.createElement(
+            'p'); // Tạo phần tử hiển thị lỗi nếu chưa có
 
-            updateButtonState(parseInt(quantityInput.value) || 0, phoneInput.value, bookingButton);
+            phoneError.id = 'phoneError';
+            phoneError.style.color = 'red';
+            phoneError.style.fontSize = '14px';
+            phoneInput.parentNode.appendChild(phoneError);
+
+            const phone = phoneInput.value;
+            const phoneRegex = /^0[0-9]{0,10}$/; // Cho phép nhập từng ký tự, bắt đầu bằng 0, tối đa 11 số
+            const isValidPhone = phoneRegex.test(phone) && (phone.length === 10 || phone.length === 11);
+
+            if (phone && !phoneRegex.test(phone)) {
+                phoneError.textContent = 'Số điện thoại phải bắt đầu bằng 0 và chỉ chứa số.';
+            } else if (phone && phone.length > 11) {
+                phoneError.textContent = 'Số điện thoại không được vượt quá 11 số.';
+            } else if (phone && phone.length < 10) {
+                phoneError.textContent = 'Số điện thoại phải có 10 hoặc 11 số.';
+            } else {
+                phoneError.textContent = '';
+            }
+
+            updateButtonState(parseInt(quantityInput.value) || 0, phone, bookingButton, isValidPhone);
         });
 
-        function updateButtonState(quantity, phone, button) {
-            const phoneRegex = /^[0-9]{10,11}$/;
-            const isValidPhone = phoneRegex.test(phone);
+        function updateButtonState(quantity, phone, button, isValidPhone) {
             const isValidQuantity = quantity > 0 && quantity <= parseInt(
                 "{{ $value->total_seats - $value->booked_seats }}");
-
             button.disabled = !(isValidPhone && isValidQuantity);
         }
 
@@ -399,14 +414,14 @@
             const phoneInput = document.getElementById('phoneInput');
             const quantity = parseInt(quantityInput.value) || 0;
             const phone = phoneInput.value;
-            const phoneRegex = /^[0-9]{10,11}$/;
+            const phoneRegex = /^0[0-9]{9,10}$/;
 
             if (quantity <= 0) {
                 event.preventDefault();
                 alert('Vui lòng nhập số lượng người lớn hơn 0.');
             } else if (!phoneRegex.test(phone)) {
                 event.preventDefault();
-                alert('Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số).');
+                alert('Số điện thoại phải bắt đầu bằng 0 và có 10 hoặc 11 chữ số.');
             } else if (quantity > parseInt("{{ $value->total_seats - $value->booked_seats }}")) {
                 event.preventDefault();
                 alert('Số chỗ còn lại không đủ. Vui lòng chọn lại số lượng.');
@@ -498,4 +513,3 @@
         });
     </script>
 @endsection
-

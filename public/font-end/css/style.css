@@ -112,7 +112,7 @@
 @media (max-width: 991.98px) {
     .sticky-top.navbar-light {
         position: relative;
-         color: var(--dark) !important;
+        color: var(--dark) !important;
     }
 
     .navbar-light .navbar-collapse {
@@ -178,7 +178,7 @@
     background-size: cover;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     color: rgba(255, 255, 255, .5);
 }
 
@@ -323,7 +323,33 @@
     z-index: 1;
 }
 
+.image-frame {
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.image-frame img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.image-frame:hover img {
+    transform: scale(1.1);
+    /* Phóng to nhẹ khi hover */
+}
+
 @media (min-width: 768px) {
+
     .testimonial-carousel::before,
     .testimonial-carousel::after {
         width: 200px;
@@ -331,6 +357,7 @@
 }
 
 @media (min-width: 992px) {
+
     .testimonial-carousel::before,
     .testimonial-carousel::after {
         width: 300px;
@@ -441,7 +468,10 @@
     border-right: none;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
     border: 1px solid black;
     color: #14141F;
 }
@@ -452,8 +482,10 @@ table, th, tr, td {
 }
 
 .container-xxl {
-    background-color: #f8f9fa; /* Màu nền sáng */
+    background-color: #f8f9fa;
+    /* Màu nền sáng */
 }
+
 .tour-name {
     color: #333;
     letter-spacing: 1px;

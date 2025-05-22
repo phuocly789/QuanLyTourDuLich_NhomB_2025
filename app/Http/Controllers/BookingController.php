@@ -52,6 +52,13 @@ class BookingController extends Controller
      */
     public function store(Request $request, $booking_tour_id, $booking_user_id)
     {
+        $request->validate([
+            'booking_quantity' => 'required|integer|min:1',
+            'booking_customer_phone' => ['required', 'regex:/^0[0-9]{9,10}$/'], // Bắt đầu bằng 0, độ dài 10 hoặc 11 số
+        ], [
+            'booking_customer_phone.regex' => 'Số điện thoại phải bắt đầu bằng 0 và có độ dài 10 hoặc 11 số.',
+        ]);
+        //
         $user = User::findOrFail($booking_user_id);
         $tour = Tour::findOrFail($booking_tour_id);
         $booking_quantity = $request->input('booking_quantity');
@@ -94,10 +101,11 @@ class BookingController extends Controller
             ->orderByDesc('booking_id')
             ->paginate(6);
         $tours = Tour::orderBy('tour_id')->get();
+        $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
         // $booking_session = Session::get('booking');
         // $booking_session = $_SESSION['booking_session'];
         // dd($booking_session);
-        return view('user.history', compact('data', 'tours'));
+        return view('user.history', compact('data', 'tours', 'footerTours'));
     }
 
     /**

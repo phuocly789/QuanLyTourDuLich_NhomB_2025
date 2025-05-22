@@ -74,7 +74,7 @@ class AddTourController extends Controller
         $validatedData = $request->validate([
             'tour_name' => 'required|string|max:255',
             'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'start_day' => 'required|date',
+            'start_day' => 'required|date|after_or_equal:today', // Kiểm tra ngày không được trong quá khứ
             'time' => 'required|string',
             'star_from' => 'required|string',
             'price' => 'required|numeric',
@@ -85,6 +85,8 @@ class AddTourController extends Controller
             'guide_id' => 'required|integer',
             'location_id' => 'required|integer|exists:locations,location_id',
             'total_seats' => 'required|integer|min:1',
+        ], [
+            'start_day.after_or_equal' => 'Ngày bắt đầu tour không được trong quá khứ!',
         ]);
 
         // Handle image upload
@@ -114,7 +116,7 @@ class AddTourController extends Controller
 
         $tour->save();
 
-        // Redirect back or to a success page
+        // Redirect back with success message
         return redirect()->back()->with('success', 'Tour đã được thêm thành công!');
     }
 
@@ -195,7 +197,7 @@ class AddTourController extends Controller
         $tours = Tour::orderByDesc('tour_id')->paginate(6);
         $user = User::orderBy('id')->get();
         $guide = Guide::orderBy('guide_Id')->get();
-        $location=Location::orderBy('location_id')->get();
+        $location = Location::orderBy('location_id')->get();
         // $client = Client::orderBy('client_id')->get();
 
         // Lấy các tour yêu thích của người dùng hiện tại
@@ -206,7 +208,7 @@ class AddTourController extends Controller
             'data' => $tours,
             'data_guide' => $guide,
             'decentralization' => $user,
-            'data_location'=>$location
+            'data_location' => $location
             // 'data_comment' => $client,
             // 'favoriteTours' => $favoriteTours, // Truyền danh sách các tour yêu thích vào view
         ]);
@@ -218,26 +220,26 @@ class AddTourController extends Controller
         return view('admin.information', compact('decentralization'));
     }
 
-    public function
-    storeGuide(Request $request)
+  public function storeGuide(Request $request)
     {
         // Validate form data
         $validatedData = $request->validate([
             'guide_name' => 'required|string|max:255',
-            'guide_pno' => 'required|string',
-            'guide_image' => 'required',
-            'guide_mail' => 'required|string',
+            'guide_pno' => 'required|string|regex:/^0[0-9]{9}$/|unique:guides,guide_Pno',
+            'guide_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'guide_mail' => 'required|email|max:255|unique:guides,guide_Mail',
             'guide_intro' => 'required|string',
         ]);
 
-        $get_imgae = $request->guide_image;
+        // Handle image upload
+        $get_image = $request->file('guide_image');
         $path = public_path('img/');
-        $get_name_image = $get_imgae->getClientOriginalName();
+        $get_name_image = $get_image->getClientOriginalName();
         $name_image = current(explode('.', $get_name_image));
-        $new_image = $name_image . rand(0, 999) . '.' . $get_imgae->getClientOriginalExtension();
-        $get_imgae->move($path, $new_image);
+        $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension();
+        $get_image->move($path, $new_image);
 
-        // Create a new tour instance
+        // Create a new guide instance
         $guide = new Guide;
         $guide->guide_Name = $validatedData['guide_name'];
         $guide->guide_Pno = $validatedData['guide_pno'];
@@ -246,9 +248,9 @@ class AddTourController extends Controller
         $guide->guide_Intro = $validatedData['guide_intro'];
         $guide->save();
 
-        // Redirect back or to a success page
         return redirect()->back()->with('success', 'Đã thêm hướng dẫn viên mới!');
     }
+
 
     public function destroyGuide($id)
     {
@@ -420,5 +422,14 @@ class AddTourController extends Controller
         });
 
         return view('admin.history', compact('bookings', 'tours'));
+    }
+    public function checkDuplicate(Request $request)
+    {
+        $field = $request->input('field');
+        $value = $request->input('value');
+
+        $exists = Guide::where($field, $value)->exists();
+
+        return response()->json(['exists' => $exists]);
     }
 }

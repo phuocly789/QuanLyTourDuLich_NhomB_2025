@@ -74,6 +74,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore');
     Route::get('/admin/result', [LienKetTrangController::class, 'adminSearch'])->name('searchAdmin');
     Route::get('/guide/crud', [AddTourController::class, 'showCRUDGuide'])->name('admin.guide');
+    Route::post('guide/check-duplicate', [AddTourController::class, 'checkDuplicate'])->name('guide.check-duplicate');
 });
 
 // Tuyến đường quản lý tour
@@ -110,4 +111,3 @@ Route::post('/admin/load-more-tours', [LienKetTrangController::class, 'loadMoreT
 Route::post('/admin/load-more-guides', [LienKetTrangController::class, 'loadMoreGuides'])->name('admin.loadMoreGuides');
 Route::post('/admin/load-more-users', [LienKetTrangController::class, 'loadMoreUsers'])->name('admin.loadMoreUsers');
 Route::post('/admin/load-more-bookings', [LienKetTrangController::class, 'loadMoreBookings'])->name('admin.loadMoreBookings');
-
