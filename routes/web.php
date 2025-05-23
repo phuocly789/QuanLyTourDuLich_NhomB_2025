@@ -46,8 +46,8 @@ Route::post('/check-otp', [ForgotPasswordController::class, 'checkOtp'])->name('
 Route::post('/auth/reset-password', [ForgotPasswordController::class, 'update'])->name('password.updated');
 
 // Tuyến đường chung (Không yêu cầu xác thực)
-Route::get('/{page?}', [LienKetTrangController::class, 'index']);
 Route::get('/search', [LienKetTrangController::class, 'search']);
+Route::get('/{page?}', [LienKetTrangController::class, 'index']);
 Route::get('/package', [AddTourController::class, 'hienThiTour'])->name('package');
 Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking');
 Route::get('/tour_location/{location_id}', [LienKetTrangController::class, 'hienThiTourTheoDiaDiem'])->name('tour.location');

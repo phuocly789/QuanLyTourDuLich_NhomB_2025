@@ -196,7 +196,7 @@ class AddTourController extends Controller
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
         $tours = Tour::orderByDesc('tour_id')->paginate(6);
         $user = User::orderBy('id')->get();
-        $guide = Guide::orderBy('guide_Id')->get();
+        $guide = Guide::orderByDesc('guide_Id')->get();
         $location = Location::orderBy('location_id')->get();
         // $client = Client::orderBy('client_id')->get();
 
@@ -220,7 +220,7 @@ class AddTourController extends Controller
         return view('admin.information', compact('decentralization'));
     }
 
-  public function storeGuide(Request $request)
+    public function storeGuide(Request $request)
     {
         // Validate form data
         $validatedData = $request->validate([

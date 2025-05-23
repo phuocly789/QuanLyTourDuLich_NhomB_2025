@@ -89,7 +89,6 @@ class LienKetTrangController extends Controller
             }
         }
 
-        // Trường hợp không đăng nhập: trả về view index.blade.php
         $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
         $guides = Guide::orderBy('guide_Id')->get();
         $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
@@ -136,7 +135,7 @@ class LienKetTrangController extends Controller
 
     public function userHienThiChiTietTuor($id)
     {
-        // $client = Client::orderBy('client_id')->get();
+
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
         $tours = Tour::orderBy('tour_id')->get();
         $tour = Tour::findOrFail($id);
@@ -161,21 +160,41 @@ class LienKetTrangController extends Controller
 
     public function userSearch(Request $request)
     {
-        $search = $request->usersearch;
-        $tours = Tour::where('tour_name', 'like', "%$search%")
-            ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
-            ->get();
-        return view('user.result', compact('tours', 'search'));
+        $search = $request->searchUser ?? '';
+        $tours = collect();
+        $error = null;
+
+        if (empty($search)) {
+            $error = 'Vui lòng nhập từ khóa tìm kiếm!';
+        } elseif (strlen($search) > 100) { // Kiểm tra độ dài ký tự
+            $error = 'Chuỗi tìm kiếm không được vượt quá 100 ký tự!';
+        } else {
+            $tours = Tour::where('tour_name', 'like', "%$search%")
+                ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+                ->get();
+        }
+
+        return view('user.result', compact('tours', 'search', 'error'));
     }
+
 
     public function search(Request $request)
     {
+        $search = $request->search ?? '';
+        $tours = collect();
+        $error = null;
 
-        $search = $request->search;
-        $tours = Tour::where('tour_name', 'like', "%$search%")
-            ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
-            ->get();
-        return view('result', compact('tours', 'search'));
+        if (empty($search)) {
+            $error = 'Vui lòng nhập từ khóa tìm kiếm!';
+        } elseif (strlen($search) > 100) { // Kiểm tra độ dài ký tự
+            $error = 'Chuỗi tìm kiếm không được vượt quá 100 ký tự!';
+        } else {
+            $tours = Tour::where('tour_name', 'like', "%$search%")
+                ->orderByRaw("CAST(REPLACE(tour_sale, '%', '') AS UNSIGNED) DESC")
+                ->get();
+        }
+
+        return view('search', compact('tours', 'search', 'error'));
     }
 
 
