@@ -1,6 +1,7 @@
 @extends('admin.app2')
 
 @section('content2')
+
     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
         <div class="container py-5">
             <div class="row justify-content-center py-5">
