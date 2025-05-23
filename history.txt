@@ -1,0 +1,1176 @@
+    1  git remote set-url origin git@github.com-tailieuweb:tailieuweb/laravel-8x.git
+    2  git remote set-url orgin git@github.com-tailieuweb:tailieuweb/laravel-vendor.git
+    3  git remote set-url origin git@github.com-tailieuweb:tailieuweb/laravel-vendor.git
+    4  cp .env-mysql .env
+    5  cd /d G:\dev\7-packages\package-worklog
+    6  cd package-work
+    7  cd package-worklog\
+    8  mkdir tempp
+    9  cd tempp\
+   10  git clone https://github.com/foostart/package-task.git
+   11  rm -rf tempp\
+   12  cd package-task\
+   13  git remote set-url origin git@github.com-foostart:foostart/package-task.git
+   14  cd package-slideshow\
+   15  cd package-serialize\
+   16  git config user.name tailieuweb
+   17  git config user.email tailieuweb.com@gmail.com
+   18  git remote set-url origin git@github.com-foostart:foostart/package-serialize.git
+   19  php artisan athentication:install
+   20  cd /d C:\Windows\System32\cmd.exe
+   21  cd /d D:\2-tdc\2020-2021-hk2\3-laravel-routing-middleware\1-source
+   22  php artisan make:middleware CompanyPerPage
+   23  php artisan route --help
+   24  php artisan route:list | wc -l
+   25  php artisan route:list | grep com wc -l
+   26  php artisan route:list | grep com
+   27  php artisan route:list | grep admin
+   28  php artisan route:list | grep admin/post
+   29  php artisan make:middleware ABTest
+   30  cd /d D:\1-github-workspace\1-tailieuweb
+   31  git clone https://github.com/tailieuweb/training-wordpress.git 7-wordpress
+   32  cd /d D:\1-github-workspace\1-tailieuweb\7-wordpress
+   33  git remote set-url origin git@github.com-tailieuweb:tailieuweb/training-wordpress.git
+   34  php artisan passport:keys
+   35  php artisan passport:keys --force
+   36  php artisan vendor:publish --tag=passport-config
+   37  php artisan vendor:publish --tag=passport-migrations
+   38  cd D:\1-github-workspace\1-tailieuweb\1-laravel-8x
+   39  php aritsan cache:clear
+   40  php artisan route:link
+   41  php artisan make:migration create_companies_table -m
+   42  php artisan make:migration create_companies_table --m
+   43  php artisan make:migration create_companies_table --help
+   44  php artisan make:migration create_companies_table -help
+   45  php artisan make:migration create_companies_table
+   46  cd /d D:\2-tdc\2020-2021-hk2\4-web2-jp
+   47  git clone -b Laravel_W8 https://github.com/hieutmm/Laravel_W5_6.git 4_truong_minh_hieu
+   48  git clone -b week8 https://github.com/kieuoanh231/BE_W5_6.git 11_luu_thi_kieu_oanh
+   49  cd 5_truong_minh_hieu\
+   50  cd 11_luu_thi_kieu_oanh\
+   51  git clone -b Week-8-22-5 https://github.com/NatswarChuan/BackEnd2_24_4.git 3-vu-minh-chuan
+   52  cd 4-web2-jp\
+   53  git clone -b Week8 https://github.com/harrypham11121998/Laravel.git 8-pham-van-loc
+   54  cd 3-vu-minh-chuan\
+   55  cd Laravel\
+   56  git clone -b week8 https://github.com/dangthanhnguyen/BE2.git 8_dang_thanh_nguyen
+   57  cd 8
+   58  cd 8_dang_thanh_nguyen\
+   59  cd blog\
+   60  cd 8-pham-van-loc\
+   61  php artisan db:seeder
+   62  cd /d D:\2-tdc\2020-2021-hk2\4-web2-jp\5_truong_minh_hieu\blog
+   63  git branch
+   64  git pul 1-web-env/1-php5
+   65  git pull 1-web-env/1-php5
+   66  git branch -r
+   67  git checkout -b
+   68  git checkout 1-web-env/1-php5
+   69  git checkout origin/1-web-env/1-php5
+   70  docker --version
+   71  dockercompose up
+   72  docker compose up
+   73  docker up
+   74  git push
+   75  cd 1-upgrade\
+   76  cd fe-
+   77  cd fe-itc\
+   78  cd fe-quiz\
+   79  cd itc-quiz\
+   80  cd master\
+   81  docker images
+   82  docker container
+   83  docker container -l
+   84  docker-compose up
+   85  php artisan cache:asdfasdf
+   86  php artisan route:asdfasdf
+   87  php artisan storage:asdfasdf
+   88  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_webcommon.git
+   89  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_common.git
+   90  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_business.git
+   91  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_batch.git
+   92  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_admin.git
+   93  git clone git@bitbucket.org-lampart:wakka_inc/monolith_base_webap.git
+   94  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_api.git
+   95  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_admin.git
+   96  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_libtest.git
+   97  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_webcommon.git
+   98  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_common.git
+   99  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_business.git
+  100  git clone git@bitbucket.org-lampart:wakka_inc/dev_monolith_batch.git
+  101  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_base_webap.git
+  102  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_api.git
+  103  git clone git@bitbucket.org-lampart:wakka_inc/monolith_db.git
+  104  git clone git@bitbucket.org-lampart:wakka_inc/training_monolith_db.git
+  105  git clone https://github.com/huyson201/learn_laravel_8x.git -b week11
+  106  cd learn_laravel_8x\
+  107  php artisan migarate
+  108  git config | grep user.name
+  109  git config --list | user
+  110  git config user.name=thanh_nhuan
+  111  git remote set-url origin git@bitbucket.org-lampart:wakka_inc/php_training.git
+  112  php artisan db:seed --class=CompaniesSeeder
+  113  php artisan db:seed --class=TrainersSeeder
+  114  php artisan db:seed --class=CategorieshasCompaniesSeeder
+  115  composer update --dev
+  116  vendor\phpunit\
+  117  cd..
+  118  .\vendor\phpunit\phpunit
+  119  vendor\phpunit\phpunit --help
+  120  cd vendor\phpunit\
+  121  cd phpunit\
+  122  cd 3-laravel-8x\
+  123  php artisan update
+  124  php artisan --env=testing
+  125  php artisan make:test UserTest
+  126  php artisan make:test UserTest --unit
+  127  .\vendor\bin\phpunit.bat 
+  128  php artisan test
+  129  cat composer.json 
+  130  vendor\phpunit\phpunit
+  131  vendor\phpunit\phpunit.bat
+  132  ls vendor\phpunit\phpunit\
+  133  ls vendor\phpunit\phpunit\src
+  134  ls vendor\phpunit\phpunit
+  135  ls vendor\phpunit\phpunit\phpunit
+  136  vendor/bin/phpunit --version
+  137  mkdir src
+  138  .\vendor\bin\phpunit.bat --testdox tests
+  139  vendor\bin\phpunit --version test
+  140  vendor\bin\phpunit --version tests
+  141  cd laravel\
+  142  composer 
+  143  y
+  144  composer require --dev phpunit/phpunit ^9.5
+  145  vendor\bin\phpunit --version
+  146  vendor\bin\phpunit tests
+  147  vendor\bin\phpunit tests --testdox
+  148  rm -rf demo
+  149  rm -rf demo\
+  150  php artisan servew
+  151  php -i
+  152  php -i | grep mysql
+  153  php artisan queue:restart
+  154  php artisan queue:table
+  155  php artisan make:job SendingEmail
+  156  php artisan make:migration create_data_table
+  157  chmod -R 777 public\
+  158  php artisan make:middleware MyWare
+  159  php -
+  160  php artisan make:command SendEmails
+  161  php artisan mail:send 1asdfasdfasdf
+  162  php artisan make:command SendOtherEmails
+  163  php artisan mail:send
+  164  php artisan mail:send 1
+  165  php artisan mail:send 1000
+  166  php artisan mail:send asdfasdfasf
+  167  php artisan list | grep mail
+  168  php artisan mail:ngocdeptrai
+  169  php artisan mail:ngocdeptrai test
+  170  composer require laravel/sanctum
+  171  php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+  172  php artisan make:migration create_blogs_table
+  173  php artisan make:resource Blog
+  174  e
+  175  php artsian migrate
+  176  node -v
+  177  npm install --global vue-native-cli
+  178  npm i -g @vue-cli
+  179  npm install -g @vue/cli
+  180  vue ui
+  181  vue create training-vue
+  182  npm install vue-router
+  183  npm v vue
+  184  npm install --save axios vue-axios
+  185  npm install axios
+  186  cd /d D:\1-github-workspace\1-tailieuweb\9-training-vueD:\1-github-workspace\1-tailieuweb\9-training-vue
+  187  cd D:\1-github-workspace\1-tailieuweb\9-training-vue
+  188  npm i bootstrap-vue
+  189  npm i axios
+  190  cd training-vue
+  191  php artisan make:migration create_categories_table
+  192  php artisan make:resource Category
+  193  npm install vuex --save
+  194  cp .env .env-local
+  195  echo '' > 1-clear-local.bat
+  196  php artisan queue:list
+  197  php artisan servw
+  198  cd /d D:\1-github-workspace\1-tailieuweb\9-training-vue
+  199  cd training-vue\
+  200  npm run serve
+  201  npx create-nuxt-app training-nuxt
+  202  rm -rf training-nuxt\
+  203  npm -v
+  204  npm init training-nuxt
+  205  rm -rf package-lock.json 
+  206  npm init nuxt-app training-nuxt
+  207  npm install nuxt
+  208  npm install --save-exact @nuxtjs/auth-next
+  209  npm install @nuxtjs/axios
+  210  cd training-nuxt\
+  211  npm run generate
+  212  vue --version
+  213  php artisan list
+  214  php artisan make:command PwSkeleton
+  215  php artisan pw:skeleton 1
+  216  php artisan pw:skeleton foobar
+  217  php artisan pw:skeleton foobar test
+  218  php artisan pw:skeleton foobar --queue=test
+  219  php artisan pw:skeleton foobar --queue=asdfasdfasdf
+  220  php artisan pw:skeleton bar
+  221  php artisan pw:skeleton help
+  222  php artisan pw:skeleton --help
+  223  npm i
+  224  cd /d F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch\app\Lib
+  225  mklink /D Common ..\..\..\..\dev_monolith_common\Common
+  226  mklink /D WebCommon ..\..\..\..\dev_monolith_webcommon\WebCommon
+  227  git config user.name thanh_nhuan
+  228  git config user.email thanh_nhuan@lampart-vn.com
+  229  php artisan queue:work
+  230  git config user.name "thanh_nhuan"
+  231  git config user.name "[Lampart] Phan_Thanh_nhuan
+  232  cd MONOLITH_SOURCE_DEVELOP\
+  233  git config user.name "[Lampart] Phan_Thanh_Nhuan"
+  234  cd dev_monolith_business\
+  235  cd dev_monolith_api\
+  236  cd dev_monolith_webcommon\
+  237  cd dev_monolith_common\
+  238  composer dump-autload
+  239  php artisan ws_contract_import --help
+  240  php artisan pw:ws_contract_import --help
+  241  php artisan pw:ws_contract_import 0 132
+  242  php artisan pw:ws_contract_import 0 132555
+  243  php artisan pw:ws_contract_import 155
+  244  php artisan pw:ws_contract_import 155 5
+  245  php artisan pw:ws_contract_import 1 1
+  246  php artisan pw:ws_contract_import 1 20210717
+  247  php artisan pw:ws_contract_import 1 123
+  248  php artisan pw:ws_contract_import 1 1235
+  249  php artisan pw:ws_contract_import 0 123
+  250  php artisan pw:ws_contract_import 0 1235
+  251  php artisan pw:ws_contract_import 0 1235ufufg
+  252  php artisan pw:ws_contract_import 0 1235ufufg sdfgdfgdfh
+  253  php artisan pw:ws_contract_import x 1235ufufg sdfgdfgdfh
+  254  php artisan pw:ws_contract_import x
+  255  php artisan pw:ws_contract_import 0 202108010
+  256  php artisan pw:ws_contract_import 0 20210810
+  257  php artisan pw:ws_contract_import 0 20210809
+  258  php --help
+  259  php artisan pw:ws_contract_import 1 20210808
+  260  php artisan pw:ws_contract_import 0 20210808
+  261  psql pg_reload_conf();
+  262  psql --config
+  263  show config_files;
+  264  psql restart
+  265  postgresql restart
+  266  psql
+  267  psql -uroot -p
+  268  psql -u root -p 123456
+  269  psql -U postgres 123456
+  270  psql -U postgres
+  271  php artisan pw:ws_contract_import 0 55
+  272  php artisan pw:ws_contract_import 1 55
+  273  1
+  274  php artisan pw:ws_contract_import 10
+  275  php --versio
+  276  php artisan pw:ws_contract_importx
+  277  php artisan pw:ws_contract_import 1 202010100
+  278  php artisan pw:ws_contract_import 
+  279  php artisan pw:ws_contract_import 1 Lampart
+  280  php artisan pw:ws_contract_import 1 asdfasdfasdfasfd
+  281  php artisan pw:ws_contract_import 0 asdfasdfasdfasfd
+  282  php artisan pw:expire_point 10
+  283  php artisan pw:expire_point 0 123
+  284  php artisan pw:expire_point 0 7987
+  285  php artisan pw:expire_point 0 10101
+  286  git config --list| grep user
+  287  git config --list | grep remote
+  288  git config user.name "thanh_nhuan@lampart-vn.com"
+  289  git config user.email "[Lampart] Phan Thanh Nhuan"
+  290  git user.name [Lampart] Phan Thanh Nhuan
+  291  git config user.email "thanh_nhuan@lamapart-vn.com"
+  292  php artisan pw:ws_contract_import 1 asdfasfasf
+  293  php artisan pw:ws_contract_import 0 asfasfasdf
+  294  php artisan pw:ws_contract_import 1 asfasfasfd
+  295  php artisan pw:ws_contract_import 0 assgs346456
+  296  php artisan pw:ws_contract_import 1 assgs346456
+  297  php artisan pw:ws_contract_import 0
+  298  php artisan pw:ws_contract_import 1 20201010
+  299  php artisan pw:ws_contract_import 0 20201010
+  300  php artisan pw:ws_contract_import
+  301  php artisan pw:ws_contract_import 1
+  302  php artisan pw:point_ws_contract_import 1 123
+  303  php artisan pw:point_ws_contract_import 1 44444444
+  304  php artisan pw:point_ws_contract_import 1 444444
+  305  php artisan pw:point_ws_contract_import 1 1011
+  306  php artisan pw:point_ws_contract_import 1 4444
+  307  php artisan pw:point_ws_contract_import 1 s
+  308  php artisan pw:point_ws_contract_import 0 sdfgsdfgasdfasf
+  309  php artisan pw:expire_point 0 asdfasdf
+  310  php artisan pw:expire_point 0 2021101011
+  311  php artisan pw:expire_point 0 20201010a
+  312  php artisan pw:point_ws_contract_import 0 sdfgsdfg
+  313  php artisan pw:expire_point 0 asdf
+  314  php artisan pw:expire_point 0 20201010
+  315  php artisan pw:expire_point a
+  316  php artisan pw:expire_point 0 a
+  317  php artisan pw:expire_point 0 2020
+  318  php artisan pw:expire_point 0 1010
+  319  php artisan pw:expire_point 0 20211010
+  320  php artisan pw:expire_point 0 20211010f
+  321  php artisan pw:point_ws_contract_import 0 2020
+  322  php artisan pw:point_ws_contract_import 0 1010
+  323  php artisan pw:expire_point 0 20210728
+  324  php artisan pw:point_ws_contract_import 1 20210729
+  325  php artisan pw:expire_point
+  326  php artisan pw:expire_point 0
+  327  php artisan pw:expire_point 1 20210729
+  328  php artisan pw:point_ws_contract_import 0 20210729
+  329  php artisan pw:expire_point 0 20210729
+  330  php artisan pw:expire_point 0 0728
+  331  php artisan pw:expire_point 0 20211313
+  332  php artisan pw:point_ws_contract_import 0 20211313asdfasdf
+  333  php artisan pw:expire_point 0 20211313asdfasf
+  334  php artisan pw:point_ws_contract_import 0 20210728
+  335  php artisan pw:point_ws_contract_import 1 asdfasf
+  336  php artisan pw:ws_contract_import 1 2021202121
+  337  php artisan pw:expire_point 1
+  338  php artisan pw:point_ws_contract_import 1 2021202121
+  339  php artisan pw:point_ws_contract_import 0 xxx
+  340  php artisan pw:expire_point 1 asdsdf
+  341  php artisan pw:point_ws_contract_import 0 sdgsdfgsdg
+  342  php artisan pw:point_ws_contract_import 1 asfas
+  343  php artisan pw:point_ws_contract_import 0 sgsdgsdg
+  344  php artisan pw:expired_point 0 sgsdgsdg
+  345  php artisan pw:expire_point 0 sgsdgsdg
+  346  php artisan pw:expired 0 asfas
+  347  php artisan pw:expire_point 0 asfas
+  348  php artisan pw:point_ws_contract_import 0 a
+  349  php artisan pw:point_ws_contract_import 0 aasdfasdfasdfasf
+  350  php artisan pw:point_ws_contract_import 0 abab
+  351  php artisan pw:point_ws_contract_import 0 aaaaaaaaaaaa
+  352  php artisan pw:expire_point 0 sgsd
+  353  php artisan pw:point_ws_contract_import 0 assd
+  354  php artisan pw:point_ws_contract_import 0 assdasfas
+  355  php artisan pw:point_ws_contract_import 0 asfas
+  356  php artisan pw:point_ws_contract_import 0 sgsd
+  357  php artisan pw:point_ws_contract_import 0 abcde
+  358  php artisan pw:point_ws_contract_import 0 0728
+  359  php artisan pw:point_ws_contract_import 0 2828
+  360  php artisan pw:point_ws_contract_import 0 20200101
+  361  php artisan pw:point_ws_contract_import 0 abcd
+  362  php artisan pw:point_ws_contract_import 1 20210728
+  363  php artisan pw:point_ws_contract_import 1 0728
+  364  php artisan pw:point_ws_contract_import 0 20211313
+  365  php artisan pw:point_ws_contract_import 0 1313
+  366  php artisan pw:point_ws_contract_import -1 2
+  367  php artisan pw:point_ws_contract_import a b
+  368  php artisan pw:point_ws_contract_import a
+  369  php artisan pw:point_ws_contract_import b
+  370  php artisan pw:point_ws_contract_import 0 465
+  371  php artisan pw:point_ws_contract_import asdfs
+  372  php artisan pw:point_ws_contract_import asdfsdfgh
+  373  cd src\
+  374  composr update
+  375  docker-compose up -d
+  376  php artisan pw:point_ws_contract_import 1 asdfe
+  377  php artisan pw:point_ws_contract_import 1 asdf
+  378  php artisan pw:point_ws_contract_import 1 0729
+  379  cp .env.example.testing .env.testing 
+  380  .\vendor\bin\phpunit tests/Unit/Lib/Business/Database/Sql/Master/Point/WsContract/SqlWsContractImportTest.php --testdox
+  381  .\vendor\bin\phpunit tests/Unit/Lib/Business/Database/Sql/Master/Point/WsContract/StoreWsContractImportTest.php --testdox
+  382  composer init
+  383  vendor\bin\phpunit.bat --version
+  384  vendor\bin\phpunit.bat
+  385  phpunit --help
+  386  vendor\bin\phpunit.bat 
+  387  phpunit FooTest
+  388  phpunit FooTest.php
+  389  phpunit --bootstrap="vendor/autoload.php"
+  390  phpunit --bootstrap="vendor\autoload.php"
+  391  phpunit --bootstrap=".\vendor\autoload.php"
+  392  phpuni
+  393  git config --list | grep up
+  394  git config user.name "tailieuweb.com"
+  395  git pull
+  396  phpunit --coverage-html test/coverage
+  397  .\vendor\bin\phpunit.bat --coverage-html test\coverage
+  398  phpunit --coverage-html test\coverage
+  399  phpunit --coverage-html tests\coverage
+  400  phpunit --coverate-html tests/coverage
+  401  phpunit --coverage-html tests/coverage
+  402  phpunit --filter test_importFromCSV_Ok
+  403  phpunit --filter test_importFromCSV_Ng
+  404  phpunit --filter wsContractCheck
+  405  phpunit --filter testCheckExisting_proc_point_ws_contract_check
+  406  phpunit --filter testCheckExisting_proc_point_ws_contract_entry
+  407  phpunit --filter testCheckNotParam
+  408  phpunit --filter testCheckSuccessful
+  409  phpunit --filter testCheckItem1NotEqua2
+  410  php artisan pw:point_ws_contract_import 1  abcd
+  411  php artisan pw:point_ws_contract_import 1  abcdd
+  412  php artisan pw:point_ws_contract_import 1 2021/10/10
+  413  php artisan pw:point_ws_contract_import 1  01/01/2021
+  414  php artisan pw:point_ws_contract_import 1  1/1/2020
+  415  php artisan pw:point_ws_contract_import 1  01/01/2020
+  416  php artisan pw:point_ws_contract_import 1  1/1
+  417  php artisan pw:point_ws_contract_import 01/01/2020
+  418  php artisan pw:point_ws_contract_import 1 0101
+  419  php artisan pw:point_ws_contract_import 1  20/1/1
+  420  php artisan pw:point_ws_contract_import 1 200101
+  421  php artisan pw:point_ws_contract_import 1 20200101
+  422  php artisan pw:point_ws_contract_import 01/01
+  423  php artisan pw:point_ws_contract_import 1 01/01
+  424  php artisan pw:point_ws_contract_import 1 01-01
+  425  php artisan pw:point_ws_contract_import 1 01/01/20
+  426  php artisan pw:point_ws_contract_import 1 01/01/50
+  427  php artisan pw:point_ws_contract_import 1 abcdd
+  428  php artisan pw:point_ws_contract_import 1 abcd
+  429  php artisan pw:point_ws_contract_import 1 01/01/2020
+  430  php artisan pw:point_ws_contract_import 1 1/11/2020
+  431  php artisan pw:point_ws_contract_import 1 1/1/2021
+  432  php artisan pw:point_ws_contract_import 1 20/01/01
+  433  php artisan pw:point_ws_contract_import 1 20/10/10
+  434  php artisan pw:point_ws_contract_import 1 20/1/10
+  435  php artisan pw:point_ws_contract_import 1 20/1/105
+  436  php artisan pw:point_ws_contract_import 1 20/1/13
+  437  php artisan pw:point_ws_contract_import 1 20/13/13
+  438  php artisan pw:point_ws_contract_import 1 20/12/12
+  439  php artisan pw:point_ws_contract_import 1 13/13
+  440  php artisan pw:point_ws_contract_import 1 101
+  441  php artisan pw:point_ws_contract_import 1 20/10/10 101
+  442  php artisan pw:point_ws_contract_import 1 20/10/10:101
+  443  php artisan pw:point_ws_contract_import 1 131
+  444  php artisan pw:point_ws_contract_import 1 1312
+  445  php artisan pw:point_ws_contract_import 1 1213
+  446  php artisan pw:point_ws_contract_import 1 20/12/13
+  447  php artisan pw:point_ws_contract_import 1 20/13/12
+  448  php artisan pw:point_ws_contract_import 1 1-1
+  449  php artisan pw:point_ws_contract_import 1 13/12
+  450  php artisan pw:point_ws_contract_import 1 12/13
+  451  php artisan pw:point_ws_contract_import 1 12/1
+  452  php artisan pw:point_ws_contract_import 1 20201010
+  453  php artisan pw:point_ws_contract_import 1 202011
+  454  php artisan pw:point_ws_contract_import 1 202099
+  455  php artisan pw:point_ws_contract_import 1 20200909
+  456  php artisan pw:point_ws_contract_import 1 2020099
+  457  php artisan pw:point_ws_contract_import 1 2020913
+  458  php artisan pw:point_ws_contract_import 1 211010
+  459  php artisan pw:point_ws_contract_import 1 220001
+  460  php artisan pw:point_ws_contract_import 1 220101
+  461  php artisan pw:point_ws_contract_import 1 22010
+  462  php artisan pw:point_ws_contract_import 1 22011
+  463  php artisan pw:point_ws_contract_import 1 3010
+  464  php artisan pw:point_ws_contract_import 1 01/01/2021
+  465  php artisan pw:point_ws_contract_import 1 1/01/2021
+  466  php artisan pw:point_ws_contract_import 1 11/1/2021
+  467  php artisan pw:point_ws_contract_import 1 20/1/1
+  468  php artisan pw:point_ws_contract_import 1 20/11/1
+  469  php artisan pw:point_ws_contract_import 1 20/51/1
+  470  php artisan pw:point_ws_contract_import 1 20/11/11
+  471  php artisan pw:point_ws_contract_import 1 20/1/11
+  472  php artisan pw:point_ws_contract_import 1 1/1
+  473  php artisan pw:point_ws_contract_import 1 15/1
+  474  php artisan pw:point_ws_contract_import 1 1/31
+  475  php artisan pw:point_ws_contract_import 1 2/31
+  476  php artisan pw:point_ws_contract_import 1 2/28
+  477  php artisan pw:point_ws_contract_import 1 2/29
+  478  php artisan pw:point_ws_contract_import 1 2/20
+  479  php artisan pw:point_ws_contract_import 1 202111
+  480  php artisan pw:point_ws_contract_import 1 202155
+  481  php artisan pw:point_ws_contract_import 1 201010
+  482  php artisan pw:point_ws_contract_import 1 201310
+  483  php artisan pw:point_ws_contract_import 1 20105
+  484  php artisan pw:point_ws_contract_import 1 1
+  485  php artisan pw:point_ws_contract_import 1 1310
+  486  php artisan pw:point_ws_contract_import 0 20201010
+  487  php artisan pw:point_ws_contract_import 0 s
+  488  php artisan pw:point_ws_contract_import 0 202110100
+  489  php artisan pw:point_ws_contract_import 0 20211010
+  490  php artisan pw:point_ws_contract_importx 1
+  491  php artisan pw:point_ws_contract_import 1 41456
+  492  php artisan pw:point_ws_contract_import -1 20211010
+  493  php artisan pw:point_ws_contract_import 10/10/2020
+  494  php artisan pw:point_ws_contract_import 1 10/10/2020
+  495  php artisan pw:point_ws_contract_import 1 1/10/2020
+  496  php artisan pw:point_ws_contract_import 1 1/1/2020
+  497  php artisan pw:point_ws_contract_import 1 11/1/2020
+  498  php artisan pw:point_ws_contract_import 05
+  499  php artisan pw:point_ws_contract_import 5
+  500  php artisan pw:point_ws_contract_import 3
+  501  git config --liset | grep user
+  502  git config user.email "thanh_nhuan@lampart-vn.com"
+  503  git config user.name [Lampart] Phan Thanh Nhuan
+  504  git config user.name "[Lampart] Phan Thanh Nhuan"
+  505  phpunit --filter testCheckItem1Successful
+  506  php artisan pw:point_ws_contract_import 1 01/01/2022
+  507  composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento
+  508  cd pub\
+  509  php artisan pw_ws_contract_import 1
+  510  cp .env .env.testing
+  511  phpunit --coverate-html coverage
+  512  phpunit --filter testValidStoredPointWsContractCheck
+  513  phpunit --filter testCheckValidParam
+  514  phpunit --fiter testValidImportFromCSV
+  515  phpunit --filter testCheckValidStoredProcPointWsContractCheck
+  516  phpunit --filter testCheckValidParamStoredProcPointWsContractCheck
+  517  phpunit --filter testInvalidParamStoredProcPointWsContractCheck
+  518  phpunit --filter testCheckItem2Valid
+  519  phpunit --filter testCheckItem2IsTrim
+  520  phpunit --filter testCheckItem2Length10
+  521  phpunit --filter testCheckItem2IsNull
+  522  phpunit --filter testCheckItem3IsNull
+  523  phpunit --filter
+  524  phpunit --filter testCheckItem5Valid
+  525  phpunit --filter testCheckItem5IsNull
+  526  cd F:\5-lampart\3-monolith\MONOLITH\monolith_db>
+  527  cd /d F:\5-lampart\3-monolith\MONOLITH\monolith_db
+  528  phpartisan cache:clear
+  529  php artisan pw:point_foru_contract_import 1
+  530  php artisan pw:point_foru_contract_import 1 asdf
+  531  php artisan pw:point_ws_contract_import aa
+  532  php artisan pw:point_ws_contract_import 1 a
+  533  php artisan pw:point_ws_contract_import 0 2
+  534   psql -h 127.0.0.1 -d lampart -Upostgres -c "\copy  monolith_work.work_batch_point_ws_contract ( cooperation_source_system_cd,  emplex_customer_no,  customer_no,  contract_no,  brand_cd  ) FROM STDIN WITH DELIMITER ',' CSV HEADER ENCODING 'UTF8'"  < "F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch\storage\app/point/RGS/contract/contract_ws.csv
+  535   psql -h 127.0.0.1 -d lampart -Upostgres -c "\copy  monolith_work.work_batch_point_ws_contract ( cooperation_source_system_cd,  emplex_customer_no,  customer_no,  contract_no,  brand_cd  ) FROM STDIN WITH DELIMITER ',' CSV HEADER ENCODING 'UTF8'"  < "F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch\storage\app/point/RGS/contract/contract_ws.csv"
+  536   psql -h 127.0.0.1 -d lampart -Upostgres -c "\copy  monolith_work.work_batch_point_ws_contract ( cooperation_source_system_cd,  emplex_customer_no,  customer_no,  contract_no,  brand_cd  ) FROM STDIN WITH DELIMITER ',' CSV ENCODING 'UTF8'"  < "F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch\storage\app/point/RGS/contract/contract_ws.csv"
+  537  php artisan pw:point_ws_contract_import 0 asdf
+  538  php artisan pw:point_ws_contract_import 0 0101
+  539  php artisan pw:point_ws_contract_import 0 0101asdfasdfsdf
+  540  php artisan pw:point_ws_contract_import 1 20210816
+  541  php artisan pw:point_ws_contract_import 1 1212
+  542  php artisan pw:point_ws_contract_import 1 1010
+  543  0
+  544  php artisan pw:point_ws_contract_import 0 01
+  545  php artisan pw:point_ws_contract_import 0 abc
+  546  php artisan pw:point_ws_contract_import 1 0505
+  547  cd dev_monolith_libtest
+  548  phpunit
+  549  phpunit --filter testTruncateWsContractCounter
+  550  phpunit --filter testInvalidImportFromCSV
+  551  phpunit testValidStoredProcPointWsContractCheck
+  552  phpunit --filter checkDataConsistencyInWorktable
+  553  phpunit --filter testValidStoredProcPointWsContractCheck
+  554  phpunit --filter testTypeParamStoredProcPointWsContractCheck
+  555  phpunit --filter testValidStoredProcPointWsContractEntry
+  556  phpunit --filter testCheckItem1Valid
+  557  phpunit --filter testCheckItem2NotNumber
+  558  phpunit --filter testCheckItem2FirstChar
+  559  phpunit --filter testCheckItem4Valid
+  560  phpunit --filter testCheckItem4Trim
+  561  phpunit --filter testCheckItem4NotLength10
+  562  phpunit --filter testCheckItem5Trim
+  563  php artisan pw:point_ws_contract_import 1 sdsdfg
+  564  php artisan pw:point_ws_contract_import 1 2021081
+  565  php artisan pw:point_ws_contract_import 1 20210817
+  566  php artisan pw:point_ws_contract_import 1
+  567  php artisan pw:point_ws_contract_import 1 20210832
+  568  php artisan pw:point_ws_contract_import 1 20212021
+  569  psqls --version
+  570  psql --version
+  571  echo %PGPASSWORD%
+  572  php artisan pw:point_ws_order_import 0
+  573  php artisan pw:point_ws_order_import 0 123
+  574  php artisan pw:point_ws_order_import 1 156798798
+  575  php artisan pw:point_ws_order_import 1 20201010
+  576  phpunit --filter testCheckItem5NotExist
+  577  phpunit --filter testTruncateWsContractRestartIdentity
+  578  phpunit --filter testValidImportFromCSV
+  579  php artisan pw:point_foru_order_import 0
+  580  php artisan pw:point_ws_contract_import 1 20211010asdfasdf
+  581  php artisan make:command WsContract
+  582  php artisan pw:point_ws_contract_import
+  583  php aritsan pw:point_ws_electricity_customer_allocation_import 1 20211010
+  584  php artisan pw:point_ws_electricity_customer_allocation_import 1 20211010
+  585  ping lms.tdc.edu.vn
+  586  php artisan pw:point_ws_contract_import 1 20211010
+  587  php artisan pw:skeleton
+  588  php artisan pw:skeleton test
+  589  php artisan version
+  590  php --init
+  591  php -init
+  592  php -ini
+  593  php ini
+  594  php .ini
+  595  php artisan vendor:publish --provider="Foostart\Acl\AuthenticationServiceProvider" --force
+  596  php --verson
+  597  cd /d D:\1-github-workspace\1-tailieuweb\sontoken
+  598  4
+  599  cd dev_monolith_a
+  600  wd
+  601  git remote set-url origin remote git@github.com-tailieuweb:tailieuweb/project-fit.git
+  602  git remote set-url origin  git@github.com-tailieuweb:tailieuweb/project-fit.git
+  603  cd vendor\
+  604  pw:point_ws_contract_import 1 20210907
+  605  netstat -a -b
+  606  netstat -aon
+  607  netstat -aon | find /i 127
+  608  taskkill /F /13868
+  609  taskkill /F 13868
+  610  taskkill /PID 13868 /F
+  611  taskkill /PID 13868 /F2908
+  612  taskkill /PID 2908 /F
+  613  netstat -aon | find /i "127.0.0.1:8000"
+  614  netstat -aon | find /i
+  615  netstat -aon | find /i 127.0.0.1:8000
+  616  netstat -aon | find  127.0.0.1:8000
+  617  taskkill /PID 24520 /F
+  618  netstat -aon | find  "127.0.0.1:8000"
+  619  taskkill /PID 6104 /F
+  620  netstat -aon | find  "8000"
+  621  netstat -aon | find  "127.0.0.1"
+  622  php artisan pw:point_ws_contract_import 0
+  623  php artisan pw:point_ws_contract_import 0 20210907
+  624  php artisan pw:point_ws_contract_import 1 aaa
+  625  php artisan pw:point_ws_contract_import 1 20210933
+  626  php artisan pw:point_ws_contract_import 1 20210908
+  627  1-templates\
+  628   php artisan pw:point_ws_contract_import 1 20210908
+  629   php artisan pw:point_ws_contract_import 1 20211313asdf
+  630   php artisan pw:point_ws_contract_import 1 20210907
+  631   php artisan pw:point_ws_contract_import 1 20211313
+  632  php artisan pw:point_ws_contract_import 1 20210907
+  633  php artisan pw:point_ws_contract_import 1 20210903
+  634  php artisan vendor:publish
+  635   php artisan vendor:publish --provider="Foostart\Crawler\CrawlerServiceProvider" --force
+  636   php artisan db:seed --class=CrawlerSeeder
+  637   php artisan vendor:publish --provider="Foostart\Pexcel\PexcelServiceProvider" --force
+  638  php artisan crawler:work
+  639  php artisan crawler:wor
+  640  cat 1-clear-local.bat 
+  641  echo '' > 1-clear.bat
+  642  vi 1-clear
+  643  LS
+  644  rm -rf 1-clear
+  645  rm -rf 1-clear.bat 
+  646  php artisan pw:point_ws_contract_import 1 20211313
+  647  php artisan pw:point_ws_contract_import 1 20210932
+  648  cd client
+  649  hisory | grep php
+  650  cd 1-hcmut\
+  651  histroy | grep authen
+  652  git clone https://github.com/tailieuweb/chuyen-de-cms.git tk1
+  653  cd tk1\
+  654  git config user.name "messi"
+  655  git config user.email "tailieuwneb.com@gamil.com"
+  656  [A
+  657  mklink /D php_training D:\1-github-workspace\1-tailieuweb\11-training-php
+  658  php artisan pw:point_foru_contract_import 1 20210908
+  659   php artisan pw:point_ws_contract_import 1 20210903
+  660  php artisan pw:point_foru_contract_import 1 20210903
+  661  php artisan pw:point_foru_contract_import 0
+  662  php artisan pw:point_ws_contract_import 1 20210909
+  663  git config branch.1-wordpress/2-groups-202109/1-group-A.merge=refs/heads/1-wordpress/2-groups-202109/1-group-A
+  664  ph artisan serve
+  665  php artisan  pw:point_foru_contract_import 1 20210928
+  666  phpunit --textdox
+  667  phpunit --filter testCheckItem1IsNull
+  668  phpunit --filter testCheckItem1Trim
+  669  phpunit --filter testCheckItem4IsNull
+  670  php artisan pw:point_ws_contract_import 1 20210929
+  671  phpunit --filter assertEqualsStoredResultMessage
+  672  phpunit --filter testCheckItem2NotLength10
+  673  phpunit --filter testCheckItem3NotLength10
+  674  phpunit --filter testCheckItem4NotNumber
+  675  cmder
+  676  aasfdasdfs -v
+  677  cd /d C:\
+  678  phpunit --testdox testEntryBothUpdateInsert
+  679  phpunit --filter testEntryBothUpdateInsert
+  680  php artisan pw:point_ws_contract_import 1 20211011
+  681  cd F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch
+  682  phpunit --filter testDuplicateImport
+  683  phpunit --filter testEntryUpdateWithoutInsert
+  684  phpunit --filter testEntryInsertWithoutUpdate
+  685  mklink /D Business ..\..\..\..\dev_monolith_business\Business
+  686  phpunit --filter test_importFromCSV_case_Valid
+  687  phpunit --filter test_CheckItem1_Isnull
+  688  php artisan pw:point_ws_contract_import 1 2021092
+  689   php artisan  pw:point_foru_contract_import 1 20211019
+  690  php artisan pw:point_ws_contract_import 1 20211019
+  691  php artisal migrate:rollback
+  692  composer require --dev phpunit/phpunit ^9
+  693  ./vendor/bin/phpunit --version
+  694  composr install
+  695  .\vendor\bin\phpunit.bat tests
+  696  phpunit tests
+  697  .\vendor\bin\phpunit.bat --version
+  698  phpunit --filter testSumNg
+  699  asdfs
+  700  phpunit --filter testSumOk
+  701  --coverage-text
+  702  phpunit --coverage-test
+  703  phpunit --coverage-text
+  704  cd /d F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH\monolith_db
+  705  php artisan  pw:point_foru_contract_import 1 20211011
+  706  php artisan  pw:point_foru_contract_import 1 20210924
+  707  php artisan  pw:point_foru_contract_import 1 20210923
+  708   phpunit --coverage-html coverage
+  709  p
+  710  git log --branches --remotes --tags --graph --oneline --decorate
+  711  git log --branches --remotes --tags --graph --oneline --decorate | more
+  712  git reflog --no-abbrev
+  713  \
+  714  git remote prune origin
+  715  phpunit --version
+  716  cd 11-training-php\
+  717  php --ini
+  718  phpunit --coverage-html coverage
+  719  php artisan db:seed --class=CrawlersSeeder
+  720  php artisan db:seed --class=CrawlerSeeder
+  721  composer require foostart/package-company
+  722  composer require foostart/package-internship
+  723  2
+  724  php artisan db:seed --class=CompanySeeder
+  725  composer require foostart/package-courses
+  726  1-clear.bat
+  727     php artisan vendor:publish --provider="Foostart\Courses\CoursesServiceProvider" --force
+  728   php artisan vendor:publish --provider="Foostart\Internship\InternshipServiceProvider" --force
+  729  2-publish.bat \
+  730  2-publish.bat 4
+  731  2-publish.bat\
+  732  2-publish.bat
+  733  netstat -aon 
+  734  netstat -aon | grep 80
+  735  kill -p 2144
+  736  taskkill /F/P 2144
+  737  taskkill /PID 2144 /F
+  738  php artisan serve key:generate
+  739  php artisan serve --port=9000
+  740  netstat -aon | findstr :9000
+  741  netstat -aon | findstr :8000
+  742  cd D:\1-github-workspace\1-tailieuweb\2-project-fit\2-source\vendor>
+  743  cd /d D:\1-github-workspace\1-tailieuweb\2-project-fit\2-source\vendor
+  744   php artisan vendor:publish --force
+  745  composer require gregwar/captcha "1.1.9"
+  746  php artisan pw:point_ws_contract_import 1 20211122
+  747  cd /d F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch
+  748  php --testdox
+  749  cd 1-longpt-client
+  750  php artisan serve --port=7000
+  751  3-publish.bat q
+  752  3-publish.bat
+  753  C:\wamp64\bin\php\php7.1.33\php artisan serve
+  754  cd 1-longpt-client\
+  755  C:\wamp64\bin\php\php7.1.33\php artisan config:clear
+  756  C:\wamp64\bin\php\php7.1.33\php artisan route:clear
+  757  C:\wamp64\bin\php\php7.1.33\php artisan cache:clear
+  758  C:\wamp64\bin\php\php7.1.33\php artisan serve --port=7000
+  759  C:\wamp64\bin\php\php7.1.33\php artisan migrate
+  760  3-publish.bat 
+  761  cd 2-
+  762  cd /d D:\1-github-workspace\1-tailieuweb\1-laravel-8x
+  763  php artisan vendor:publish --force
+  764  cd F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH_SOURCE_DEVELOP\dev_monolith_libtest
+  765  phpunit --configuration config.xml --testsuite SqlForuContractImport
+  766  phpunit --testsuite SqlForuContractImport --testdox
+  767  phpunit --filter testCheckItem1NotEqual1
+  768  php artisan pw:point_ws_contract_import 1 20210920
+  769  phpunit --filter testCheckItem1NotEqual2
+  770  php artisan pw:point_ws_contract_import 1 20211130
+  771  php artisan pw:point_foru_contract_import 1 20211129
+  772  vagrant -v
+  773  vagrant init centos/7
+  774  vagrant --version
+  775  vagrant halt && vagrant up --provision
+  776  cd /d F:\5-lampart\3-monolith\1-other\2-source-test\MONOLITH_SOURCE_DEVELOP\dev_monolith_libtest
+  777   php artisan pw:point_foru_contract_import 1 20211129
+  778   php artisan pw:point_foru_contract_import 1 20210923
+  779   php artisan pw:point_foru_contract_import 1 20210924
+  780  git config user.name "tailieuweb"
+  781  git config user.email "tailieuweb.com@gmail.com"
+  782  git clone git@github.com-talieuweb:tailieuweb/laravel-vendor.git vendor
+  783  git clone git@github.com-talieuweb:tailieuweb/laravel-vendor.git
+  784  mklink /D package-acl F:\2-dev\7-packages\package-acl
+  785  mklink /D package-category F:\2-dev\7-packages\package-category
+  786  mklink /D package-sentry F:\2-dev\7-packages\package-sentry
+  787  mklink /D package-post F:\2-dev\7-packages\package-post
+  788  mklink /D package-slideshow F:\2-dev\7-packages\package-slideshow
+  789  mklink /D package-pexcel F:\2-dev\7-packages\package-pexcel
+  790  mklink /D package-filemanager F:\2-dev\7-packages\package-filemanager
+  791  php artisan db:seed --class=PexcelSeeder
+  792  composer require foostart/package-english
+  793  cd /d D:\1-github-workspace\1-tailieuweb\14-project-english\projects\vendor\foostart
+  794  mklink /D package-english D:\1-github-workspace\1-tailieuweb\14-project-english\projects\vendor\foostart
+  795  mklink /D package-english F:\2-dev\7-packages\package-english
+  796  php artisan db:seed --class=EnglishSeeder
+  797  1-clear-local.bat 
+  798  phpunit --filter testJudgmentTownVillageResultCode2
+  799  phpunit --filter testRegistTownVillageFirstGeneration
+  800  phpunit --filter testJudgmentHouseNumberResultCode0
+  801  phpunit --filter testJudgmentHouseNumberResultCode1
+  802  phpunit --filter testJudgmentHouseNumberResultCode2
+  803  phpunit --filter testRegistHouseNumberFirstGeneration
+  804  php aritsan migrate:rollback
+  805  php artisan vendor:publish --provider="Foostart\English\EnglishServiceProvider" --force
+  806  phpunit --filter testJudgmentTownVillageResultCode3
+  807  phpunit --v
+  808  mklink /D php-training F:\5-lampart\0-php-training
+  809     php artisan vendor:publish --provider="Foostart\Internship\InternshipServiceProvider" --force
+  810   php artisan vendor:publish --provider="Foostart\Courses\CoursesServiceProvider" --force
+  811  phpunit --filter testJudgmentIndividualZipcodeResultCode1
+  812  phpunit --filter testJudgmentIndividualZipcodeResultCode2
+  813  phpunit --filter testRegistIndividualZipcodeFirstGeneration
+  814  phpunit --filter testImportIndividualZipcode
+  815  echo '' > postgresql-monolith.log 
+  816  phpunit --filter testCheckItem1Isnull
+  817  php artisan pw:point_foru_contract_import 1 20211028
+  818  php artisan pw:point_foru_contract_import 1 20211114
+  819  php artisan pw:point_ws_contract_import 1 2021023
+  820  php artisan pw:point_foru_order_import 1 20211012
+  821  php artisan pw:point_ws_order_import 1 2020924
+  822  php artisan pw:point_ws_electricity_customer_allocation_import 1 20211020
+  823  php artisan pw:point_ws_electricity_customer_allocation_import 1 20211013
+  824  php artisan pw:point_ws_electricity_customer_allocation_import 1 20211029
+  825  php artisan pw:point_foru_customer_import 1 2011029
+  826  php artisan pw:point_ws_customer_import 1 20211111
+  827  php artisan pw:point_foru_order_import 1 2020923
+  828  phpunit --filter testJudgmentTownVillageResultCode0
+  829  phpunit --filter testJudgmentTownVillageResultCode1
+  830  phpunit --filter testJudgmentIndividualZipcodeResultCode0
+  831  cd /d F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch
+  832  php artisan pw:point_foru_contract_import 1 20210924
+  833  php artisan pw:point_ws_contract_import 1 20210924
+  834  php artisan pw:point_foru_customer_import 1 20210924
+  835  php artisan pw:point_ws_order_import 1 20210924
+  836  php artisan pw:point_ws_contract_import 1 2021092333333333
+  837  composer create-project laravel/laravel 1-source
+  838  composer create-project laravel/laravel 1-source1
+  839  composer create-project laravel/laravel "9.0"
+  840  rm -rf 9.0\
+  841  composer create-project laravel/laravel 1-source1 "9.*"
+  842  composer create-project laravel/laravel 1-source1 "^9"
+  843  composer create-project laravel/laravel 1-source1 v9.0
+  844  composer create-project laravel/laravel 1-source1 "v9.0.*"
+  845  composer create-project laravel/laravel 1-source1 "9.0.*"
+  846  omposer create-project --prefer-dist laravel/laravel blog "9.0.*"
+  847  composer create-project --prefer-dist laravel/laravel blog "9.0.*"
+  848  composer create-project --prefer-dist laravel/laravel blog "9.0.0"
+  849  composer create-project –prefer-dist laravel/laravel laravel-dev dev-develop
+  850  composer create-project –-prefer-dist laravel/laravel laravel-dev dev-develop
+  851  composer create-project –-prefer-dist laravel/laravel laravel-dev "dev-develop"
+  852  composer create-project --prefer-dist laravel/laravel laravel-dev dev-develop
+  853  composer create-project --prefer-dist laravel/laravel laravel-dev 9x-dev
+  854  composer create-project --prefer-dist laravel/laravel laravel-dev 9.x-dev
+  855  composer create-project --prefer-dist laravel/laravel laravel-dev "9.x-dev"
+  856  composer create-project --prefer-dist laravel/laravel laravel-dev "9.0.0"
+  857  composer create-project laravel/laravel my_laravel_dir 9.0
+  858  composer create-project laravel/laravel my_laravel_dir "9.0.0"  --prefer-dist
+  859  composer create-project laravel/laravel=~9.0 my_laravel_dir --prefer-dist
+  860  composer create-project laravel/laravel laravel-test dev-develop --prefer-dist
+  861  cd 1-source
+  862  rm -rf 1-source1
+  863  git checkout 1-laravel-core
+  864  git status
+  865  git branch -m 1-laravel-core-9x
+  866  git push origin -u 1-laravel-core-9x
+  867  git push origin --delete 1-laravel-core
+  868  php artisan generate:key
+  869  composer require foostart/package-slideshow
+  870  composer create-project laravel/laravel laravel-test 9.0.0 --prefer-dist
+  871  composer require laravel/ui
+  872  composer require laravelcollective/html "6.x-dev"
+  873  composer require laravelcollective/html
+  874  mklink /d package-acl F:\2-dev\7-packages\package-acl
+  875  mklink /d package-sentry F:\2-dev\7-packages\package-sentry
+  876  mklink /d package-category F:\2-dev\7-packages\package-category
+  877  mklink /d package-post F:\2-dev\7-packages\package-post
+  878  mklink /d package-filemanager F:\2-dev\7-packages\package-filemanager
+  879  mklink /d package-slideshow F:\2-dev\7-packages\package-slideshow
+  880  mklink /d package-slideshow F:\2-dev\7-packages\package-collectivehtml
+  881  mklink /d package-collectivehtml F:\2-dev\7-packages\package-collectivehtml
+  882  php artisan pw:address_import 0
+  883  cd /d F:/5-lampart/3-monolith/MONOLITH_SOURCE_DEVELOP/dev_monolith_batch/storage/app/master/address/address/20220209125759
+  884  cd f:\
+  885  cd F:/5-lampart/3-monolith/MONOLITH_SOURCE_DEVELOP/dev_monolith_batch/storage/app/master/address/address/20220209125759
+  886  md5sum -c K97057.zip.md5
+  887  md5sum
+  888  md5sum -v
+  889  cd /d D:\1-github-workspace\1-tailieuweb\15-project-task\1-source
+  890  cd vendor\foostart\
+  891  mklink /d package-pexcel F:\2-dev\7-packages\package-pexcel
+  892  composer create-project laravel/laravel:^8 example-app
+  893  composer create-project laravel/laravel example-app
+  894  rm -rf composer.json 
+  895  rm -rf composer.lock 
+  896  rm -rf example-app\
+  897  rm -rf laravel-test\
+  898  php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+  899  composer require foostart/package-task
+  900  php artisan db:seed --class=TaskSeedr
+  901  composer require foostart/package-acl
+  902  composer require foostart/package-pexcel
+  903   php artisan vendor:publish --provider="Foostart\Acl\Authentication\AuthenticationServiceProvider" --force
+  904   php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+  905  cd dev_monolith_admin\
+  906  cd /d F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_admin
+  907   cd /d F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_admin
+  908  npm ci
+  909  php artisan testdox
+  910  php artisan serbe
+  911  php artisan vendor:publish --provider="Foostart\Pexcel\SlideshowServiceProvider" --force
+  912  php artisan pw:point_ws_contract_import 1 20210923
+  913  php artisan pw:point_ws_contract_import 1 20220222
+  914  cd dev_monolith_batch\
+  915  php artisan pw:address_import 1
+  916  php artisan pw:point_foru_contract_import 1 20210923
+  917  php artisan pw:point_foru_contract_import 1 20210922
+  918  php artisan pw:point_ws_customer_import 1 20210922
+  919  php artisan pw:point_foru_customer_import 1 20210923
+  920  php artisan pw:point_ws_order_import 1 20210923
+  921  php artisan pw:point_foru_order_import 1 20210923
+  922  php artisan pw:point_ws_contract_import 1 20220221
+  923  php artisan pw:point_foru_contract_import 1 20220222
+  924  php artisan pw:point_ws_electricity_customer_allocation_import 1 20220222
+  925  python3 server.py 
+  926  python -m pip install --upgrade pip
+  927  python -v
+  928  python --version
+  929  python -m pip install mysql-connector-python
+  930  python server.py 
+  931  python server.py
+  932  pip install flask
+  933  export FLASK_APP=hello
+  934  composer require laravel/passport
+  935  php artisan make:controller Auth/UserAuthController
+  936  php artisan pw:point_ws_customer_import 1 20210923
+  937  php artisan pw:point_ws_customer_import 1 20210924
+  938  php artisan pw:point_ws_customer_import 1 20220222
+  939  php artisan pw:point_foru_customer_import 1 20220222
+  940  php artisan pw:point_ws_order_import 1 20220222
+  941   php artisan vendor:publish --tag=lfm_public
+  942  cd /d D:\1-github-workspace\1-tailieuweb\2-project-fit>
+  943  cd /d D:\1-github-workspace\1-tailieuweb\2-project-fit
+  944  cd 2-source
+  945  cd /d D:\1-github-workspace\1-tailieuweb\2-project-fit\2-source\public\packages\foostart\package-front
+  946  rm -rf js\
+  947  rm -rf js
+  948  composer require foostart/package-helpdesk
+  949  php artisan db:seed --class=HelpdeskSeeder
+  950  php artisan db:seed --class=TaskSeeder
+  951  php artisan servic
+  952  php artisan passport:install
+  953  composer require kreait/firebase-php -with-all-dependencies
+  954  composer require kreait/firebase-php -W
+  955  composer require lcobucci/jwt
+  956  composer require kreait/firebase-php -
+  957  composer require kreait/firebase-php
+  958  mklink /D aaaaaaaaa D:\5-gitlab\sva\a
+  959  cd 18-project-helpdesk\
+  960  ph partisan serve
+  961  php artisan vendor:publish --provider="Foostart\Helpdesk\HelpdeskServiceProvider" --force
+  962  cd backend\
+  963  cd client\
+  964  npm run dev
+  965  cd F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_batch
+  966  ./import_psql.sh -d F:/5-lampart/3-monolith/MONOLITH/monolith_db/monolith_db/full
+  967   ./import_psql.sh -d F:/5-lampart/3-monolith/MONOLITH/monolith_db/monolith_db/full
+  968  php artisan -v
+  969  php artisan --v
+  970  php artisan make:controller RonaldoController
+  971  phpx -v
+  972  abc -v
+  973  php artisan pw:national_holiday_import 1
+  974  composer require tailieuweb/mypackage
+  975   php artisan pw:point_ws_eposcard_customer_import 1 2022/04/01
+  976   php artisan pw:point_ws_eposcard_customer_import 1 20220401
+  977  php artisan route:clear
+  978  php artisan storage:clear
+  979  cat 1-clear.bat 
+  980  cat .env
+  981  vim .env
+  982  $x = 1
+  983  $x = "hellworld"
+  984  mysql -uroot
+  985  cp .env-example .evn
+  986  php artisan make:controller CustomAuthController
+  987  php -version
+  988  php --v
+  989  php artisan view:clear
+  990  php artisan cache:clear
+  991  php artisan storage:lin
+  992  php artisan storage:link
+  993   php artisan key:generate
+  994  php artisan make:controller MessiController
+  995  php artisan pw:point_ws_eposcard_customer_import 1 20220404
+  996  cd dev_monolith_libtest\
+  997  phpunit -v
+  998  phpunit --filter testValidStoredProcPointcheckDataConsistencyInWorktable
+  999   php artisan pw:national_holiday_import 1
+ 1000  composer create-project laravel/laravel laravel-test 8.6.11 --prefer-dist
+ 1001  cd 1-source\
+ 1002   phpunit --configuration phpunit.xml --testsuite Brand
+ 1003   phpunit --configuration phpunit.xml --testsuite SqlForuContractImport
+ 1004   phpunit --configuration phpunit.xml --testsuite SqlWsContractImport
+ 1005   phpunit --configuration phpunit.xml --testsuite CodeName
+ 1006   phpunit --configuration phpunit.xml --testsuite PointAdditionalMeasure
+ 1007   phpunit --configuration phpunit.xml --testsuite PointAdditionalMeasureCategory
+ 1008   phpunit --configuration phpunit.xml --testsuite CustomerPoint
+ 1009   phpunit --configuration phpunit.xml --testsuite CustomerPointCustomerCounterbalance
+ 1010   phpunit --configuration phpunit.xml --testsuite WsCustomerImport
+ 1011   phpunit --configuration phpunit.xml --testsuite WsOrderImport
+ 1012   phpunit --configuration phpunit.xml --testsuite WsOrderImpor
+ 1013   phpunit --configuration phpunit.xml --testsuite ForuCustomerImport
+ 1014   phpunit --configuration phpunit.xml --testsuite OrderImport
+ 1015   phpunit --configuration phpunit.xml --testsuite WsElectricityCustomerAllocationImport
+ 1016   phpunit --configuration phpunit.xml --testsuite CleanupWorkTables
+ 1017   phpunit --configuration phpunit.xml --testsuite ForuOrderImport
+ 1018   phpunit --configuration phpunit.xml --testsuite AddressMasterCleanup
+ 1019   phpunit --configuration phpunit.xml --testsuite AddressMasterImport
+ 1020  2-testsuite.bat 
+ 1021  phpunit --testsuite Validator
+ 1022  phpunit --testsuite Brand
+ 1023  phpunit --testsuite SqlWsContractImport
+ 1024  phpunit --testsuite CodeName
+ 1025  phpunit --testsuite CodeNames
+ 1026  phpunit --testsuite PointAdditionalMeasure
+ 1027  phpunit --testsuite PointAdditionalMeasureCategory
+ 1028  phpunit --testsuite CustomerPoint
+ 1029  phpunit --testsuite ImportCustomerPointAdjustmentData
+ 1030  phpunit --testsuite WsCustomerImport
+ 1031  phpunit --testsuite ForuCustomerImport
+ 1032  phpunit --testsuite WsOrderImport
+ 1033  phpunit --testsuite OrderImport
+ 1034  phpunit --testsuite WsElectricityCustomerAllocationImport
+ 1035  phpunit --testsuite ForuOrderImport
+ 1036  phpunit --testsuite AddressMasterCleanup
+ 1037  phpunit --testsuite AddressMasterImport
+ 1038  phpunit --testsuite SqlForuContractImport
+ 1039  phpunit --testsuite CleanupWorkTables
+ 1040  phpunit --testsuite CustomerPointCustomerCounterbalance
+ 1041  phpunit SqlCustomerPointCounterbalanceTest
+ 1042  phpunit --filter=SqlCustomerPointCounterbalanceTest
+ 1043  phpunit --filter=testCaseRegisterCounterData_Successful --testdox
+ 1044  phpunit --filter=SqlCustomerPointCounterbalanceTest --testdox
+ 1045  phpunit --filter=AdminPointCounterbalanceBusinessTest --testdox
+ 1046  phpunit --filter=CustomerPointCustomerCounterbalance --testdox
+ 1047  phpunit --filter=testGetRecentExpirationPoint_case2 --testdox
+ 1048  php artisan pw:point_foru_order_import 1 20220222
+ 1049  php artisan pw:point_foru_order_import 1 20210924
+ 1050  cd /d F:\5-lampart\3-monolith\MONOLITH_SOURCE_DEVELOP\dev_monolith_libtest
+ 1051  phpunit --testdox
+ 1052  php artisan vendor:publish --provider="Foostart\Crawler\CrawlerServiceProvider" --force
+ 1053  php artian crawler:job
+ 1054  php artisan crawler:job
+ 1055  php artisan vendor:publish --provider="Foostart\Task\TaskServiceProvider" --forcephp artisan vendor:publish --provider="Foostart\Task\TaskServiceProvider" --force
+ 1056  php artisan vendor:publish --provider="Foostart\Task\TaskServiceProvider" --force
+ 1057  cd D:\1-github-workspace\1-tailieuweb\2-project-fit\6-sampledata\db-server
+ 1058  cd /d D:\1-github-workspace\1-tailieuweb\2-project-fit\6-sampledata\db-server
+ 1059  rm -rf Business\
+ 1060  cd app\
+ 1061  cd Lib\
+ 1062  mklink /D Business ..\..\dev_monolith_business\Business
+ 1063  mklink /D Business .\..\..\dev_monolith_business\Business
+ 1064  mklink /D Business ..\..\..\dev_monolith_business\Business
+ 1065  mklink /D Business ..\..\..\dev_monolith_common\Common
+ 1066  mklink /D Common ..\..\..\dev_monolith_common\Common
+ 1067  mklink /D WebCommon ..\..\..\dev_monolith_webcommon\WebCommon
+ 1068  cd v2_dev_monolith_batch\
+ 1069  php artisan pwjp1:national_holiday_import 1
+ 1070  php artisan pwjp1:national_holiday_import @10A200
+ 1071  php artisan --sreve
+ 1072  php artisan --serve
+ 1073  php artisan service
+ 1074  php artisan --service
+ 1075  php artisan server
+ 1076  composer global update
+ 1077  cd 1-laravel-8x\
+ 1078  cd example-app\
+ 1079  composer clear-cache
+ 1080  compose diagnose
+ 1081  composer diagnose
+ 1082  composer require maatwebsite/excel
+ 1083  composer require foostart/package-acl "2022.09.041542"
+ 1084  composer require maatwebsite/excel "3.1.40"
+ 1085  composer require maatwebsite/excel "3.1.40" --with-all-dependencies
+ 1086  php artisan vendor:publish --tag=lfm_config
+ 1087  php artisan vendor:publish --tag=lfm_public
+ 1088  php artisan vendor:publish --provider="Foostart\Pexcel\PexcelServiceProvider" --force
+ 1089  php artisan --server
+ 1090  composer cache:clear
+ 1091  composer clear:cache
+ 1092  composer  clearcache
+ 1093  composer dump-autolaod
+ 1094  cat history_test.txt 
+ 1095  vi history_test.txt 
+ 1096  vi .evn
+ 1097  vi .env
+ 1098   php artisan authentication:install
+ 1099  git branch -m wordpress-6x/1-core
+ 1100  git push origin :wordpress-5x/1-core wordpress-6x/1-core
+ 1101  git push origin -u wordpress-6x/1-core
+ 1102  php authentication install
+ 1103  composer require foostart/package-front
+ 1104  composer require matthiasmullie/minify
+ 1105  php artisan vendor:publish --provider="Foostart\Front\FrontServiceProvider" --force
+ 1106  2-publish.bat 
+ 1107  php artisan vendor:publish --provider="Foostart\Slideshow\SlideshowServiceProvider" --force
+ 1108  php artisan vendor:publish --provider="Foostart\Category\CategoryServiceProvider" --force
+ 1109  php artisan vendor:publish --provider=" Foostart\Acl\Authentication\AuthenticationServiceProvider" --force
+ 1110  composer require foostart/package-branch
+ 1111  php artisan migrate:status
+ 1112  php artisan db:seed
+ 1113  php artisan vendor:publish --provider="Foostart\Branch\BranchServiceProvider" --force
+ 1114  php artisan migrate:rollback
+ 1115  php artisan db:seed --class=LocationSeeder
+ 1116  php artisan route:list | grep api
+ 1117  cp .env.example 
+ 1118  cp .env.example .env
+ 1119  cd /d D:\
+ 1120  mkdir test
+ 1121  echo '' > test.txt
+ 1122  vi test.txt 
+ 1123  cat test.txt 
+ 1124  php --version
+ 1125  composer --version
+ 1126  composer -v
+ 1127  git -v
+ 1128  git --version
+ 1129  mkdir abc
+ 1130  echo '' > abc.txt
+ 1131  vi abc.txt 
+ 1132  composer dump-autoload
+ 1133  composer update
+ 1134  cd D:\
+ 1135  cd xxxxxxxxxxx\
+ 1136  mkdir JP
+ 1137  echo '' > jp.txt
+ 1138  vi jp.txt 
+ 1139  cat  jp.txt 
+ 1140  cls
+ 1141  git config user.name "JP"
+ 1142  git config user.email "jp@gmail.com"
+ 1143  mysqldump -uroot -p wordpress_v602 > wordpress_v602_20230304.sql
+ 1144  mysqldump -uroot -p wordpress_v602 > abc.sql
+ 1145  git config --list
+ 1146  git config --list | grep user
+ 1147  eix
+ 1148  composer install
+ 1149  cd 6-sampledata\
+ 1150  php artisan vendor:publish --provider="Foostart\Post\PostServiceProvider" --force
+ 1151  php artisan vendor:publish --provider="Foostart\Acl\Authentication\AuthenticationServiceProvider" --force
+ 1152  php artisan config:clear
+ 1153  php artisan config:reload
+ 1154  php artisan config:cache
+ 1155  php artisan key:generate
+ 1156  php artisan migrate
+ 1157  php artisan authentication:install
+ 1158  cd backup\
+ 1159  pwd
+ 1160  mysql -uroot -p
+ 1161  php -v
+ 1162  php artisan --version
+ 1163  1-clear.bat 
+ 1164  6-update-change.bat 
+ 1165  cd 2-project-fit\
+ 1166  cd 2-project-fit
+ 1167  cd 2-source\
+ 1168  4-release.bat 
+ 1169  php artisan serve
+ 1170  php artisan route:list
+ 1171  php artisan route:list | grep login
+ 1172  cd ..
+ 1173  echo history > history.txt
+ 1174  la
+ 1175  ls
+ 1176  cat history.txt 
