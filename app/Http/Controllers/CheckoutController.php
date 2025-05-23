@@ -79,6 +79,7 @@ class CheckoutController extends Controller
         }
 
         // Chuyển hướng trình duyệt sang trang thanh toán VNPAY
+        // header('Location: ' . $vnp_Url);
         header('Location: ' . $vnp_Url);
         die(); // Kết thúc chương trình sau khi redirect
     }
@@ -94,7 +95,7 @@ class CheckoutController extends Controller
 
     //         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     //         $vnp_Returnurl = route('history', $booking->booking_user_id);
-    //         $vnp_TmnCode = "VLQ7W9CS"; //Mã website tại VNPAY 
+    //         $vnp_TmnCode = "VLQ7W9CS"; //Mã website tại VNPAY
     //         $vnp_HashSecret = "F1ZHK1GCTWQAES1CZH1ZVNUJO8YSRVCZ"; //Chuỗi bí mật
 
     //         $vnp_TxnRef = rand(00, 999);  //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
@@ -181,7 +182,7 @@ class CheckoutController extends Controller
 
     //         $vnp_Url = $vnp_Url . "?" . $query;
     //         if (isset($vnp_HashSecret)) {
-    //             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+    //             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //
     //             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
     //         }
     //         $returnData = array(
