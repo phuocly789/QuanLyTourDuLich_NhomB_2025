@@ -15,6 +15,19 @@
             return `${day}/${month}/${year}`;
         }
 
+        // Function to scroll to a section smoothly
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            } else {
+                console.error(`Section with ID ${sectionId} not found.`);
+            }
+        }
+
         // Function to load more tours
         function loadMoreTours() {
             const button = document.getElementById('load-more-tours');

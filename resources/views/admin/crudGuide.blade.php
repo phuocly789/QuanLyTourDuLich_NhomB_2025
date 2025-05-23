@@ -131,10 +131,10 @@
         </div>
     </div>
     <script>
-        // Hàm kiểm tra định dạng số điện thoại
-        function isValidPhoneNumber(value) {
-            return /^0\d{9}$/.test(value); // Kiểm tra 10 chữ số
-        }
+        // // Hàm kiểm tra định dạng số điện thoại
+        // function isValidPhoneNumber(value) {
+        //     return /^0\d{9}$/.test(value); // Kiểm tra 10 chữ số
+        // }
 
         // Hàm kiểm tra định dạng email
         function isValidEmail(value) {
@@ -161,16 +161,47 @@
         });
 
         // Validate guide_pno
-        document.getElementById('guide_pno').addEventListener('input', function() {
-            const value = this.value.trim();
-            const errorElement = document.getElementById('guide_pno_error');
-            if (value === '') {
-                errorElement.textContent = 'Số điện thoại không được để trống!';
-            } else if (!isValidPhoneNumber(value)) {
-                errorElement.textContent = 'Số điện thoại phải là 10 chữ số và bắt đầu bằng số 0!';
+        const phoneInput = document.getElementById('guide_pno');
+        phoneInput.addEventListener('input', function(e) {
+            // const quantityInput = document.getElementById('quantityInput');
+            // const bookingButton = document.getElementById('bookingButton');
+            let phone = this.value.replace(/\D/g, ''); // Loại bỏ mọi ký tự không phải số
+
+            // Đảm bảo chỉ có một số 0 ở đầu
+            if (phone.startsWith('0')) {
+                phone = '0' + phone.slice(1).replace(/^0+/, ''); // Giữ số 0 đầu, loại bỏ các số 0 tiếp theo
             } else {
-                errorElement.textContent = '';
+                phone = ''; // Nếu không bắt đầu bằng 0, xóa nội dung
             }
+
+            // Giới hạn tối đa 11 chữ số
+            if (phone.length > 11) {
+                phone = phone.slice(0, 11);
+            }
+
+            this.value = phone;
+
+            // Kiểm tra tính hợp lệ của số điện thoại
+            const phoneError = document.getElementById('phoneError') || document.createElement('p');
+            phoneError.id = 'phoneError';
+            phoneError.style.color = 'red';
+            phoneError.style.fontSize = '14px';
+            this.parentNode.appendChild(phoneError);
+
+            const phoneRegex = /^0[0-9]{9,10}$/; // Bắt đầu bằng 0, theo sau 9 hoặc 10 chữ số
+            const isValidPhone = phoneRegex.test(phone);
+
+            if (phone && phone.length < 10) {
+                phoneError.textContent = 'Số điện thoại phải có 10 hoặc 11 chữ số.';
+            } else if (phone && !phone.startsWith('0')) {
+                phoneError.textContent = 'Số điện thoại phải bắt đầu bằng 0.';
+            } else if (phone && !isValidPhone) {
+                phoneError.textContent = 'Số điện thoại không hợp lệ.';
+            } else {
+                phoneError.textContent = '';
+            }
+
+            updateButtonState(parseInt(quantityInput.value) || 0, phone, bookingButton, isValidPhone);
         });
 
         // Validate guide_image
