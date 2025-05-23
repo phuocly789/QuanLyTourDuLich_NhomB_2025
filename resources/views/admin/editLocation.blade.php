@@ -22,6 +22,17 @@
                 @csrf
                 @method('PUT')
                 <div class="row">
+                        <!-- <div class="mb-3">
+                            <label for="tour_name" class="form-label text-primary">Tên location</label>
+                            <input type="text" class="form-control" id="location_name" value="{{ $location->location_name}}" name="location_name" placeholder="Tên location">
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_day" class="form-label text-primary">Hình ảnh</label>
+                            <input type="file" class="form-control" id="location_image" value="{{ $location->location_image}}" name="location_image" placeholder="Hình ảnh">
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Sửa</button>
+                        </div> -->
                         <div class="mb-3">
                             <label for="tour_name" class="form-label text-primary">Tên location</label>
                             <input type="text" class="form-control" id="location_name" value="{{ $location->location_name}}" name="location_name" placeholder="Tên location">
