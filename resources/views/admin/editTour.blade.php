@@ -126,6 +126,14 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                    <!-- <div class="mb-3">
+                        <label for="guide_id" class="form-label text-primary">Guide ID</label>
+                        <input type="number" class="form-control" id="guide_id" name="guide_id"
+                            value="{{ $tour->guide_id }}" placeholder="Guide ID">
+                        @error('guide_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div> -->
                     <div class="mb-3">
                         <label for="guide_id" class="form-label text-primary">Guide ID</label>
                         <input type="number" class="form-control" id="guide_id" name="guide_id"
