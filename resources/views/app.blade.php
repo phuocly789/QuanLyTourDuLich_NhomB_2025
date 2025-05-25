@@ -119,8 +119,8 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">HHTP</h4>
-                    <a href="{{ url('/index') }}"
-                        class="btn btn-link {{ request()->is('index') ? 'active' : '' }}">Trang chủ</a>
+                    <a href="{{ url('/') }}"
+                        class="btn btn-link {{ request()->is('') ? 'active' : '' }}">Trang chủ</a>
                     <a href="{{ url('/about') }}"
                         class="btn btn-link {{ request()->is('about') ? 'active' : '' }}">Giới thiệu</a>
                     <a href="{{ url('/service') }}"
@@ -136,7 +136,7 @@
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>39 Nguyễn Huệ, Bến Nghé, Quận 1,
                         Thành phố Hồ Chí Minh</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+0924 242 424</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>hhtp@mail.tour.com</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>discovery@mail.tour.com</p>
 
                 </div>
                 <div class="col-lg-6 col-md-12">
@@ -179,8 +179,7 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top rounded-circle"><i
-            class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

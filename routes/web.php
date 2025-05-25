@@ -15,7 +15,6 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\AdminReviewController;
-use App\Http\Controllers\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,10 +30,6 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . '/auth.php';
 
 // Tuyến đường xác thực (Yêu cầu đăng nhập)
-Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
-Route::get('/auth/facebook', [SocialAuthController::class, 'redirectToFacebook'])->name('facebook.redirect');
-Route::get('/auth/facebook/callback', [SocialAuthController::class, 'handleFacebookCallback']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -7,13 +7,13 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Tận hưởng kỳ nghỉ của bạn với chúng tôi</h1>
                     <p class="fs-4 text-white mb-4 animated slideInDown">Hãy sẵn sàng cho cuộc phiêu lưu tiếp theo của bạn
                     </p>
-                    <div class="position-relative w-100 mx-auto animated slideInDown">
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
 
                         <form action="/search" method="get">
                             <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Search by name..." name="search" id="searchInput" maxlength="100"
-                                oninput="checkCharCount()">
-                            <div id="error-message" style="color: red;font-size: 20px; display: none;">
+                            placeholder="Search by name..." name="search" id="searchInput" maxlength="100"
+                            oninput="checkCharCount()">
+                            <div  id="error-message" style="color: red;font-size: 20px; display: none;">
                                 Đã nhập tối đa 100 ký tự!
                             </div>
                             <button type="submit"
