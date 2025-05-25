@@ -114,11 +114,11 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $tour = Tour::findOrFail($id);;
-        return view('user.checkout', compact('tour'));
-    }
+    // public function show($id)
+    // {
+    //     $tour = Tour::findOrFail($id);;
+    //     return view('user.checkout', compact('tour'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -126,6 +126,22 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     public function show($id)
+    {
+        $booking = Booking::find($id);
+
+        if (is_null($booking)) {
+            Session::flash('error', 'Địa chỉ trang không hợp lệ. Tour bạn đang tìm không tồn tại.');
+
+            // CHỈNH SỬA TẠI ĐÂY: Thay redirect()->back() bằng redirect()->route()
+            // Đảm bảo 'tours.list' là tên route chính xác của trang danh sách tour của bạn
+            return redirect()->route('booking.store'); // <-- Thay thế bằng tên route của bạn
+        }
+
+        // Nếu booking tồn tại, hiển thị trang chi tiết
+        return view('bookings.show', compact('booking'));
+    }
+      
     public function edit($id)
     {
         //
@@ -137,7 +153,22 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+    */
+    //  public function update(Request $request, $id)
+    // {
+    //     //
+    // }
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($id)
+    // {
+    //     //
+    // }
     public function update(Request $request, $id)
     {
         //
