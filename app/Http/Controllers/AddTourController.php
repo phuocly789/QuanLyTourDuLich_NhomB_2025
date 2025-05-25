@@ -70,6 +70,12 @@ class AddTourController extends Controller
     // add tour
     public function store(Request $request)
     {
+        $request->merge([
+            'price' => $this->normalizeNumber($request->input('price')),
+            'tour_sale' => $this->normalizeNumber($request->input('tour_sale')),
+            'total_seats' => $this->normalizeNumber($request->input('total_seats')),
+        ]);
+
         // Validate form data
         $validatedData = $request->validate([
             'tour_name' => 'required|string|max:255',
@@ -119,6 +125,20 @@ class AddTourController extends Controller
         // Redirect back with success message
         return redirect()->back()->with('success', 'Tour đã được thêm thành công!');
     }
+
+    private function normalizeNumber($value)
+    {
+        // Nếu không phải chuỗi thì trả lại như cũ
+        if (!is_string($value))
+            return $value;
+
+        // Chuyển full-width digits (U+FF10 - U+FF19) thành half-width (0-9)
+        return preg_replace_callback('/[\x{FF10}-\x{FF19}]/u', function ($matches) {
+            // Dùng mb_ord để lấy mã unicode, trừ đi FF10, cộng 0x30 để ra mã ASCII tương ứng
+            return chr(mb_ord($matches[0], 'UTF-8') - 0xFF10 + 0x30);
+        }, $value);
+    }
+
 
 
     public function destroy($id)
@@ -189,6 +209,12 @@ class AddTourController extends Controller
         $tour->save();
 
         return redirect()->route('admin.showcrud')->with('success', 'Tour đã được cập nhật thành công!');
+    }
+    private function toHalfWidth($str): array|string|null
+    {
+        return preg_replace_callback('/[０-９]/u', function ($matches) {
+            return chr(ord($matches[0]) - 0xFF10 + ord('0'));
+        }, $str);
     }
 
     public function showCrud()
