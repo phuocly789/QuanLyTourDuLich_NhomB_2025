@@ -345,9 +345,8 @@ class AddTourController extends Controller
 
         // Paginate the results
         $data = $query->paginate(6); // Adjust per-page value as needed
-        $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
 
-        return view('user.package', compact('data', 'footerTours'));
+        return view('user.package', compact('data'));
     }
     public function hienThiTour(Request $request)
     {
@@ -377,8 +376,8 @@ class AddTourController extends Controller
 
         // Paginate the results
         $data = $query->paginate(6); // Adjust per-page value as needed
-        $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
-        return view('package', compact('data', 'footerTours'));
+
+        return view('package', compact('data'));
     }
     public function history(Request $request)
     {

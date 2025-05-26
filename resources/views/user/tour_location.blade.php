@@ -91,18 +91,21 @@
                                 <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                     {{ $tour->total_seats - $tour->booked_seats }} chỗ</p>
                                 <div class="d-flex justify-content-center mb-2 pb-2">
-                                    <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
+                                    <a href="{{ route('user.tour.readmore', $tour->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end"
-                                        style="border-radius: 30px 0 0 30px;width: 150px">Xem thêm</a>
-                                    <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
-                                        <button type="submit" class="btn btn-sm btn-primary px-3 favorite-btn"
-                                            style="border-radius: 0 30px 30px 0;width: 60px"
-                                            data-tour-id="{{ $row->tour_id }}">
-                                            <i class="far fa-heart" id="favorite-btn-{{ $row->tour_id }}"></i>
-                                        </button>
-                                    </form>
+                                        style="border-radius: 30px 0 0 30px;">Xem thêm</a>
+                                    <a href="{{ route('user.tour.readmore', $tour->tour_id) }}"
+                                        class="btn btn-sm btn-primary px-3 border-end {{ $tour->total_seats - $tour->booked_seats <= 0 ? 'disabled' : '' }}"
+                                        style="border-radius: 0 0 0 0;"
+                                        {{ $tour->total_seats - $tour->booked_seats <= 0 ? 'title="Tour đã hết chỗ"' : '' }}>
+                                        Đặt ngay
+                                    </a>
+                                    <div class="btn-sm btn-primary px-3 border-end btn-far"
+                                        style="border-radius: 0 30px 30px 0; display: flex; align-items: center; justify-content: center; height: 36px;"
+                                        data-tour-id="{{ $tour->tour_id }}">
+                                        <i class="far fa-heart" style="color: white; font-size: 16px;"
+                                            id="favorite-btn-{{ $tour->tour_id }}"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +179,7 @@
                 success: function(response) {
                     $.each(response, function(index, element) {
                         $("#favorite-btn-" + element.tour_id).removeClass("far").addClass(
-                            "fas");
+                        "fas");
                     });
                 },
                 error: function(xhr, status, error) {
