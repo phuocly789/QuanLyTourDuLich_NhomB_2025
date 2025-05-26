@@ -20,6 +20,16 @@ class CheckoutController extends Controller
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"; // URL thanh toán (sandbox là môi trường test)
         $vnp_Returnurl = route('history', $booking->booking_user_id); // URL chuyển hướng sau khi thanh toán thành công
 
+        // // Tính thời gian bắt đầu và hết hạn của phiên thanh toán
+        // $startTime = date("YmdHis");
+        // $expire = date('YmdHis', strtotime('+15 minutes', strtotime($startTime)));
+
+        // // Các thông tin đơn hàng
+        // $vnp_TxnRef = rand(1, 10000); // Mã giao dịch (ngẫu nhiên)
+        // $vnp_Amount = $booking->booking_amount; // Số tiền thanh toán
+        // $vnp_Locale = 'vn'; // Ngôn ngữ giao diện thanh toán
+        // $vnp_BankCode = 'VNBANK'; // Mã ngân hàng thanh toán (mặc định là VNBANK)
+        // $vnp_IpAddr = $_SERVER['REMOTE_ADDR']; // Địa chỉ IP của khách hàng
         // Tính thời gian bắt đầu và hết hạn của phiên thanh toán
         $startTime = date("YmdHis");
         $expire = date('YmdHis', strtotime('+15 minutes', strtotime($startTime)));
