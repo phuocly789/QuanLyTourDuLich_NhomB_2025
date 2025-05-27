@@ -497,6 +497,14 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- @if ($booking_history->total() > 10)
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-auto">
+                                <button class="btn btn-primary" onclick="loadMoreBookings()" data-current="10"
+                                    id="load-more-bookings">Xem thêm</button>
+                            </div>
+                        </div>
+                    @endif -->
                     @if ($booking_history->total() > 10)
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
