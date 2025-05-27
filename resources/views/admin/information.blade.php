@@ -83,6 +83,25 @@
                     xhr.setRequestHeader('X-CSRF-TOKEN',
                         '{{ csrf_token() }}'); // Bao gồm CSRF token trong header
 
+                    // // Xử lý phản hồi từ máy chủ
+                    // xhr.onload = function() {
+                    //     if (xhr.status >= 200 && xhr.status < 300) {
+                    //         console.log('Cập nhật phân quyền thành công');
+                    //         // Thực hiện các hành động sau khi cập nhật thành công
+                    //         alert('Phân quyền thành công');
+                    //     } else {
+                    //         console.error('Lỗi khi cập nhật phân quyền: ' + xhr.status);
+                    //         // Xử lý lỗi nếu có
+                    //     }
+                    // };
+                    // // Xử lý lỗi kết nối
+                    // xhr.onerror = function() {
+                    //     console.error('Lỗi kết nối');
+                    // };
+                    // // Gửi yêu cầu AJAX với dữ liệu đã chuẩn bị
+                    // var formData = 'user_id=' + encodeURIComponent(userId) + '&usertype=' +
+                    //     encodeURIComponent(newUsertype);
+                    // xhr.send(formData);
                     // Xử lý phản hồi từ máy chủ
                     xhr.onload = function() {
                         if (xhr.status >= 200 && xhr.status < 300) {
