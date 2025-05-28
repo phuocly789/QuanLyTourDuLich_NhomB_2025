@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Thông Tin Cá Nhân') }}
+            {{ __('Profile Information') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Cập nhật thông tin hồ sơ tài khoản và địa chỉ email của bạn.") }}
+            {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
 
@@ -48,7 +48,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Cập Nhật') }}</x-primary-button>
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
@@ -56,8 +56,8 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-green-600"
-                >{{ __('Cập Nhật Thành Công.') }}</p>
+                    class="text-sm text-gray-600"
+                >{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>

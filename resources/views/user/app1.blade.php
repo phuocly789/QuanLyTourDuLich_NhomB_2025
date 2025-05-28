@@ -53,7 +53,7 @@
                     <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>39 Nguyễn Huệ, Bến Nghé,
                         Quận 1, Thành phố Hồ Chí Minh</small>
                     <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>0924 242 424</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>hhtp@mail.tour.com</small>
+                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>discovery@mail.tour.com</small>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
@@ -133,11 +133,11 @@
 
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('profile.edit')">
-                                            {{ __('Thông Tin Cá Nhân') }}
+                                            {{ __('Profile') }}
                                         </x-dropdown-link>
 
                                         <x-dropdown-link :href="route('history', Auth::user()->id)">
-                                            {{ __('Lịch Sử Giao Dịch') }}
+                                            {{ __('History') }}
                                         </x-dropdown-link>
 
                                         <!-- Authentication -->
@@ -147,7 +147,7 @@
                                             <x-dropdown-link :href="route('logout')"
                                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                                {{ __('Đăng Xuất') }}
+                                                {{ __('Log Out') }}
                                             </x-dropdown-link>
                                         </form>
                                     </x-slot>
@@ -214,54 +214,76 @@
 
     <!--  -->
 
-    <x-request-logint-modal />
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">HHTP</h4>
-                     <a href="{{ url('/user.home') }}"
-                        class="btn btn-link {{ request()->is('user.home') ? 'active' : '' }}">Trang chủ</a>
-                    <a href="{{ url('/user.about') }}"
-                        class="btn btn-link {{ request()->is('user.about') ? 'active' : '' }}">Giới thiệu</a>
-                    <a href="{{ url('/user.service') }}"
-                        class="btn btn-link {{ request()->is('user.service') ? 'active' : '' }}">Dịch vụ</a>
-                    <a href="{{ url('/user.package') }}"
-                        class="btn btn-link {{ request()->is('user.package') ? 'active' : '' }}">Tour</a>
-                    <a href="{{ url('/user.contact') }}"
-                        class="btn btn-link {{ request()->is('user.contact') ? 'active' : '' }}">Liên hệ</a>
-                    {{-- <a class="btn btn-link" href="">Câu hỏi và trợ giúp</a> --}}
+                    <h4 class="text-white mb-3">Discovery</h4>
+                    <a class="btn btn-link" href="">Giới thiệu</a>
+                    <a class="btn btn-link" href="">Liên hệ chúng tôi</a>
+                    <a class="btn btn-link" href="">Chính sách bảo mật</a>
+                    <a class="btn btn-link" href="">Điều khoản & Điều kiện</a>
+                    <a class="btn btn-link" href="">Câu hỏi và trợ giúp</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Liên hệ</h4>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>39 Nguyễn Huệ, Bến Nghé, Quận 1,
                         Thành phố Hồ Chí Minh</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+0924 242 424</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>hhtp@mail.tour.com</p>
-
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <h4 class="text-white mb-3">Sản Phẩm Của Chúng Tôi</h4>
-                    <div class="row g-2 pt-2">
-                        @if (isset($footerTours) && $footerTours->isNotEmpty())
-                            @foreach ($footerTours as $tour)
-                                <div class="col-2">
-                                    <a href="{{ route('user.tour.readmore', $tour->tour_id) }}"
-                                        class="image-frame">
-                                        <img class="img-fluid" src="{{ asset('img/' . $tour->tour_image) }}"
-                                            alt="{{ $tour->tour_name }}">
-                                    </a>
-                                </div>
-                            @endforeach
-                        @else
-                            <p>No tours available.</p>
-                        @endif
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>discovery@mail.tour.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-
-
-
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Sản phẩm của chúng tôi</h4>
+                    <div class="row g-2 pt-2">
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-1.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-2.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-3.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-2.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-3.jpg') }}"
+                                alt="">
+                        </div>
+                        <div class="col-4">
+                            <img class="img-fluid bg-light p-1" src="{{ asset('img/package-1.jpg') }}"
+                                alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                   
+                    <h4 class="text-white mb-3">Bản tin</h4>
+                    <p>Để nhận được bản tin về du lịch, bạn vui lòng nhập email đăng ký với chúng tôi.</p>
+                    {{-- <form action="{{ route('notice.store') }}" method="POST">
+                        @csrf
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text"
+                                id="notice_email" name="notice_email" placeholder="Your email">
+                            <button type="submit"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Đăng ký</button>
+                        </div>
+                    </form> --}}
+                </div>
 
 
             </div>
@@ -269,14 +291,25 @@
         <div class="container">
             <div class="copyright">
                 <div class="row">
-                    <div class="text-center mb-3 mb-md-0">
-                        &copy; 2025 <a class="border-bottom" href="index">HHTP</a>. All Rights Reserved.
-                        Designed by <a class="border-bottom" href="https://htmlcodex.com">HHTP TEAM</a>
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Tên trang web của bạn</a>, Tất cả các quyền.
+
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Trang chủ</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
