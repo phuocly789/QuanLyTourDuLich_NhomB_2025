@@ -188,6 +188,16 @@
                             </div>
                             <hr>
                         `;
+                        // if (!repliesContainer.length) {
+                        //     form.before(
+                        //         '<div class="replies mt-3" style="margin-left: 20px;"></div>'
+                        //     );
+                        //     form.prev('.replies').append(replyHtml);
+                        // } else {
+                        //     repliesContainer.append(replyHtml);
+                        // }
+                        // form.find('textarea').val('');
+                        // alert('Câu trả lời đã được gửi thành công!');
                         if (!repliesContainer.length) {
                             form.before(
                                 '<div class="replies mt-3" style="margin-left: 20px;"></div>'
