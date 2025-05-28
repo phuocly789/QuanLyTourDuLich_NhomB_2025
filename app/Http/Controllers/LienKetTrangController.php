@@ -36,6 +36,7 @@ class LienKetTrangController extends Controller
                 $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
                 return view($page, [
+                    // 'user_main' => $user_main,
                     'user_main' => $user_main,
                     'data' => $tours,
                     'data_guide' => $guides,
