@@ -26,6 +26,7 @@
     </div>
     <!-- Navbar & Hero End -->
 
+
     <!-- Package Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -156,7 +157,85 @@
     </div>
     <!-- Process Start -->
     <!-- Favorite tour javascript -->
-    <script>
+    <!-- <script>
+        $(document).ready(function() {
+            // Lấy danh sách tour yêu thích khi tải trang
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('favorite.favoriteList') }}",
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    // Duyệt qua danh sách tour yêu thích và cập nhật biểu tượng trái tim
+                    $.each(response, function(index, tour) {
+                        const fav_btn = $("#favorite-btn-" + tour.tour_id);
+                        if (fav_btn.length) {
+                            fav_btn.removeClass("far").addClass("fas");
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching favorite list:', error);
+                }
+            });
+
+            // Xử lý sự kiện submit form yêu thích
+            $(".favorite-form").on("submit", function(e) {
+                e.preventDefault(); // Ngăn chặn submit form mặc định
+                const form = $(this);
+                const tour_id = form.find('input[name="tour_id"]').val();
+                const fav_btn = $("#favorite-btn-" + tour_id);
+                const button = form.find('button[type="submit"]');
+
+                // Vô hiệu hóa nút để ngăn click liên tiếp
+                button.prop('disabled', true);
+
+                // Lưu trạng thái ban đầu để hoàn tác nếu lỗi
+                const isInitiallyFar = fav_btn.hasClass("far");
+
+                // Tạm thời cập nhật giao diện
+                if (isInitiallyFar) {
+                    fav_btn.removeClass("far").addClass("fas");
+                } else {
+                    fav_btn.removeClass("fas").addClass("far");
+                }
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('favorite.add') }}",
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        // Xác nhận trạng thái từ server
+                        if (response.status === 'added') {
+                            fav_btn.removeClass("far").addClass("fas");
+                        } else if (response.status === 'removed') {
+                            fav_btn.removeClass("fas").addClass("far");
+                        }
+                        // Kích hoạt lại nút sau khi xử lý
+                        button.prop('disabled', false);
+                    },
+                    error: function(xhr, status, error) {
+                        // Hoàn tác thay đổi giao diện nếu lỗi
+                        if (isInitiallyFar) {
+                            fav_btn.removeClass("fas").addClass("far");
+                        } else {
+                            fav_btn.removeClass("far").addClass("fas");
+                        }
+                        console.error('Error toggling favorite:', error);
+                        // Kích hoạt lại nút
+                        button.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script> -->
+   <script>
         $(document).ready(function() {
             // Lấy danh sách tour yêu thích khi tải trang
             $.ajax({
@@ -234,5 +313,5 @@
             });
         });
     </script>
-
+    
 @endsection
