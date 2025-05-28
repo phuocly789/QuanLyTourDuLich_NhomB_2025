@@ -117,6 +117,10 @@
                     xhr.onerror = function() {
                         console.error('Lỗi kết nối');
                     };
+                    // // Gửi yêu cầu AJAX với dữ liệu đã chuẩn bị
+                    // var formData = 'user_id=' + encodeURIComponent(userId) + '&usertype=' +
+                    //     encodeURIComponent(newUsertype);
+                    // xhr.send(formData);
                     // Gửi yêu cầu AJAX với dữ liệu đã chuẩn bị
                     var formData = 'user_id=' + encodeURIComponent(userId) + '&usertype=' +
                         encodeURIComponent(newUsertype);
