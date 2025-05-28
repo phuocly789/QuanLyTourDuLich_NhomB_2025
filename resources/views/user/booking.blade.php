@@ -15,6 +15,104 @@
     </div>
     <!-- Navbar & Hero End -->
 
+    <!-- <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ asset('img/' . $value->tour_image) }}"
+                            alt="" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <h1 class="mb-4 text-primary">{{ $value->tour_name }} </h1>
+                    <p class="mb-4">{{ $value->tour_description }}</p>
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-calendar-alt text-primary me-2"></i>Ngày bắt đầu:
+                                {{ $value->start_day }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-clock text-primary me-2"></i>Thời gian: {{ $value->time }}
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-plane-departure text-primary me-2"></i>Nơi khởi hành:
+                                {{ $value->star_from }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-bus text-primary me-2"></i>Phương tiện: {{ $value->vehicle }}
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-hotel text-primary me-2"></i>Khách sạn: Khách sạn 5 sao </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-gifts text-primary me-2"></i>Đã bao gồm ưu đãi trong giá tour
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-money-check text-primary me-2"></i>Giá tour / 1 người</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0 text-danger"><i
+                                    class=""></i>{{ number_format($value->price, 0, ',', '.') }} vnd</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-chair text-primary me-2"></i>Số chỗ còn trống</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0 text-danger">{{ $value->total_seats - $value->booked_seats }} <i
+                                    class="fa fa-chair text-primary me-2"></i></p>
+                        </div>
+
+                        <form action="{{ route('booking.store', [$value->tour_id, Auth::user()->id]) }}"
+                            class="row gy-2 gx-4 mb-4" method="post">
+                            @csrf
+                            <div class="col-sm-6">
+                                <p class="mb-0"><i class="fa fa-users text-primary me-2"></i>Số lượng người: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="quantity buttons_added">
+                                    <input name="booking_quantity" id="quantityInput" style="text-align: center;"
+                                        type="number" size="4" class="input-text qty text border-1" title="Qty"
+                                        value="0" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-0"><i class="fa fa-phone text-primary  me-2"></i>Số điện thoại: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="quantity buttons_added">
+                                    <input name="booking_customer_phone" id="phoneInput" type="text"
+                                        class="input-text qty text border-1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-0"><i class="fa fa-users text-primary me-2"></i>Voucher: </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-0 text-danger" id="voucher"></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-0"><i class="fa fa-money-check text-primary me-2"></i>Thành tiền</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <td class="product-subtotal">
+                                    <span class="amount mb-0 text-danger" id="subtotal">0 vnđ</span>
+                                </td>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button name="redirect" id="bookingButton"
+                                    class="col-sm-4 btn btn-primary rounded-pill py-3 px-5 mt-2" href="#">Đặt
+                                    ngay</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
