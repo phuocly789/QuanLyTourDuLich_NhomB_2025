@@ -14,7 +14,8 @@ class CreateRepliesTable extends Migration
             $table->timestamps();
 
             // Khóa ngoại
-            $table->integer('client_id')->unsigned();
+            // $table->integer('client_id')->unsigned();
+             $table->integer('client_id')->unsigned();
             $table->integer('admin_id')->unsigned();
 
         });

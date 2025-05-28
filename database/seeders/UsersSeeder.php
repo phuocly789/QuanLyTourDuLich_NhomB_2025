@@ -29,7 +29,8 @@ class UsersSeeder extends Seeder
 
         foreach ($users as $user) {
             User::create([
-                'name' => $user['name'],
+                // 'name' => $user['name'],
+                 'name' => $user['name'],
                 'email' => $user['email'],
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'), // mật khẩu mặc định là "password"
