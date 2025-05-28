@@ -145,6 +145,9 @@ class LienKetTrangController extends Controller
         $favoriteTours = collect();
         $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
         // Kiểm tra nếu người dùng đã đăng nhập
+        // if ($user_main) {
+        //     $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+        // }
         if ($user_main) {
             $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
         }
