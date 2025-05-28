@@ -72,21 +72,24 @@ class AddTourController extends Controller
     {
         // Validate form data
         $validatedData = $request->validate([
-            'tour_name' => 'required|string|max:255',
+            'tour_name' => 'required|string|max:250',
             'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'start_day' => 'required|date|after_or_equal:today', // Kiểm tra ngày không được trong quá khứ
-            'time' => 'required|string',
+            'start_day' => 'required|date|after_or_equal:today', // Không trong quá khứ
+            'time' => 'required|string|max:75',
             'star_from' => 'required|string',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
             'vehicle' => 'required|string',
             'tour_description' => 'required|string',
             'tour_schedule' => 'required|string',
-            'tour_sale' => 'required|string',
+            'tour_sale' => 'required|numeric|min:0|max:100', // Giảm giá từ 0-100
             'guide_id' => 'required|integer',
             'location_id' => 'required|integer|exists:locations,location_id',
-            'total_seats' => 'required|integer|min:1',
+            'total_seats' => 'required|integer|min:1|max:60', // Tối đa 60 chỗ
         ], [
+            'tour_name.max' => 'Tên tour không được vượt quá 250 ký tự!',
             'start_day.after_or_equal' => 'Ngày bắt đầu tour không được trong quá khứ!',
+            'tour_sale.max' => 'Giảm giá không được vượt quá 100%!',
+            'total_seats.max' => 'Số chỗ ngồi không được vượt quá 60!',
         ]);
 
         // Handle image upload
@@ -116,14 +119,16 @@ class AddTourController extends Controller
 
         $tour->save();
 
-        // Redirect back with success message
         return redirect()->back()->with('success', 'Tour đã được thêm thành công!');
     }
 
 
     public function destroy($id)
     {
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::find($id);
+        if (!$tour) {
+            return redirect()->back()->with('error', 'Tour không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
         $path = 'img/';
         if (File::exists(public_path($path . $tour->tour_image))) {
             File::delete(public_path($path . $tour->tour_image));
@@ -157,8 +162,17 @@ class AddTourController extends Controller
             'guide_id' => 'required|integer',
             'total_seats' => 'required|integer|min:1',
             'tour_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'updated_at' => 'required|date',
         ]);
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::find($id);
+        // Kiểm tra xem tour có tồn tại không
+        if (!$tour) {
+            return redirect()->back()->with('error', 'Tour không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
+        // Kiểm tra xem bản ghi có bị thay đổi bởi tab khác không
+        if ($tour->updated_at->toDateTimeString() !== $request->updated_at) {
+            return redirect()->back()->with('error', 'Dữ liệu đã được cập nhật bởi một phiên khác. Vui lòng tải lại trang trước khi cập nhật!');
+        }
         $get_imgae = $request->tour_image;
         if ($get_imgae) {
             $path = 'img/';
@@ -254,7 +268,10 @@ class AddTourController extends Controller
 
     public function destroyGuide($id)
     {
-        $guide = Guide::findOrFail($id);
+        $guide = Guide::find($id);
+        if (!$guide) {
+            return redirect()->back()->with('error', 'Hướng dẫn viên không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
         $path = 'img/';
         if (File::exists(public_path($path . $guide->guide_Img))) {
             File::delete(public_path($path . $guide->guide_Img));
@@ -290,9 +307,18 @@ class AddTourController extends Controller
             'guide_Pno' => 'required|string',
             'guide_Mail' => 'required|string',
             'guide_Intro' => 'required|string',
+            'updated_at' => 'required|date',
         ]);
         // Tìm guide dựa trên id hoặc trả về null nếu không tìm thấy
-        $guide = Guide::findOrFail($id);
+        $guide = Guide::find($id);
+        // Kiểm tra xem guide có tồn tại không
+        if (!$guide) {
+            return redirect()->back()->with('error', 'Hướng dẫn viên không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
+        // Kiểm tra xem bản ghi có bị thay đổi không
+        if ($guide->updated_at->toDateTimeString() !== $request->updated_at) {
+            return redirect()->back()->with('error', 'Dữ liệu đã được cập nhật bởi một phiên khác. Vui lòng tải lại trang trước khi cập nhật!');
+        }
         $get_imgae = $request->guide_image;
         if ($get_imgae) {
             $path = 'img/';

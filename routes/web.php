@@ -82,6 +82,9 @@ Route::post('/tours', [AddTourController::class, 'store'])->name('tours.store');
 Route::delete('/tours/{id}', [AddTourController::class, 'destroy'])->name('tours.destroy');
 Route::get('/tours/{id}/edit', [AddTourController::class, 'edit'])->name('tours.edit');
 Route::put('/tours/{id}', [AddTourController::class, 'update'])->name('tours.update');
+Route::get('/tours/{id}', function ($id) {
+    return redirect()->route('home')->with('error', 'Không thể truy cập đường dẫn này.');
+});
 
 // Tuyến đường quản lý hướng dẫn viên
 Route::post('/guide', [AddTourController::class, 'storeGuide'])->name('guide.store');

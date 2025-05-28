@@ -9,6 +9,7 @@
                     <p class="fs-4 text-white mb-4 animated slideInDown">{{ $tour->tour_name }}</p>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -16,6 +17,11 @@
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h1 class="text-center text-primary px-3">Chỉnh sửa thông tin tour</h1>
         </div>
+        @if (session('error'))
+            <div class="alert alert-danger text-center" style="font-size: 30px;">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="row justify-content-center" style="position: relative; left: 420px;">
             <form action="{{ route('tours.update', $tour->tour_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -54,8 +60,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="time" class="form-label text-primary">Thời gian</label>
-                        <input type="text" class="form-control" id="time" name="time" value="{{ $tour->time }}"
-                            placeholder="Thời gian">
+                        <input type="text" class="form-control" id="time" name="time"
+                            value="{{ $tour->time }}" placeholder="Thời gian">
                         @error('time')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -70,8 +76,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label text-primary">Giá tour</label>
-                        <input type="text" class="form-control" id="price" name="price" value="{{ $tour->price }}"
-                            placeholder="Giá tour">
+                        <input type="text" class="form-control" id="price" name="price"
+                            value="{{ $tour->price }}" placeholder="Giá tour">
                         @error('price')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -134,6 +140,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                    <input type="hidden" name="updated_at" value="{{ $tour->updated_at->toDateTimeString() }}">
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </div>
