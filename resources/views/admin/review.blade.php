@@ -10,8 +10,7 @@
         </div>
     </div>
     <div class="container-fluid py-5">
-        <!-- <div class="container"> -->
-            <div class="container">
+        <div class="container">
 
             @if (session('success'))
                 <div class="alert alert-success">

@@ -4,8 +4,7 @@
         @csrf
 
         <!-- Name -->
-        <!-- <div> -->
-            <div>
+        <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -50,6 +49,13 @@
                 {{ __('Register') }}
             </x-primary-button>
         </div>
+        <div class="flex items-center justify-center mt-6">
+
+<a href="{{ route('google.redirect') }}" class="btn btn-danger" style="background-color: #db4437; color: white;">
+    <i class="fab fa-google"></i> Đăng nhập bằng Google
+</a>
+</div>
+
     </form>
 </x-guest-layout>
 

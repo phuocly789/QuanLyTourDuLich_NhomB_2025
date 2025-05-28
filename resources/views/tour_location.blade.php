@@ -7,7 +7,13 @@
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white animated slideInDown">Tour</h1>
-
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href={{ '/index' }}>Trang chủ</a></li>
+                                <li class="breadcrumb-item"><a href="#">Trang</a></li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Danh sách tour</li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -56,14 +62,14 @@
                                 </div>
                                 <?php
                                 $tourDescription = $tour->tour_description;
-
+                                
                                 // Chia chuỗi thành mảng các từ
                                 $words = explode(' ', $tourDescription);
-
+                                
                                 // Lấy 100 từ đầu tiên
                                 $mota = implode(' ', array_slice($words, 0, 50));
                                 ?>
-                                <p style="height: 110px;text-align: justify;padding: 10px">{{ $mota }} ... </p>
+                                <p style="height: 110px;">{{ $mota }} ... </p>
 
                                 <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                     {{ $tour->total_seats - $tour->booked_seats }} chỗ</p>
