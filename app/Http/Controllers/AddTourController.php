@@ -70,56 +70,33 @@ class AddTourController extends Controller
     // add tour
     public function store(Request $request)
     {
-        // Validate form data
-        $validatedData = $request->validate([
-            'tour_name' => 'required|string|max:250',
-            'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'start_day' => 'required|date|after_or_equal:today', // Không trong quá khứ
-            'time' => 'required|string|max:75',
-            'star_from' => 'required|string',
+        // Ràng buộc validation
+        $validated = $request->validate([
+            'tour_name' => 'required|string|max:255',
+            'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+            'start_day' => 'required|date|after_or_equal:today',
+            'time' => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
-            'vehicle' => 'required|string',
-            'tour_description' => 'required|string',
-            'tour_schedule' => 'required|string',
-            'tour_sale' => 'required|numeric|min:0|max:100', // Giảm giá từ 0-100
-            'guide_id' => 'required|integer',
-            'location_id' => 'required|integer|exists:locations,location_id',
-            'total_seats' => 'required|integer|min:1|max:60', // Tối đa 60 chỗ
-        ], [
-            'tour_name.max' => 'Tên tour không được vượt quá 250 ký tự!',
-            'start_day.after_or_equal' => 'Ngày bắt đầu tour không được trong quá khứ!',
-            'tour_sale.max' => 'Giảm giá không được vượt quá 100%!',
-            'total_seats.max' => 'Số chỗ ngồi không được vượt quá 60!',
+            'vehicle' => 'required|in:Máy bay,Xe khách',
+            'star_from' => 'required|string|in:An Giang,Bà Rịa - Vũng Tàu,Bắc Giang,Bắc Kạn,Bạc Liêu,Bắc Ninh,Bến Tre,Bình Định,Bình Dương,Bình Phước,Bình Thuận,Cà Mau,Cần Thơ,Cao Bằng,Đà Nẵng,Đắk Lắk,Đắk Nông,Điện Biên,Đồng Nai,Đồng Tháp,Gia Lai,Hà Giang,Hà Nam,Hà Nội,Hà Tĩnh,Hải Dương,Hải Phòng,Hậu Giang,Hòa Bình,Hưng Yên,Khánh Hòa,Kiên Giang,Kon Tum,Lai Châu,Lâm Đồng,Lạng Sơn,Lào Cai,Long An,Nam Định,Nghệ An,Ninh Bình,Ninh Thuận,Phú Thọ,Phú Yên,Quảng Bình,Quảng Nam,Quảng Ngãi,Quảng Ninh,Quảng Trị,Sóc Trăng,Sơn La,Tây Ninh,Thái Bình,Thanh Hóa,Thừa Thiên Huế,Tiền Giang,TP. Hồ Chí Minh,Trà Vinh,Tuyên Quang,Vĩnh Long,Vĩnh Phúc,Yên Bái',
+            'total_seats' => 'required|integer|min:1|max:60',
+            'tour_sale' => 'nullable|numeric|min:0|max:100',
+            'guide_id' => 'required|integer|min:1|exists:guides,guide_Id',
+            'location_id' => 'required|integer|min:1|exists:locations,location_id',
+            'tour_description' => 'required|string|max:1000',
+            'tour_schedule' => 'required|string|max:2000',
         ]);
 
-        // Handle image upload
-        $get_image = $request->file('tour_image');
-        $path = 'img/';
-        $get_name_image = $get_image->getClientOriginalName();
-        $name_image = current(explode('.', $get_name_image));
-        $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension();
-        $get_image->move(public_path($path), $new_image);
+        // Xử lý file ảnh
+        if ($request->hasFile('tour_image')) {
+            $path = $request->file('tour_image')->store('img', 'public');
+            $validated['tour_image'] = $path;
+        }
 
-        // Create a new tour instance
-        $tour = new Tour;
-        $tour->tour_name = $validatedData['tour_name'];
-        $tour->tour_image = $new_image;
-        $tour->location_id = $validatedData['location_id'];
-        $tour->start_day = $validatedData['start_day'];
-        $tour->time = $validatedData['time'];
-        $tour->star_from = $validatedData['star_from'];
-        $tour->price = $validatedData['price'];
-        $tour->vehicle = $validatedData['vehicle'];
-        $tour->tour_description = $validatedData['tour_description'];
-        $tour->tour_schedule = $validatedData['tour_schedule'];
-        $tour->tour_sale = $validatedData['tour_sale'];
-        $tour->guide_id = $validatedData['guide_id'];
-        $tour->total_seats = $validatedData['total_seats'];
-        $tour->booked_seats = 0;
+        // Tạo tour mới
+        Tour::create($validated);
 
-        $tour->save();
-
-        return redirect()->back()->with('success', 'Tour đã được thêm thành công!');
+        return redirect()->route('tours.index')->with('success', 'Thêm tour thành công!');
     }
 
 
