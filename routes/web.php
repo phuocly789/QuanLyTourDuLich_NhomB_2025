@@ -16,6 +16,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\AdminReviewController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialAuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . '/auth.php';
 
 // Tuyến đường xác thực (Yêu cầu đăng nhập)
+Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -74,7 +78,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore');
     Route::get('/admin/result', [LienKetTrangController::class, 'adminSearch'])->name('searchAdmin');
     Route::get('/guide/crud', [AddTourController::class, 'showCRUDGuide'])->name('admin.guide');
-    Route::post('guide/check-duplicate', [AddTourController::class, 'checkDuplicate'])->name('guide.check-duplicate');
 });
 
 // Tuyến đường quản lý tour
@@ -111,3 +114,4 @@ Route::post('/admin/load-more-tours', [LienKetTrangController::class, 'loadMoreT
 Route::post('/admin/load-more-guides', [LienKetTrangController::class, 'loadMoreGuides'])->name('admin.loadMoreGuides');
 Route::post('/admin/load-more-users', [LienKetTrangController::class, 'loadMoreUsers'])->name('admin.loadMoreUsers');
 Route::post('/admin/load-more-bookings', [LienKetTrangController::class, 'loadMoreBookings'])->name('admin.loadMoreBookings');
+

@@ -6,8 +6,7 @@
         @csrf
         
         <!-- Email Address -->
-        <!-- <div> -->
-            <div>
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -43,6 +42,9 @@
             <x-primary-button class="ml-3">
                 {{ __('Log in') }}
             </x-primary-button>
+            <a href="{{ route('google.redirect') }}" class="btn btn-danger" style="background-color: #db4437; color: white;">
+    <i class="fab fa-google"></i> Đăng nhập bằng Google
+</a>
         </div>
     </form>
 </x-guest-layout>
