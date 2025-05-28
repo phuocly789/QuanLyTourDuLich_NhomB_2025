@@ -13,6 +13,7 @@
 
     <div class="container-fluid py-5">
         <div class="container">
+            
             <!-- Users List Table -->
             <div class="mb-5" id="users-list">
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -74,6 +75,41 @@
                             </tbody>
                         </table>
                     </div>
+                    @if ($decentralization->total() > 8)
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-auto">
+                                <ul class="pagination">
+                                    @if ($decentralization->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">«</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="{{ $decentralization->previousPageUrl() }}#users-list">«</a>
+                                        </li>
+                                    @endif
+                                    @foreach ($decentralization->getUrlRange(1, $decentralization->lastPage()) as $page => $url)
+                                        <li
+                                            class="page-item {{ $page == $decentralization->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link"
+                                                href="{{ $url }}#users-list">{{ $page }}</a>
+                                        </li>
+                                    @endforeach
+                                    @if ($decentralization->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $decentralization->nextPageUrl() }}"
+                                                id="#users-list">»</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">»</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>

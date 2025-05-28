@@ -47,12 +47,23 @@ class ReplyController extends Controller
             'scroll_to_comments' => true
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $tours = Tour::withCount('clients')
+        $query = Tour::withCount('clients')
             ->with(['clients.replies.admin'])
-            ->orderBy('clients_count', 'desc')
-            ->paginate(8);
+            ->orderBy('clients_count', 'desc');
+
+        $perPage = 8;
+        $totalTours = $query->count();
+        $maxPages = ceil($totalTours / $perPage);
+        $page = $request->input('page', 1);
+
+        // Kiểm tra tính hợp lệ của page
+        if (!is_numeric($page) || $page < 1 || ($totalTours > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.reviews')->with('error', 'Trang không hợp lệ! Đã chuyển về trang mặc định.');
+        }
+
+        $tours = $query->paginate($perPage);
 
         return view('admin.review', compact('tours'));
     }

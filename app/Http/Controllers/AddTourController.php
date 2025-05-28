@@ -205,17 +205,26 @@ class AddTourController extends Controller
         return redirect()->route('admin.showcrud')->with('success', 'Tour đã được cập nhật thành công!');
     }
 
-    public function showCrud()
+    public function showCrud(Request $request)
     {
-        $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-        $tours = Tour::orderByDesc('tour_id')->paginate(6);
+        $user_main = Auth::user();
+        //Phân trang
+        $perPage = 8;
+        $totalTours = Tour::count();
+        $maxPages = ceil($totalTours / $perPage);
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1);
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            // Nếu page không hợp lệ (không phải số, nhỏ hơn 1, hoặc lớn hơn số trang tối đa)
+            return redirect()->route('admin.showcrud')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+        //
+        $tours = Tour::orderByDesc('tour_id')->paginate($perPage);
         $user = User::orderBy('id')->get();
         $guide = Guide::orderByDesc('guide_Id')->get();
         $location = Location::orderBy('location_id')->get();
-        // $client = Client::orderBy('client_id')->get();
 
-        // Lấy các tour yêu thích của người dùng hiện tại
-        // $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
         return view('admin.crud', [
             'user_main' => $user_main,
@@ -228,11 +237,29 @@ class AddTourController extends Controller
         ]);
     }
     //-------------------------------------------------------------------------------------
-    public function showInformation()
+    public function showInformation(Request $request)
     {
-        $decentralization = User::all(); // Lấy danh sách users
+        $query = User::orderBy('id', 'desc');
+
+        // Tổng số bản ghi
+        $totalUsers = $query->count();
+        $perPage = 8;
+        $maxPages = ceil($totalUsers / $perPage);
+
+        // Xác định trang hiện tại
+        $page = $request->input('page', 1);
+
+        // Kiểm tra tính hợp lệ của page
+        if (!is_numeric($page) || $page < 1 || ($totalUsers > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.information')->with('error', 'Trang không hợp lệ! Đã chuyển về trang mặc định.');
+        }
+
+        // Lấy dữ liệu có phân trang
+        $decentralization = $query->paginate($perPage);
+
         return view('admin.information', compact('decentralization'));
     }
+
 
     public function storeGuide(Request $request)
     {
@@ -287,12 +314,22 @@ class AddTourController extends Controller
         return view('admin.editGuide', compact('guide'));
     }
 
-    public function showCRUDGuide()
+    public function showCrudGuide(Request $request)
     {
-        $guide = Guide::orderByDesc('guide_Id')->get();
+        $perPage = 6;
+        $totalGuides = Guide::count();
+        $maxPages = ceil($totalGuides / $perPage);
 
-        // Lấy các tour yêu thích của người dùng hiện tại
-        // $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1); // Mặc định là trang 1
+
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.showcrudguide')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+
+        // Lấy danh sách hướng dẫn viên với phân trang
+        $guide = Guide::orderByDesc('guide_Id')->paginate($perPage);
 
         return view('admin.crudGuide', [
             'data_guide' => $guide,
@@ -347,7 +384,7 @@ class AddTourController extends Controller
     {
         $query = Tour::query();
 
-        // Filter by destination (search in tour_name or tour_description)
+        // Áp dụng các bộ lọc
         if ($request->filled('destination')) {
             $destination = $request->input('destination');
             $query->where(function ($q) use ($destination) {
@@ -356,21 +393,31 @@ class AddTourController extends Controller
             });
         }
 
-        // Filter by price range
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->input('price_min'));
         }
+
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->input('price_max'));
         }
 
-        // Filter by start date
         if ($request->filled('start_date')) {
             $query->whereDate('start_day', '>=', $request->input('start_date'));
         }
 
-        // Paginate the results
-        $data = $query->paginate(6); // Adjust per-page value as needed
+        // Tính tổng số tour sau khi áp dụng bộ lọc
+        $totalTours = $query->count(); // Đếm số bản ghi sau khi lọc
+        $perPage = 6; // Số bản ghi mỗi trang
+        $maxPages = ceil($totalTours / $perPage); // Số trang tối đa
+
+        // Kiểm tra tham số page
+        $page = $request->input('page', 1);
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('user.package')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+
+        // Lấy dữ liệu với phân trang
+        $data = $query->paginate($perPage);
 
         return view('user.package', compact('data'));
     }
@@ -378,36 +425,38 @@ class AddTourController extends Controller
     {
         $query = Tour::query();
 
-        // Filter by destination (search in tour_name or tour_description)
-        if ($request->filled('destination')) {
-            $destination = $request->input('destination');
-            $query->where(function ($q) use ($destination) {
-                $q->where('tour_name', 'like', '%' . $destination . '%')
-                    ->orWhere('tour_description', 'like', '%' . $destination . '%');
-            });
+        // Tính tổng số tour
+        $totalTours = $query->count();
+        $perPage = 6;
+        $maxPages = ceil($totalTours / $perPage);
+
+        // Kiểm tra tham số page
+        $page = $request->input('page', 1);
+        if (!is_numeric($page) || $page < 1 || ($totalTours > 0 && $page > $maxPages)) {
+            return redirect()->route('package')->with('error', 'Trang không hợp lệ! Đã chuyển về trang mặc định.');
         }
 
-        // Filter by price range
-        if ($request->filled('price_min')) {
-            $query->where('price', '>=', $request->input('price_min'));
-        }
-        if ($request->filled('price_max')) {
-            $query->where('price', '<=', $request->input('price_max'));
-        }
-
-        // Filter by start date
-        if ($request->filled('start_date')) {
-            $query->whereDate('start_day', '>=', $request->input('start_date'));
-        }
-
-        // Paginate the results
-        $data = $query->paginate(6); // Adjust per-page value as needed
+        // Lấy dữ liệu với phân trang
+        $data = $query->paginate($perPage);
 
         return view('package', compact('data'));
     }
+
     public function history(Request $request)
     {
-        $query = Booking::query();
+        $query = Booking::query()->orderBy('booking_id', 'desc');
+
+        $perPage = 10;
+        $totalBookings = Booking::count();
+        $maxPages = ceil($totalBookings / $perPage);
+
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1); // Mặc định là trang 1
+
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.history')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
 
         // Tìm kiếm theo tên khách hàng
         if ($search = $request->search) {
@@ -437,7 +486,7 @@ class AddTourController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $bookings = $query->with('tour')->paginate(10);
+        $bookings = $query->with('tour')->paginate($perPage);
 
         // Cache danh sách tour
         $tours = \Illuminate\Support\Facades\Cache::remember('booked_tours', 3600, function () {

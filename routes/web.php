@@ -66,9 +66,9 @@ Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('h
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/home', [UserController::class, 'index'])->name('home');
     Route::get('/admin/reviews', [ReplyController::class, 'index'])->name('admin.reviews');
-    Route::get('/admin/crud', [AddTourController::class, 'showCRUD'])->name('admin.showcrud');
+    Route::get('/admin/crud', [AddTourController::class, 'showCrud'])->name('admin.showcrud');
     Route::get('/admin/history', [AddTourController::class, 'history'])->name('admin.history');
-    Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour');
+    Route::get('/admin/crudguide', [AddTourController::class, 'showCrudGuide'])->name('admin.showcrudguide');
     Route::get('/admin/information', [AddTourController::class, 'showInformation'])->name('admin.information');
     Route::get('/admin/tour_location/{location_id}', [LienKetTrangController::class, 'adminHienThiTourTheoDiaDiem'])->name('admin.tour.location');
     Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore');

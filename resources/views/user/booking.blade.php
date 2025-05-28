@@ -258,7 +258,7 @@
                     giá.</p>
             @endif
 
-            <!-- Danh sách bình luận -->
+         
             <!-- Danh sách bình luận -->
             <div class="row g-1">
                 @if ($data_comment->isEmpty())

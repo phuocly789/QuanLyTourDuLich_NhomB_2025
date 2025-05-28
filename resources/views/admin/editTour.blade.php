@@ -148,4 +148,16 @@
             </form>
         </div>
     </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            inputs.forEach(input => {
+                const value = input.value.replace(/\u3000/g, ' ').trim();
+                if (value === '') {
+                    e.preventDefault();
+                    alert('Các trường không được chỉ chứa khoảng trắng!');
+                }
+            });
+        });
+    </script>
 @endsection

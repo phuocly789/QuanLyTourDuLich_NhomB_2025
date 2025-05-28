@@ -357,7 +357,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if ($data->total() > 10)
+                        @if ($data->total() > 8)
                             <div class="row justify-content-center mt-4">
                                 <div class="col-auto">
                                     <ul class="pagination">
