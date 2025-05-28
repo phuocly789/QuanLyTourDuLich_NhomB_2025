@@ -1,5 +1,6 @@
 <?php
 
+// namespace App\Http\Controllers;
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class ReplyController extends Controller
         // Validate dữ liệu
         $validatedData = $request->validate([
             'client_id' => 'required|integer|exists:clients,client_id',
+            // 'reply_content' => 'required|string',
             'reply_content' => 'required|string',
         ]);
 
