@@ -85,6 +85,10 @@ class AddTourController extends Controller
             'location_id' => 'required|integer|min:1|exists:locations,location_id',
             'tour_description' => 'required|string|max:1000',
             'tour_schedule' => 'required|string|max:2000',
+<<<<<<< HEAD
+=======
+
+>>>>>>> ac3b43e1d8456fceb9058ae07c1f6ce736c39ec6
         ]);
 
         // Xử lý file ảnh

@@ -8,6 +8,10 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
+<<<<<<< HEAD
+=======
+        <!-- Email Address -->
+>>>>>>> ac3b43e1d8456fceb9058ae07c1f6ce736c39ec6
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
