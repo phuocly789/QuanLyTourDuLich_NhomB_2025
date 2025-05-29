@@ -255,6 +255,14 @@
 
         // Vô hiệu hóa submit nếu có lỗi
         document.getElementById('addGuideForm').addEventListener('submit', function(e) {
+            // Dọn sạch khoảng trắng trong các input
+            ['guide_name', 'guide_pno', 'guide_mail', 'guide_intro'].forEach(function(id) {
+                const input = document.getElementById(id);
+                if (input && input.value) {
+                    input.value = input.value.replace(/\s+/g, ' ').trim();
+                }
+            });
+
             const errors = document.querySelectorAll('.text-danger:not(:empty)');
             if (errors.length > 0) {
                 e.preventDefault();

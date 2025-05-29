@@ -131,6 +131,11 @@
     <!-- Package Start -->
     <div class="container-xxl py-5">
         <div class="container">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h1 class="text-center text-primary px-3">Tour phổ biến </h1>
             </div>
@@ -175,8 +180,8 @@
                                     <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end"
                                         style="border-radius: 30px 0 0 30px;">Xem thêm</a>
-                                    <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
-                                        class="btn btn-sm btn-primary px-3 border-end">Đặt ngay</a>
+                                    {{-- <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
+                                        class="btn btn-sm btn-primary px-3 border-end">Đặt ngay</a> --}}
                                     <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
@@ -258,7 +263,7 @@
                     giá.</p>
             @endif
 
-         
+
             <!-- Danh sách bình luận -->
             <div class="row g-1">
                 @if ($data_comment->isEmpty())
@@ -379,7 +384,7 @@
             const phoneInput = this;
             const bookingButton = document.getElementById('bookingButton');
             const phoneError = document.getElementById('phoneError') || document.createElement(
-            'p'); // Tạo phần tử hiển thị lỗi nếu chưa có
+                'p'); // Tạo phần tử hiển thị lỗi nếu chưa có
 
             phoneError.id = 'phoneError';
             phoneError.style.color = 'red';

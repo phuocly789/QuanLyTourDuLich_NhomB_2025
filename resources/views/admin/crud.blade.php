@@ -26,7 +26,7 @@
 
             <!-- Add Tour Form -->
             <div class="mb-4">
-                <form action="{{ route('tours.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tours.store') }}" method="POST" enctype="multipart/form-data" id="addTourForm">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-3">
@@ -57,7 +57,7 @@
                             <span id="tour_image_error" class="text-danger">{{ $errors->first('tour_image') }}</span>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle"  >
+                            <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle">
                                 <option value="" disabled selected>Chọn loại phương tiện</option>
                                 <option value="Máy bay" {{ old('vehicle') == 'Máy bay' ? 'selected' : '' }}>Máy bay
                                 </option>
@@ -122,7 +122,8 @@
                                 </option>
                                 <option value="Hải Phòng" {{ old('star_from') == 'Hải Phòng' ? 'selected' : '' }}>Hải Phòng
                                 </option>
-                                <option value="Hậu Giang" {{ old('star_from') == 'Hậu Giang' ? 'selected' : '' }}>Hậu Giang
+                                <option value="Hậu Giang" {{ old('star_from') == 'Hậu Giang' ? 'selected' : '' }}>Hậu
+                                    Giang
                                 </option>
                                 <option value="Hòa Bình" {{ old('star_from') == 'Hòa Bình' ? 'selected' : '' }}>Hòa Bình
                                 </option>
@@ -198,7 +199,7 @@
                         <div class="col-md-3">
                             <input type="number" class="form-control @error('total_seats') is-invalid @enderror"
                                 id="total_seats" name="total_seats" placeholder="Số chỗ ngồi"
-                                value="{{ old('total_seats') }}" min="1" max="60"  >
+                                value="{{ old('total_seats') }}" min="1" max="60">
                             <span id="total_seats_error" class="text-danger">{{ $errors->first('total_seats') }}</span>
                         </div>
                     </div>
@@ -211,7 +212,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="guide_id"
-                                class="form-control @error('guide_id') is-invalid @enderror"  >
+                                class="form-control @error('guide_id') is-invalid @enderror">
                                 <option value="" disabled selected>Chọn hướng dẫn viên</option>
                                 @foreach ($data_guide as $row)
                                     <option value="{{ $row->guide_Id }}"
@@ -224,7 +225,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="location_id"
-                                class="form-control @error('location_id') is-invalid @enderror"  >
+                                class="form-control @error('location_id') is-invalid @enderror">
                                 <option value="" disabled selected>Chọn địa điểm</option>
                                 @foreach ($data_location as $location)
                                     <option value="{{ $location->location_id }}"
@@ -275,7 +276,6 @@
                                     <th>Giá</th>
                                     <th>Phương tiện</th>
                                     <th>Mô tả</th>
-                                    {{-- <th>Lịch trình</th> --}}
                                     <th>Địa điểm</th>
                                     <th>Hướng dẫn viên</th>
                                     <th>Hành động</th>
@@ -301,14 +301,6 @@
                                             ?>
                                             {{ $mota }}
                                         </td>
-                                        {{-- <td class="text-center">
-                                            <?php
-                                            $tourSchedule = $row->tour_schedule;
-                                            $words1 = explode(' ', $tourSchedule);
-                                            $schedule = implode(' ', array_slice($words1, 0, 20));
-                                            ?>
-                                            {{ $schedule }}
-                                        </td> --}}
                                         <td class="text-center">
                                             {{ $row->location ? $row->location->location_name : 'N/A' }}</td>
                                         <td class="text-center">{{ $row->guide ? $row->guide->guide_Name : 'N/A' }}</td>
@@ -365,6 +357,7 @@
             </div>
         </div>
     </div>
+
     <script>
         $(document).ready(function() {
             // Hàm hiển thị thông báo lỗi
@@ -399,10 +392,20 @@
                 return /^\d+$/.test(value) && parseInt(value) > 0;
             }
 
+            // Hàm dọn sạch khoảng trắng
+            function cleanInputValue(input) {
+                let value = input.val();
+                if (value) {
+                    value = value.replace(/\s+/g, ' ').trim();
+                    input.val(value);
+                }
+                return value;
+            }
+
             // Validate tour_name
             function validateTourName() {
                 let input = $('#tour_name');
-                let value = input.val().trim();
+                let value = cleanInputValue(input);
                 if (value === '') {
                     showError(input, 'Tên tour không được để trống!');
                     return false;
@@ -438,7 +441,7 @@
             // Validate time
             function validateTime() {
                 let input = $('#time');
-                let value = input.val().trim();
+                let value = cleanInputValue(input);
                 if (value === '') {
                     showError(input, 'Thời gian không được để trống!');
                     return false;
@@ -576,8 +579,7 @@
             // Validate tour_description
             function validateTourDescription() {
                 let input = $('#tour_description');
-                sonic
-                let value = input.val().trim();
+                let value = cleanInputValue(input);
                 if (value === '') {
                     showError(input, 'Giới thiệu tour không được để trống!');
                     return false;
@@ -593,7 +595,7 @@
             // Validate tour_schedule
             function validateTourSchedule() {
                 let input = $('#tour_schedule');
-                let value = input.val().trim();
+                let value = cleanInputValue(input);
                 if (value === '') {
                     showError(input, 'Lịch trình tour không được để trống!');
                     return false;
@@ -625,10 +627,28 @@
                 return isValid;
             }
 
-            // Kiểm tra real-time
-            $('#tour_name').on('input', validateTourName);
+            // Ngăn nhập nhiều khoảng trắng liên tiếp trong thời gian thực
+            ['tour_name', 'time', 'tour_description', 'tour_schedule'].forEach(function(id) {
+                $('#' + id).on('input', function() {
+                    let input = $(this);
+                    let value = input.val();
+                    // Thay thế nhiều khoảng trắng bằng một khoảng trắng và xóa khoảng trắng đầu/cuối
+                    if (value) {
+                        let cleanedValue = value.replace(/\s+/g, ' ').trim();
+                        if (cleanedValue !== value) {
+                            input.val(cleanedValue);
+                        }
+                    }
+                    // Gọi hàm validate tương ứng
+                    if (id === 'tour_name') validateTourName();
+                    else if (id === 'time') validateTime();
+                    else if (id === 'tour_description') validateTourDescription();
+                    else if (id === 'tour_schedule') validateTourSchedule();
+                });
+            });
+
+            // Kiểm tra real-time cho các trường khác
             $('#start_day').on('change input', validateStartDay);
-            $('#time').on('input', validateTime);
             $('#price').on('input', validatePrice);
             $('#tour_image').on('change', validateTourImage);
             $('select[name="vehicle"]').on('change', validateVehicle);
@@ -637,12 +657,20 @@
             $('#tour_sale').on('input', validateTourSale);
             $('select[name="guide_id"]').on('change', validateGuideId);
             $('select[name="location_id"]').on('change', validateLocationId);
-            $('#tour_description').on('input', validateTourDescription);
-            $('#tour_schedule').on('input', validateTourSchedule);
 
-            // Ngăn submit nếu có lỗi
-            $('form').on('submit', function(e) {
-                if (!validateAllFields()) {
+            // Vô hiệu hóa submit nếu có lỗi
+            $('#addTourForm').on('submit', function(e) {
+                // Dọn sạch khoảng trắng trong các input
+                ['tour_name', 'time', 'tour_description', 'tour_schedule'].forEach(function(id) {
+                    const input = $('#' + id);
+                    if (input && input.val()) {
+                        input.val(input.val().replace(/\s+/g, ' ').trim());
+                    }
+                });
+
+                // Kiểm tra lỗi
+                const errors = $('.text-danger:not(:empty)');
+                if (errors.length > 0 || !validateAllFields()) {
                     e.preventDefault();
                     alert('Vui lòng sửa các lỗi trước khi gửi form!');
                 }
@@ -650,6 +678,14 @@
 
             // Kiểm tra khi trang tải
             validateAllFields();
+
+            // Áp dụng giá trị ban đầu từ old() và dọn sạch khoảng trắng
+            ['tour_name', 'time', 'tour_description', 'tour_schedule'].forEach(function(id) {
+                const input = $('#' + id);
+                if (input && input.val()) {
+                    input.val(input.val().replace(/\s+/g, ' ').trim());
+                }
+            });
         });
     </script>
 @endsection

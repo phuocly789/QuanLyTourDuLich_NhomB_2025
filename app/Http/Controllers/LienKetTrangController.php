@@ -133,17 +133,33 @@ class LienKetTrangController extends Controller
         return view('user.tour_location', compact('tours', 'location', 'footerTours'));
     }
 
-    public function userHienThiChiTietTuor($id)
+    public function userHienThiChiTietTuor(Request $request, $id)
     {
+        // Kiểm tra tour tồn tại
+        $tour = Tour::find($id);
+        if (!$tour) {
+            return redirect()->route('user.package')->with('error', 'Tour không tồn tại!');
+        }
 
         $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
+
         $tours = Tour::orderBy('tour_id')->get();
-        $tour = Tour::findOrFail($id);
-        $data_comment = Client::where('tour_id', $tour->tour_id)->latest()->paginate(5);
-        // Khởi tạo mảng rỗng cho favoriteTours
-        $favoriteTours = collect();
         $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
-        // Kiểm tra nếu người dùng đã đăng nhập
+
+        // Bình luận - phân trang và kiểm tra trang hợp lệ
+        $perPage = 5;
+        $totalComments = Client::where('tour_id', $tour->tour_id)->count();
+        $maxPages = ceil($totalComments / $perPage);
+
+        $page = $request->input('page', 1);
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('user.package')->with('error', 'Trang bình luận không hợp lệ!');
+        }
+
+        $data_comment = Client::where('tour_id', $tour->tour_id)->latest()->paginate($perPage, ['*'], 'page', $page);
+
+        // Danh sách tour yêu thích nếu đã đăng nhập
+        $favoriteTours = collect(); // Khởi tạo rỗng
         if ($user_main) {
             $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
         }
@@ -157,6 +173,7 @@ class LienKetTrangController extends Controller
             'footerTours' => $footerTours
         ]);
     }
+
 
     public function userSearch(Request $request)
     {

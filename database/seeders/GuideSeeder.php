@@ -89,8 +89,38 @@ class GuideSeeder extends Seeder
             [
                 'guide_Name' => 'Viruss',
                 'guide_Pno' => '0987654321',
-                'guide_Img' => 'viruss.jpg',
+                'guide_Img' => 'v.jpg',
                 'guide_Mail' => 'lvc@gmail.com',
+                'guide_Intro' => 'Là người có thâm niên hơn 10 năm kinh nghiệm trong việc dẫn dắt các tour lớn nhỏ, tôi sẽ đồng hành cùng các bạn trọng mọi cuộc hành trình. Bạn chỉ cần đi và trải nghiệm, còn lại tôi sẽ lo cho bạn tất cả. Nếu có gì thắc mắc, vui lòng liên hệ với tôi qua email hoặc số điện thoại. Chúc bạn có những phút giây thật tuyệt vời cùng với Discovery.',
+                'created_at' => now(),
+                'updated_at' => now(),
+
+            ],
+            [
+                'guide_Name' => 'Nguyễn Văn A',
+                'guide_Pno' => '0921238423',
+                'guide_Img' => 'team-1.jpg',
+                'guide_Mail' => 'lbb@gmail.com',
+                'guide_Intro' => 'Là người có thâm niên hơn 10 năm kinh nghiệm trong việc dẫn dắt các tour lớn nhỏ, tôi sẽ đồng hành cùng các bạn trọng mọi cuộc hành trình. Bạn chỉ cần đi và trải nghiệm, còn lại tôi sẽ lo cho bạn tất cả. Nếu có gì thắc mắc, vui lòng liên hệ với tôi qua email hoặc số điện thoại. Chúc bạn có những phút giây thật tuyệt vời cùng với Discovery.',
+                'created_at' => now(),
+                'updated_at' => now(),
+
+            ],
+            [
+                'guide_Name' => 'Lê Văn Cường',
+                'guide_Pno' => '0939392374',
+                'guide_Img' => 'team-2.jpg',
+                'guide_Mail' => 'lds@gmail.com',
+                'guide_Intro' => 'Là người có thâm niên hơn 10 năm kinh nghiệm trong việc dẫn dắt các tour lớn nhỏ, tôi sẽ đồng hành cùng các bạn trọng mọi cuộc hành trình. Bạn chỉ cần đi và trải nghiệm, còn lại tôi sẽ lo cho bạn tất cả. Nếu có gì thắc mắc, vui lòng liên hệ với tôi qua email hoặc số điện thoại. Chúc bạn có những phút giây thật tuyệt vời cùng với Discovery.',
+                'created_at' => now(),
+                'updated_at' => now(),
+
+            ],
+            [
+                'guide_Name' => 'Lê Văn Cường',
+                'guide_Pno' => '0939392374',
+                'guide_Img' => 'team-3.jpg',
+                'guide_Mail' => 'team@gmail.com',
                 'guide_Intro' => 'Là người có thâm niên hơn 10 năm kinh nghiệm trong việc dẫn dắt các tour lớn nhỏ, tôi sẽ đồng hành cùng các bạn trọng mọi cuộc hành trình. Bạn chỉ cần đi và trải nghiệm, còn lại tôi sẽ lo cho bạn tất cả. Nếu có gì thắc mắc, vui lòng liên hệ với tôi qua email hoặc số điện thoại. Chúc bạn có những phút giây thật tuyệt vời cùng với Discovery.',
                 'created_at' => now(),
                 'updated_at' => now(),
