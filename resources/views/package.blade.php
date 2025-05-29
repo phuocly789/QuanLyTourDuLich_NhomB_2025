@@ -16,9 +16,14 @@
     <!-- Navbar & Hero End -->
 
 
-    <!-- Filter Start -->
+    {{-- <!-- Filter Start -->
     <div class="container-xxl py-5">
         <div class="container">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 24px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
                 <h3 class="text-primary fw-bold">Lọc Tour Du Lịch</h3>
                 <p class="text-muted">Tìm tour phù hợp với nhu cầu của bạn</p>
@@ -63,117 +68,129 @@
             </form>
         </div>
     </div>
-    <!-- Filter End -->
+    <!-- Filter End --> --}}
     <!-- Package Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
+            {{-- <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h1 class="text-center text-primary px-3">Tour đang triển khai </h1>
-            </div>
-            <x-request-logint-modal />
-            <div class="row g-4 justify-content-center">
-                @foreach ($data as $row)
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="package-item">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" style="width: 600px; height: 250px"
-                                    src="{{ asset('img/' . $row->tour_image) }}" alt="">
-                                <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">
-                                    {{ $row->tour_sale }}</div>
-                            </div>
-                            <div class="d-flex border-bottom" style="height: 50px;">
-                                <small class="flex-fill text-center border-end py-2"><i
-                                        class="fa fa-calendar-alt text-primary me-2"></i>{{ $row->start_day }}</small>
-                                <small class="flex-fill text-center border-end py-2"><i
-                                        class="fa fa-clock text-primary me-2"></i>{{ $row->time }}</small>
-                                <small class="flex-fill text-center py-2"><i
-                                        class="fa fa-plane-departure text-primary me-2"></i>{{ $row->star_from }}</small>
-                            </div>
-                            <h4 class=" text-primary fw-bold flex-fill text-center py-2" style="height: 50px;">
-                                {{ $row->tour_name }}</h4>
-                            <div class="text-center pt-2">
-
-                                <h5 class="mb-0 text-danger">{{ number_format($row->price, 0, ',', '.') }} vnđ</h5>
-
-                                <div class="mb-3">
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
+            </div> --}}
+            @if (isset($data) && !$data->isEmpty())
+                <x-request-logint-modal />
+                <div class="row g-4 justify-content-center">
+                    @foreach ($data as $row)
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="package-item">
+                                <div class="position-relative overflow-hidden">
+                                    <img class="img-fluid" style="width: 600px; height: 250px"
+                                        src="{{ asset('img/' . $row->tour_image) }}" alt="">
+                                    <div class="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">
+                                        {{ $row->tour_sale }}</div>
                                 </div>
-                                <?php
-                                $tourDescription = $row->tour_description;
+                                <div class="d-flex border-bottom" style="height: 50px;">
+                                    <small class="flex-fill text-center border-end py-2"><i
+                                            class="fa fa-calendar-alt text-primary me-2"></i>{{ $row->start_day }}</small>
+                                    <small class="flex-fill text-center border-end py-2"><i
+                                            class="fa fa-clock text-primary me-2"></i>{{ $row->time }}</small>
+                                    <small class="flex-fill text-center py-2"><i
+                                            class="fa fa-plane-departure text-primary me-2"></i>{{ $row->star_from }}</small>
+                                </div>
+                                <h4 class=" text-primary fw-bold flex-fill text-center py-2" style="height: 50px;">
+                                    {{ $row->tour_name }}</h4>
+                                <div class="text-center pt-2">
 
-                                // Chia chuỗi thành mảng các từ
-                                $words = explode(' ', $tourDescription);
+                                    <h5 class="mb-0 text-danger">{{ number_format($row->price, 0, ',', '.') }} vnđ</h5>
 
-                                // Lấy 100 từ đầu tiên
-                                $mota = implode(' ', array_slice($words, 0, 50));
-                                ?>
-                                <p style="height: 110px;text-align: justify;padding: 10px">{{ $mota }} ... </p>
-                                <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
-                                    {{ $row->total_seats - $row->booked_seats }} chỗ</p>
-                                <div class="d-flex justify-content-center mb-2 pb-2">
+                                    <div class="mb-3">
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                        <small class="fa fa-star text-primary"></small>
+                                    </div>
+                                    <?php
+                                    $tourDescription = $row->tour_description;
+                                    
+                                    // Chia chuỗi thành mảng các từ
+                                    $words = explode(' ', $tourDescription);
+                                    
+                                    // Lấy 100 từ đầu tiên
+                                    $mota = implode(' ', array_slice($words, 0, 50));
+                                    ?>
+                                    <p style="height: 110px;text-align: justify;padding: 10px">{{ $mota }} ...
+                                    </p>
+                                    <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
+                                        {{ $row->total_seats - $row->booked_seats }} chỗ</p>
+                                    <div class="d-flex justify-content-center mb-2 pb-2">
 
 
-                                    <button type="button" class="btn btn-sm btn-primary px-3 border-end"
-                                        style="border-radius: 30px 0 0 30px;" data-bs-toggle="modal"
-                                        data-bs-target="#loginPromptModal">Xem thêm</button>
+                                        <button type="button" class="btn btn-sm btn-primary px-3 border-end"
+                                            style="border-radius: 30px 0 0 30px;" data-bs-toggle="modal"
+                                            data-bs-target="#loginPromptModal">Xem thêm</button>
 
-                                    <button type="button" class="btn btn-sm btn-primary px-3"
-                                        style="border-radius: 0 30px 30px 0;" data-bs-toggle="modal"
-                                        data-bs-target="#loginPromptModal">Đặt ngay</button>
+                                        <button type="button" class="btn btn-sm btn-primary px-3"
+                                            style="border-radius: 0 30px 30px 0;" data-bs-toggle="modal"
+                                            data-bs-target="#loginPromptModal">Đặt ngay</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Phần phân trang -->
-
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <ul class="pagination">
-                    {{-- Nút Previous --}}
-                    @if ($data->onFirstPage())
-                        <li class="page-item disabled">
-                            <span class="page-link" aria-hidden="true">&laquo;</span>
-                        </li>
-                    @else
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $data->previousPageUrl() }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    {{-- Các nút số --}}
-                    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
-                        <li class="page-item {{ $page == $data->currentPage() ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                        </li>
                     @endforeach
-
-                    {{-- Nút Next --}}
-                    @if ($data->hasMorePages())
-                        <li class="page-item">
-                            <a class="page-link" href="{{ $data->nextPageUrl() }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    @else
-                        <li class="page-item disabled">
-                            <span class="page-link" aria-hidden="true">&raquo;</span>
-                        </li>
-                    @endif
-                </ul>
-            </div>
+                </div>
+            @else
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <p class="text-center text-gray my-4">Không có kết quả </p>
+                </div>
+            @endif
         </div>
     </div>
+
+    <!-- Phần phân trang -->
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-auto">
+            <ul class="pagination">
+                {{-- Nút Previous --}}
+                @if ($data->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $data->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- Các nút số --}}
+                @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+                    <li class="page-item {{ $page == $data->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                {{-- Nút Next --}}
+                @if ($data->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $data->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                @endif
+            </ul>
+        </div>
     </div>
+
     <!-- Package End -->
 
     <!-- Process Start -->

@@ -11,7 +11,11 @@
 
                         <form action="/search" method="get">
                             <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Search by name..." name="search">
+                                placeholder="Search by name..." name="search" id="searchInput" maxlength="100"
+                                oninput="checkCharCount()">
+                            <div id="error-message" style="color: red;font-size: 20px; display: none;">
+                                Đã nhập tối đa 100 ký tự!
+                            </div>
                             <button type="submit"
                                 class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2"
                                 style="margin-top: 7px;">Tìm kiếm</button>
@@ -34,9 +38,9 @@
 
             <div class="row g-4 justify-content-center">
                 @if ($tours->isNotEmpty())
-                <div class="text-center pb-2 wow fadeInUp" data-wow-delay="0.1s">
-                    <h1 class="mb-2">Danh sách tour cho:  <b>{{ $search }}</b></h1>
-                </div>
+                    <div class="text-center pb-2 wow fadeInUp" data-wow-delay="0.1s">
+                        <h1 class="mb-2">Danh sách tour cho: <b>{{ $search }}</b></h1>
+                    </div>
                     @foreach ($tours as $row)
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="package-item">
@@ -147,4 +151,16 @@
         </div>
     </div>
     <!-- Process Start -->
+    <script>
+        function checkCharCount() {
+            const input = document.getElementById('searchInput');
+            const errorMessage = document.getElementById('error-message');
+            if (input.value.length >= 100) {
+                errorMessage.style.display = 'block';
+                input.value = input.value.substring(0, 100); // Cắt bớt nếu vượt quá 100 ký tự
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
+    </script>
 @endsection
