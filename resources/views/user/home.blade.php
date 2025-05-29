@@ -239,6 +239,12 @@
                                         <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                             class="btn btn-sm btn-primary px-3 border-end"
                                             style="border-radius: 30px 0 0 30px;width: 150px">Xem thêm</a>
+                                        {{-- <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
+                                        class="btn btn-sm btn-primary px-3 border-end {{ $row->total_seats - $row->booked_seats <= 0 ? 'disabled' : '' }}"
+                                        style="border-radius: 0 0 0 0;"
+                                        {{ $row->total_seats - $row->booked_seats <= 0 ? 'title="Tour đã hết chỗ"' : '' }}>
+                                        Đặt ngay
+                                    </a> --}}
                                         <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">

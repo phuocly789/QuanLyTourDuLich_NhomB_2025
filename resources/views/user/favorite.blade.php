@@ -60,10 +60,10 @@
                                         </div>
                                         <?php
                                         $tourDescription = $favoriteTour->tour->tour_description;
-                                        
+
                                         // Chia chuỗi thành mảng các từ
                                         $words = explode(' ', $tourDescription);
-                                        
+
                                         // Lấy 100 từ đầu tiên
                                         $mota = implode(' ', array_slice($words, 0, 50));
                                         ?>
@@ -77,12 +77,14 @@
                                             <a href="{{ route('user.tour.readmore', $favoriteTour->tour->tour_id) }}"
                                                 class="btn btn-sm btn-primary px-3 border-end"
                                                 style="border-radius: 30px 0 0 30px;">Xem thêm</a>
-
+                                            <a href="{{ route('user.tour.readmore', $favoriteTour->tour->tour_id) }}"
+                                                class="btn btn-sm btn-primary px-3 border-end"
+                                                style="border-radius: 0 0 0 0;">Đặt ngay</a>
                                             <!-- <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
-                                       @csrf
-                                       <input type="hidden" name="tour_id" value="{{ $favoriteTour->tour->tour_id }}">
+                                   @csrf
+                                   <input type="hidden" name="tour_id" value="{{ $favoriteTour->tour->tour_id }}">
 
-                                   </form> -->
+                               </form> -->
 
                                             <div class="btn-sm btn-primary px-3 border-end btn-far"
                                                 style="border-radius: 0 30px 30px 0;"

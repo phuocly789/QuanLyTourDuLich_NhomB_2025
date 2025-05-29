@@ -22,8 +22,6 @@ class Tour extends Model
         'tour_schedule',
         'tour_sale',
         'guide_id',
-        'total_seats',
-        'booked_seats',
     ];
     public function guide()
     {
