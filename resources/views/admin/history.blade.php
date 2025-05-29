@@ -14,7 +14,11 @@
 
     <div class="container-fluid py-5">
         <div class="container">
-
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             <!-- Filter Form -->
             <div class="mb-4">
                 <form method="GET" action="{{ route('admin.history') }}">

@@ -65,13 +65,22 @@ body {
     color: #2e8b57;
 }
 
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
 .revenue-card h3 {
     color: #2e8b57;
 }
 
 .table-modern {
     background-color: #fff;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;

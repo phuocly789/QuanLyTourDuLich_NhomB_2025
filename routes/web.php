@@ -18,7 +18,6 @@ use App\Http\Controllers\AdminReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialAuthController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,8 +31,8 @@ use App\Http\Controllers\SocialAuthController;
 require __DIR__ . '/auth.php';
 
 // Tuyến đường xác thực (Yêu cầu đăng nhập)
-Route::get('/auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('/auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
+    Route::get('auth/google/redirect', [SocialAuthController::class, 'redirect'])->name('google.redirect');
+    Route::get('auth/google/callback', [SocialAuthController::class, 'callback']);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -50,8 +49,8 @@ Route::post('/check-otp', [ForgotPasswordController::class, 'checkOtp'])->name('
 Route::post('/auth/reset-password', [ForgotPasswordController::class, 'update'])->name('password.updated');
 
 // Tuyến đường chung (Không yêu cầu xác thực)
-Route::get('/{page?}', [LienKetTrangController::class, 'index']);
 Route::get('/search', [LienKetTrangController::class, 'search']);
+Route::get('/{page?}', [LienKetTrangController::class, 'index']);
 Route::get('/package', [AddTourController::class, 'hienThiTour'])->name('package');
 Route::get('/tour/{tour_id}', [LienKetTrangController::class, 'hienThi'])->name('tourShow.booking');
 Route::get('/tour_location/{location_id}', [LienKetTrangController::class, 'hienThiTourTheoDiaDiem'])->name('tour.location');
@@ -70,14 +69,15 @@ Route::get('/history/{user_id}', [BookingController::class, 'history'])->name('h
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/home', [UserController::class, 'index'])->name('home');
     Route::get('/admin/reviews', [ReplyController::class, 'index'])->name('admin.reviews');
-    Route::get('/admin/crud', [AddTourController::class, 'showCRUD'])->name('admin.showcrud');
+    Route::get('/admin/crud', [AddTourController::class, 'showCrud'])->name('admin.showcrud');
     Route::get('/admin/history', [AddTourController::class, 'history'])->name('admin.history');
-    Route::get('/admin/crudtour', [AddTourController::class, 'S'])->name('admin.tour');
+    Route::get('/admin/crudguide', [AddTourController::class, 'showCrudGuide'])->name('admin.showcrudguide');
     Route::get('/admin/information', [AddTourController::class, 'showInformation'])->name('admin.information');
     Route::get('/admin/tour_location/{location_id}', [LienKetTrangController::class, 'adminHienThiTourTheoDiaDiem'])->name('admin.tour.location');
     Route::get('/admin/booking/{tour_id}', [LienKetTrangController::class, 'adminHienThiChiTietTuor'])->name('admin.tour.readmore');
     Route::get('/admin/result', [LienKetTrangController::class, 'adminSearch'])->name('searchAdmin');
     Route::get('/guide/crud', [AddTourController::class, 'showCRUDGuide'])->name('admin.guide');
+    Route::post('guide/check-duplicate', [AddTourController::class, 'checkDuplicate'])->name('guide.check-duplicate');
 });
 
 // Tuyến đường quản lý tour
@@ -85,6 +85,9 @@ Route::post('/tours', [AddTourController::class, 'store'])->name('tours.store');
 Route::delete('/tours/{id}', [AddTourController::class, 'destroy'])->name('tours.destroy');
 Route::get('/tours/{id}/edit', [AddTourController::class, 'edit'])->name('tours.edit');
 Route::put('/tours/{id}', [AddTourController::class, 'update'])->name('tours.update');
+Route::get('/tours/{id}', function ($id) {
+    return redirect()->route('home')->with('error', 'Không thể truy cập đường dẫn này.');
+});
 
 // Tuyến đường quản lý hướng dẫn viên
 Route::post('/guide', [AddTourController::class, 'storeGuide'])->name('guide.store');
@@ -114,4 +117,3 @@ Route::post('/admin/load-more-tours', [LienKetTrangController::class, 'loadMoreT
 Route::post('/admin/load-more-guides', [LienKetTrangController::class, 'loadMoreGuides'])->name('admin.loadMoreGuides');
 Route::post('/admin/load-more-users', [LienKetTrangController::class, 'loadMoreUsers'])->name('admin.loadMoreUsers');
 Route::post('/admin/load-more-bookings', [LienKetTrangController::class, 'loadMoreBookings'])->name('admin.loadMoreBookings');
-

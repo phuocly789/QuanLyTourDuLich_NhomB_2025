@@ -10,10 +10,8 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('client_id'); // Liên kết với bình luận
-            // $table->unsignedBigInteger('admin_id'); // Liên kết với admin
-            $table->text('reply_content'); // Nội dung câu trả lời
-            $table->timestamps(); // created_at và updated_at
+            $table->text('reply_content'); 
+            $table->timestamps();
 
             // Khóa ngoại
             $table->integer('client_id')->unsigned();

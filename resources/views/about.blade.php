@@ -8,13 +8,7 @@
             <div class="row justify-content-center py-5">
                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-3 text-white animated slideInDown">HHTP</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href={{ '/index' }}>Trang chủ</a></li>
-                            <li class="breadcrumb-item"><a href="#">trang</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Giới thiệu</li>
-                        </ol>
-                    </nav>
+                    
                 </div>
             </div>
         </div>

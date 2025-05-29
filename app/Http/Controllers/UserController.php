@@ -30,6 +30,7 @@ class UserController extends Controller
                 $user_main = Auth::user();
                 $tours = Tour::orderByRaw('CAST(tour_sale AS DECIMAL) DESC')->paginate(6);
                 $guides = Guide::orderBy('guide_Id')->get();
+                $footerTours = Tour::orderBy('tour_id', 'asc')->take(12)->get();
                 // $clients = Client::orderBy('client_id')->get();
                 $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
@@ -37,7 +38,7 @@ class UserController extends Controller
                     'user_main' => $user_main,
                     'data' => $tours,
                     'data_guide' => $guides,
-                    // 'data_comment' => $clients,
+                    'footerTours' => $footerTours,
                     'favoriteTours' => $favoriteTours
                 ]);
             } elseif ($userType == 'admin') {

@@ -18,13 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'google_id', // Thêm dòng này
-            'facebook_id',  // Thêm dòng này
-
-];
+        'name',
+        'email',
+        'password',
+        'google_id',       // Thêm trường này
+        'google_avatar',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

@@ -11,7 +11,11 @@
 
                         <form action="/search" method="get">
                             <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Search by name..." name="search">
+                            placeholder="Search by name..." name="search" id="searchInput" maxlength="100"
+                            oninput="checkCharCount()">
+                            <div  id="error-message" style="color: red;font-size: 20px; display: none;">
+                                Đã nhập tối đa 100 ký tự!
+                            </div>
                             <button type="submit"
                                 class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2"
                                 style="margin-top: 7px;">Tìm kiếm</button>
@@ -147,15 +151,7 @@
                     </div>
                 @endforeach
 
-                <!-- <div class="row justify-content-center">
-                                            <div class="col-auto">
-                                                <a class="btn btn-primary rounded-pill py-3 px-4 mt-2" href="{{ url('/destination') }}">Show more ...</a>
-                                            </div>
-                                        </div> -->
-
-
             </div>
-
         </div>
     </div>
     <!-- Destination Start -->
@@ -209,7 +205,7 @@
                                 // Lấy 100 từ đầu tiên
                                 $mota = implode(' ', array_slice($words, 0, 50));
                                 ?>
-                                <p style="height: 110px;">{{ $mota }} ... </p>
+                                <p style="height: 110px;text-align: justify;padding: 10px">{{ $mota }} ... </p>
 
                                 <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                     {{ $row->total_seats - $row->booked_seats }} chỗ</p>
@@ -327,7 +323,7 @@
                                 // Lấy 100 từ đầu tiên
                                 $motaGuide = implode(' ', array_slice($words, 0, 50));
                                 ?>
-                                <p style="height: auto;">{{ $motaGuide }}</p>
+                                <p style="height: auto;text-align: justify;padding: 10px">{{ $motaGuide }}</p>
                             </div>
                         </div>
                     </div>
@@ -362,5 +358,18 @@
 
             setInterval(changeImage, 2000);
         });
+
+
+
+        function checkCharCount() {
+            const input = document.getElementById('searchInput');
+            const errorMessage = document.getElementById('error-message');
+            if (input.value.length >= 100) {
+                errorMessage.style.display = 'block';
+                input.value = input.value.substring(0, 100); // Cắt bớt nếu vượt quá 100 ký tự
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
     </script>
 @endsection

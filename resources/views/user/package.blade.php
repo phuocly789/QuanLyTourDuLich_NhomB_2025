@@ -7,13 +7,7 @@
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white animated slideInDown">Tour đang triển khai</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href={{ '/user.home' }}>Trang chủ</a></li>
-                                <li class="breadcrumb-item"><a href="#">Trang</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">Tour đang triển khai</li>
-                            </ol>
-                        </nav>
+
                     </div>
                 </div>
             </div>
@@ -24,6 +18,11 @@
     <!-- Filter Start -->
     <div class="container-xxl py-5">
         <div class="container">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
                 <h3 class="text-primary fw-bold">Lọc Tour Du Lịch</h3>
                 <p class="text-muted">Tìm tour phù hợp với nhu cầu của bạn</p>
@@ -113,7 +112,8 @@
                                     $words = explode(' ', $tourDescription);
                                     $mota = implode(' ', array_slice($words, 0, 50));
                                     ?>
-                                    <p style="height: 130px;">{{ $mota }} ... </p>
+                                    <p style="height: 130px;text-align: justify;padding: 10px">{{ $mota }} ...
+                                    </p>
                                     <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                         {{ $row->total_seats - $row->booked_seats }} chỗ</p>
                                     <div class="d-flex justify-content-center mb-2 pb-2">
