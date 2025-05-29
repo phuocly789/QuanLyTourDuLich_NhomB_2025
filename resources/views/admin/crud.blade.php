@@ -275,7 +275,7 @@
                                     <th>Giá</th>
                                     <th>Phương tiện</th>
                                     <th>Mô tả</th>
-                                    <th>Lịch trình</th>
+                                    {{-- <th>Lịch trình</th> --}}
                                     <th>Địa điểm</th>
                                     <th>Hướng dẫn viên</th>
                                     <th>Hành động</th>
@@ -301,14 +301,14 @@
                                             ?>
                                             {{ $mota }}
                                         </td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <?php
                                             $tourSchedule = $row->tour_schedule;
                                             $words1 = explode(' ', $tourSchedule);
                                             $schedule = implode(' ', array_slice($words1, 0, 20));
                                             ?>
                                             {{ $schedule }}
-                                        </td>
+                                        </td> --}}
                                         <td class="text-center">
                                             {{ $row->location ? $row->location->location_name : 'N/A' }}</td>
                                         <td class="text-center">{{ $row->guide ? $row->guide->guide_Name : 'N/A' }}</td>
