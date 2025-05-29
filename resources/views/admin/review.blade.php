@@ -12,13 +12,8 @@
     <div class="container-fluid py-5">
         <div class="container">
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
             @if (session('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
                     {{ session('error') }}
                 </div>
             @endif
@@ -48,7 +43,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" class="p-0 trai" >
+                                <td colspan="4" class="p-0 trai">
                                     <div class="collapse" id="reviews-{{ $tour->tour_id }}">
                                         <div class="card card-body">
                                             @if ($tour->clients->isEmpty())
