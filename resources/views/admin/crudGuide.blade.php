@@ -21,7 +21,63 @@
             @endif
 
             <!-- Add Guide Form -->
-            <div class="mb-4">
+            <!-- <div class="mb-4">
+                <form action="{{ route('guide.store') }}" method="POST" enctype="multipart/form-data" id="addGuideForm">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="guide_name" name="guide_name"
+                                placeholder="Tên hướng dẫn viên" value="{{ old('guide_name') }}" required>
+                            @error('guide_name')
+                                <span class="text-danger" id="guide_name_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_name_error"></span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" id="guide_pno" name="guide_pno"
+                                placeholder="Số điện thoại" value="{{ old('guide_pno') }}" required>
+                            @error('guide_pno')
+                                <span class="text-danger" id="guide_pno_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_pno_error"></span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3">
+                            <input type="file" class="form-control" id="guide_image" name="guide_image" accept="image/*"
+                                required>
+                            @error('guide_image')
+                                <span class="text-danger" id="guide_image_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_image_error"></span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3">
+                            <input type="email" class="form-control" id="guide_mail" name="guide_mail" placeholder="Email"
+                                value="{{ old('guide_mail') }}" required>
+                            @error('guide_mail')
+                                <span class="text-danger" id="guide_mail_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_mail_error"></span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-9">
+                            <textarea class="form-control" id="guide_intro" name="guide_intro" placeholder="Giới thiệu" required>{{ old('guide_intro') }}</textarea>
+                            @error('guide_intro')
+                                <span class="text-danger" id="guide_intro_error">{{ $message }}</span>
+                            @else
+                                <span class="text-danger" id="guide_intro_error"></span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+             <div class="mb-4">
                 <form action="{{ route('guide.store') }}" method="POST" enctype="multipart/form-data" id="addGuideForm">
                     @csrf
                     <div class="row g-3">
@@ -77,6 +133,7 @@
                     </div>
                 </form>
             </div>
+
 
             <!-- Guides List Table -->
             <div class="mb-5" id="guides-list">
