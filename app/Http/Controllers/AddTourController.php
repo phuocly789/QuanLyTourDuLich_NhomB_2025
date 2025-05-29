@@ -85,32 +85,11 @@ class AddTourController extends Controller
             'location_id' => 'required|integer|min:1|exists:locations,location_id',
             'tour_description' => 'required|string|max:1000',
             'tour_schedule' => 'required|string|max:2000',
-<<<<<<< HEAD
 
-=======
->>>>>>> hiepDev
         ]);
 
         // Xử lý file ảnh
         if ($request->hasFile('tour_image')) {
-<<<<<<< HEAD
-            $get_image = $request->file('tour_image');
-            $path = public_path('img/'); // thư mục public/img
-            $get_name_image = $get_image->getClientOriginalName(); // tên gốc
-            $name_image = current(explode('.', $get_name_image)); // lấy phần tên (không đuôi)
-            $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension(); // tên mới tránh trùng
-            $get_image->move($path, $new_image); // move ảnh
-
-            // lưu đường dẫn ảnh vào DB (đường dẫn tương đối)
-            $validated['tour_image'] = $new_image;
-        }
-
-        $validated['booked_seats'] = 0;
-        // Tạo tour mới
-        Tour::create($validated);
-
-        return redirect()->route('admin.showcrud')->with('success', 'Thêm tour thành công!');
-=======
             $path = $request->file('tour_image')->store('img', 'public');
             $validated['tour_image'] = $path;
         }
@@ -119,7 +98,6 @@ class AddTourController extends Controller
         Tour::create($validated);
 
         return redirect()->route('tours.index')->with('success', 'Thêm tour thành công!');
->>>>>>> hiepDev
     }
 
 

@@ -12,23 +12,6 @@ return new class extends Migration
      * @return void
      */
     public function up(): void
-<<<<<<< HEAD
-{
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('google_id')->nullable()->unique()->after('email'); // Thêm unique()
-    });
-}
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            //
-=======
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('google_id')->nullable()->unique()->after('email');
@@ -38,13 +21,14 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('google_id');
             $table->dropColumn('google_avatar');
->>>>>>> hiepDev
         });
     }
 };

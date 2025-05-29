@@ -8,10 +8,7 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-<<<<<<< HEAD
             <!-- Name -->
-=======
->>>>>>> hiepDev
             <div>
                 <x-input-label for="name" :value="__('Tên đăng nhập')" />
                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
@@ -19,10 +16,7 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
-<<<<<<< HEAD
             <!-- Email Address -->
-=======
->>>>>>> hiepDev
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />
                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
@@ -30,10 +24,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
-<<<<<<< HEAD
             <!-- Password -->
-=======
->>>>>>> hiepDev
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Mật khẩu')" />
 
@@ -43,10 +34,7 @@
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
-<<<<<<< HEAD
             <!-- Confirm Password -->
-=======
->>>>>>> hiepDev
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Xác nhận mật khẩu')" />
 
@@ -66,13 +54,6 @@
                     {{ __('Đăng Ký') }}
                 </x-primary-button>
             </div>
-<<<<<<< HEAD
-
-        </form>
-    </x-guest-layout>
-
-</div>
-=======
         </form> 
        <div class="mt-4">
     <a href="{{ route('google.redirect') }}" style="background-color: #DB4437; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
@@ -81,4 +62,3 @@
 </div>
     </x-guest-layout>
 </div>
->>>>>>> hiepDev

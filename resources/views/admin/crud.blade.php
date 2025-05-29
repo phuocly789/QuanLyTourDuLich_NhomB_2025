@@ -57,11 +57,7 @@
                             <span id="tour_image_error" class="text-danger">{{ $errors->first('tour_image') }}</span>
                         </div>
                         <div class="col-md-3">
-<<<<<<< HEAD
-                            <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle">
-=======
                             <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle"  >
->>>>>>> hiepDev
                                 <option value="" disabled selected>Chọn loại phương tiện</option>
                                 <option value="Máy bay" {{ old('vehicle') == 'Máy bay' ? 'selected' : '' }}>Máy bay
                                 </option>
@@ -202,11 +198,7 @@
                         <div class="col-md-3">
                             <input type="number" class="form-control @error('total_seats') is-invalid @enderror"
                                 id="total_seats" name="total_seats" placeholder="Số chỗ ngồi"
-<<<<<<< HEAD
-                                value="{{ old('total_seats') }}" min="1" max="60">
-=======
                                 value="{{ old('total_seats') }}" min="1" max="60"  >
->>>>>>> hiepDev
                             <span id="total_seats_error" class="text-danger">{{ $errors->first('total_seats') }}</span>
                         </div>
                     </div>
@@ -219,11 +211,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="guide_id"
-<<<<<<< HEAD
-                                class="form-control @error('guide_id') is-invalid @enderror">
-=======
                                 class="form-control @error('guide_id') is-invalid @enderror"  >
->>>>>>> hiepDev
                                 <option value="" disabled selected>Chọn hướng dẫn viên</option>
                                 @foreach ($data_guide as $row)
                                     <option value="{{ $row->guide_Id }}"
@@ -236,11 +224,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="location_id"
-<<<<<<< HEAD
-                                class="form-control @error('location_id') is-invalid @enderror">
-=======
                                 class="form-control @error('location_id') is-invalid @enderror"  >
->>>>>>> hiepDev
                                 <option value="" disabled selected>Chọn địa điểm</option>
                                 @foreach ($data_location as $location)
                                     <option value="{{ $location->location_id }}"
@@ -291,11 +275,7 @@
                                     <th>Giá</th>
                                     <th>Phương tiện</th>
                                     <th>Mô tả</th>
-<<<<<<< HEAD
-                                    {{-- <th>Lịch trình</th> --}}
-=======
                                     <th>Lịch trình</th>
->>>>>>> hiepDev
                                     <th>Địa điểm</th>
                                     <th>Hướng dẫn viên</th>
                                     <th>Hành động</th>
@@ -321,22 +301,14 @@
                                             ?>
                                             {{ $mota }}
                                         </td>
-<<<<<<< HEAD
-                                        {{-- <td class="text-center">
-=======
                                         <td class="text-center">
->>>>>>> hiepDev
                                             <?php
                                             $tourSchedule = $row->tour_schedule;
                                             $words1 = explode(' ', $tourSchedule);
                                             $schedule = implode(' ', array_slice($words1, 0, 20));
                                             ?>
                                             {{ $schedule }}
-<<<<<<< HEAD
-                                        </td> --}}
-=======
                                         </td>
->>>>>>> hiepDev
                                         <td class="text-center">
                                             {{ $row->location ? $row->location->location_name : 'N/A' }}</td>
                                         <td class="text-center">{{ $row->guide ? $row->guide->guide_Name : 'N/A' }}</td>
