@@ -57,7 +57,7 @@
                             <span id="tour_image_error" class="text-danger">{{ $errors->first('tour_image') }}</span>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle"  >
+                            <select class="form-control @error('vehicle') is-invalid @enderror" name="vehicle">
                                 <option value="" disabled selected>Chọn loại phương tiện</option>
                                 <option value="Máy bay" {{ old('vehicle') == 'Máy bay' ? 'selected' : '' }}>Máy bay
                                 </option>
@@ -198,7 +198,7 @@
                         <div class="col-md-3">
                             <input type="number" class="form-control @error('total_seats') is-invalid @enderror"
                                 id="total_seats" name="total_seats" placeholder="Số chỗ ngồi"
-                                value="{{ old('total_seats') }}" min="1" max="60"  >
+                                value="{{ old('total_seats') }}" min="1" max="60">
                             <span id="total_seats_error" class="text-danger">{{ $errors->first('total_seats') }}</span>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="guide_id"
-                                class="form-control @error('guide_id') is-invalid @enderror"  >
+                                class="form-control @error('guide_id') is-invalid @enderror">
                                 <option value="" disabled selected>Chọn hướng dẫn viên</option>
                                 @foreach ($data_guide as $row)
                                     <option value="{{ $row->guide_Id }}"
@@ -224,7 +224,7 @@
                         </div>
                         <div class="col-md-3">
                             <select style="width: 100%;" name="location_id"
-                                class="form-control @error('location_id') is-invalid @enderror"  >
+                                class="form-control @error('location_id') is-invalid @enderror">
                                 <option value="" disabled selected>Chọn địa điểm</option>
                                 @foreach ($data_location as $location)
                                     <option value="{{ $location->location_id }}"
