@@ -93,13 +93,8 @@
                                 <div class="d-flex justify-content-center mb-2 pb-2">
                                     <a href="{{ route('user.tour.readmore', $tour->tour_id) }}"
                                         class="btn btn-sm btn-primary px-3 border-end"
-                                        style="border-radius: 30px 0 0 30px;">Xem thêm</a>
-                                    <a href="{{ route('user.tour.readmore', $tour->tour_id) }}"
-                                        class="btn btn-sm btn-primary px-3 border-end {{ $tour->total_seats - $tour->booked_seats <= 0 ? 'disabled' : '' }}"
-                                        style="border-radius: 0 0 0 0;"
-                                        {{ $tour->total_seats - $tour->booked_seats <= 0 ? 'title="Tour đã hết chỗ"' : '' }}>
-                                        Đặt ngay
-                                    </a>
+                                        style="border-radius: 30px 0 0 30px;width: 150px">Xem thêm</a>
+
                                     <div class="btn-sm btn-primary px-3 border-end btn-far"
                                         style="border-radius: 0 30px 30px 0; display: flex; align-items: center; justify-content: center; height: 36px;"
                                         data-tour-id="{{ $tour->tour_id }}">
@@ -179,7 +174,7 @@
                 success: function(response) {
                     $.each(response, function(index, element) {
                         $("#favorite-btn-" + element.tour_id).removeClass("far").addClass(
-                        "fas");
+                            "fas");
                     });
                 },
                 error: function(xhr, status, error) {
