@@ -54,8 +54,11 @@
                     {{ __('Đăng Ký') }}
                 </x-primary-button>
             </div>
-
-        </form>
+        </form> 
+       <div class="mt-4">
+    <a href="{{ route('google.redirect') }}" style="background-color: #DB4437; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+        Đăng ký bằng Google
+    </a>
+</div>
     </x-guest-layout>
-
 </div>

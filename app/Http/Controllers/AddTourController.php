@@ -90,22 +90,14 @@ class AddTourController extends Controller
 
         // Xử lý file ảnh
         if ($request->hasFile('tour_image')) {
-            $get_image = $request->file('tour_image');
-            $path = public_path('img/'); // thư mục public/img
-            $get_name_image = $get_image->getClientOriginalName(); // tên gốc
-            $name_image = current(explode('.', $get_name_image)); // lấy phần tên (không đuôi)
-            $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension(); // tên mới tránh trùng
-            $get_image->move($path, $new_image); // move ảnh
-
-            // lưu đường dẫn ảnh vào DB (đường dẫn tương đối)
-            $validated['tour_image'] = $new_image;
+            $path = $request->file('tour_image')->store('img', 'public');
+            $validated['tour_image'] = $path;
         }
 
-        $validated['booked_seats'] = 0;
         // Tạo tour mới
         Tour::create($validated);
 
-        return redirect()->route('admin.showcrud')->with('success', 'Thêm tour thành công!');
+        return redirect()->route('tours.index')->with('success', 'Thêm tour thành công!');
     }
 
 
