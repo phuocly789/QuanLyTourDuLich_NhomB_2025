@@ -1,5 +1,4 @@
 <x-guest-layout>
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <div class="mt-4 mb-6">
         <a href="{{ url('/') }}" class="text-xl text-gray-600 hover:text-indigo-900 inline-block">
@@ -9,7 +8,10 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
+<<<<<<< HEAD
         <!-- Email Address -->
+=======
+>>>>>>> hiepDev
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
@@ -17,7 +19,6 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
@@ -33,7 +34,6 @@
             @endif
         </div>
 
-        <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox"
@@ -51,5 +51,14 @@
                 {{ __('Đăng Nhập') }}
             </x-primary-button>
         </div>
+        
     </form>
+
+    {{-- Nút Đăng nhập bằng Google --}}
+    <div class="flex items-center justify-end mt-4"> 
+        <a href="{{ route('google.redirect') }}" style="background-color: #DB4437; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+            Đăng nhập bằng Google
+        </a>
+    </div>
+
 </x-guest-layout>
