@@ -121,7 +121,11 @@ class AddTourController extends Controller
     // edit tour
     public function edit($id)
     {
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::find($id);
+
+        if (!$tour) {
+            return redirect()->route('admin.showcrud')->with('error', 'Không tìm thấy tour với ID đã cho.');
+        }
         return view('admin.editTour', compact('tour'));
     }
 
@@ -289,7 +293,11 @@ class AddTourController extends Controller
 
     public function editGuide($id)
     {
-        $guide = Guide::findOrFail($id);
+        $guide = Guide::find($id);
+
+        if (!$guide) {
+            return redirect()->route('admin.showcrudguide')->with('error', 'Không tìm thấy guide với ID đã cho.');
+        }
         return view('admin.editGuide', compact('guide'));
     }
 
