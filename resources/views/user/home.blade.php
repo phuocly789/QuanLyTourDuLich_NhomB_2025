@@ -364,7 +364,8 @@
             <!--nút show danh sách -->
             <div class="row justify-content-center py-3">
                 <div class="col-auto">
-                    <a class="btn btn-primary rounded-pill py-3 px-4 mt-2" href="{{ url('/team') }}">Xem thêm ...</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-4 mt-2" href="{{ url('/user.team') }}">Xem thêm
+                        ...</a>
                 </div>
             </div>
         </div>
