@@ -41,7 +41,7 @@ class SocialAuthController extends Controller
             $googleUser = Socialite::driver('google')->user();
 
             // Tìm kiếm người dùng hiện có bằng google_id
-             $user = User::where('google_id', $googleUser->id)->first();
+            $user = User::where('google_id', $googleUser->id)->first();
 
             // Nếu không tìm thấy, tạo người dùng mới
             if (!$user) {
