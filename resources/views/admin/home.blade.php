@@ -224,6 +224,16 @@
                     alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
                 });
         }
+        // Function to scroll to a specific section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
     </script>
 
     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
@@ -441,11 +451,7 @@
                                         <td>{{ $row->id }}</td>
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->email }}</td>
-                                        <td>
-                                            <input type="text" value="{{ $row->usertype }}"
-                                                class="usertype-input form-control" data-id="{{ $row->id }}"
-                                                style="border-radius: 5px; padding: 5px;">
-                                        </td>
+                                        <td>{{ $row->usertype }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

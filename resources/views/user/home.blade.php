@@ -41,7 +41,11 @@
                     <div class="position-relative w-75 mx-auto animated slideInDown">
                         <form action="{{ route('searchUser') }}" method="get">
                             <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                                placeholder="Search by name..." name="usersearch">
+                                placeholder="Search by name..." name="searchUser" id="searchInput" maxlength="100"
+                                oninput="checkCharCount()">
+                            <div id="error-message" style="color: red;font-size: 20px; display: none;">
+                                Đã nhập tối đa 100 ký tự!
+                            </div>
                             <button type="submit"
                                 class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2"
                                 style="margin-top: 7px;">Tìm kiếm</button>
@@ -327,7 +331,9 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                         <div class="team-item">
                             <div class="overflow-hidden">
-                                <img class="img-fluid" src="{{ asset('img/' . $row->guide_Img) }}" alt="">
+                                <img src="{{ asset('img/' . $row->guide_Img) }}" class="img-fluid w-100"
+                                    style="height: 250px; object-fit: cover;" alt="">
+
                             </div>
                             {{-- <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
                                 <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -358,7 +364,8 @@
             <!--nút show danh sách -->
             <div class="row justify-content-center py-3">
                 <div class="col-auto">
-                    <a class="btn btn-primary rounded-pill py-3 px-4 mt-2" href="{{ url('/team') }}">Xem thêm ...</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-4 mt-2" href="{{ url('/user.team') }}">Xem thêm
+                        ...</a>
                 </div>
             </div>
         </div>
@@ -454,5 +461,16 @@
                 });
             });
         });
+
+        function checkCharCount() {
+            const input = document.getElementById('searchInput');
+            const errorMessage = document.getElementById('error-message');
+            if (input.value.length >= 100) {
+                errorMessage.style.display = 'block';
+                input.value = input.value.substring(0, 100); // Cắt bớt nếu vượt quá 100 ký tự
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
     </script>
 @endsection

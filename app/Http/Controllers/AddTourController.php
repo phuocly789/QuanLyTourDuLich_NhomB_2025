@@ -70,60 +70,44 @@ class AddTourController extends Controller
     // add tour
     public function store(Request $request)
     {
-        // Validate form data
-        $validatedData = $request->validate([
+        // Ràng buộc validation
+        $validated = $request->validate([
             'tour_name' => 'required|string|max:255',
-            'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'start_day' => 'required|date|after_or_equal:today', // Kiểm tra ngày không được trong quá khứ
-            'time' => 'required|string',
-            'star_from' => 'required|string',
-            'price' => 'required|numeric',
-            'vehicle' => 'required|string',
-            'tour_description' => 'required|string',
-            'tour_schedule' => 'required|string',
-            'tour_sale' => 'required|string',
-            'guide_id' => 'required|integer',
-            'location_id' => 'required|integer|exists:locations,location_id',
-            'total_seats' => 'required|integer|min:1',
-        ], [
-            'start_day.after_or_equal' => 'Ngày bắt đầu tour không được trong quá khứ!',
+            'tour_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
+            'start_day' => 'required|date|after_or_equal:today',
+            'time' => 'required|string|max:100',
+            'price' => 'required|numeric|min:0',
+            'vehicle' => 'required|in:Máy bay,Xe khách',
+            'star_from' => 'required|string|in:An Giang,Bà Rịa - Vũng Tàu,Bắc Giang,Bắc Kạn,Bạc Liêu,Bắc Ninh,Bến Tre,Bình Định,Bình Dương,Bình Phước,Bình Thuận,Cà Mau,Cần Thơ,Cao Bằng,Đà Nẵng,Đắk Lắk,Đắk Nông,Điện Biên,Đồng Nai,Đồng Tháp,Gia Lai,Hà Giang,Hà Nam,Hà Nội,Hà Tĩnh,Hải Dương,Hải Phòng,Hậu Giang,Hòa Bình,Hưng Yên,Khánh Hòa,Kiên Giang,Kon Tum,Lai Châu,Lâm Đồng,Lạng Sơn,Lào Cai,Long An,Nam Định,Nghệ An,Ninh Bình,Ninh Thuận,Phú Thọ,Phú Yên,Quảng Bình,Quảng Nam,Quảng Ngãi,Quảng Ninh,Quảng Trị,Sóc Trăng,Sơn La,Tây Ninh,Thái Bình,Thanh Hóa,Thừa Thiên Huế,Tiền Giang,TP. Hồ Chí Minh,Trà Vinh,Tuyên Quang,Vĩnh Long,Vĩnh Phúc,Yên Bái',
+            'total_seats' => 'required|integer|min:1|max:60',
+            'tour_sale' => 'nullable|numeric|min:0|max:100',
+            'guide_id' => 'required|integer|min:1|exists:guides,guide_Id',
+            'location_id' => 'required|integer|min:1|exists:locations,location_id',
+            'tour_description' => 'required|string|max:1000',
+            'tour_schedule' => 'required|string|max:2000',
         ]);
 
-        // Handle image upload
-        $get_image = $request->file('tour_image');
-        $path = 'img/';
-        $get_name_image = $get_image->getClientOriginalName();
-        $name_image = current(explode('.', $get_name_image));
-        $new_image = $name_image . rand(0, 999) . '.' . $get_image->getClientOriginalExtension();
-        $get_image->move(public_path($path), $new_image);
+        // Xử lý file ảnh
+        if ($request->hasFile('tour_image')) {
+            $image = $request->file('tour_image');
+            $imageName = uniqid('tour_', true) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img'), $imageName);
+            $validated['tour_image'] = $imageName; // Gán tên file vào validated
+        }
+        $validated['booked_seats'] = 0; // Khởi tạo booked_seats về 0
+        // Tạo tour mới
+        Tour::create($validated);
 
-        // Create a new tour instance
-        $tour = new Tour;
-        $tour->tour_name = $validatedData['tour_name'];
-        $tour->tour_image = $new_image;
-        $tour->location_id = $validatedData['location_id'];
-        $tour->start_day = $validatedData['start_day'];
-        $tour->time = $validatedData['time'];
-        $tour->star_from = $validatedData['star_from'];
-        $tour->price = $validatedData['price'];
-        $tour->vehicle = $validatedData['vehicle'];
-        $tour->tour_description = $validatedData['tour_description'];
-        $tour->tour_schedule = $validatedData['tour_schedule'];
-        $tour->tour_sale = $validatedData['tour_sale'];
-        $tour->guide_id = $validatedData['guide_id'];
-        $tour->total_seats = $validatedData['total_seats'];
-        $tour->booked_seats = 0;
-
-        $tour->save();
-
-        // Redirect back with success message
-        return redirect()->back()->with('success', 'Tour đã được thêm thành công!');
+        return redirect()->route('admin.showcrud')->with('success', 'Thêm tour thành công!');
     }
 
 
     public function destroy($id)
     {
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::find($id);
+        if (!$tour) {
+            return redirect()->back()->with('error', 'Tour không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
         $path = 'img/';
         if (File::exists(public_path($path . $tour->tour_image))) {
             File::delete(public_path($path . $tour->tour_image));
@@ -157,8 +141,17 @@ class AddTourController extends Controller
             'guide_id' => 'required|integer',
             'total_seats' => 'required|integer|min:1',
             'tour_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'updated_at' => 'required|date',
         ]);
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::find($id);
+        // Kiểm tra xem tour có tồn tại không
+        if (!$tour) {
+            return redirect()->back()->with('error', 'Tour không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
+        // Kiểm tra xem bản ghi có bị thay đổi bởi tab khác không
+        if ($tour->updated_at->toDateTimeString() !== $request->updated_at) {
+            return redirect()->back()->with('error', 'Dữ liệu đã được cập nhật bởi một phiên khác. Vui lòng tải lại trang trước khi cập nhật!');
+        }
         $get_imgae = $request->tour_image;
         if ($get_imgae) {
             $path = 'img/';
@@ -191,17 +184,26 @@ class AddTourController extends Controller
         return redirect()->route('admin.showcrud')->with('success', 'Tour đã được cập nhật thành công!');
     }
 
-    public function showCrud()
+    public function showCrud(Request $request)
     {
-        $user_main = Auth::user(); // Lấy thông tin người dùng đã đăng nhập
-        $tours = Tour::orderByDesc('tour_id')->paginate(6);
+        $user_main = Auth::user();
+        //Phân trang
+        $perPage = 8;
+        $totalTours = Tour::count();
+        $maxPages = ceil($totalTours / $perPage);
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1);
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            // Nếu page không hợp lệ (không phải số, nhỏ hơn 1, hoặc lớn hơn số trang tối đa)
+            return redirect()->route('admin.showcrud')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+        //
+        $tours = Tour::orderByDesc('tour_id')->paginate($perPage);
         $user = User::orderBy('id')->get();
-        $guide = Guide::orderBy('guide_Id')->get();
+        $guide = Guide::orderByDesc('guide_Id')->get();
         $location = Location::orderBy('location_id')->get();
-        // $client = Client::orderBy('client_id')->get();
 
-        // Lấy các tour yêu thích của người dùng hiện tại
-        // $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
 
         return view('admin.crud', [
             'user_main' => $user_main,
@@ -214,13 +216,31 @@ class AddTourController extends Controller
         ]);
     }
     //-------------------------------------------------------------------------------------
-    public function showInformation()
+    public function showInformation(Request $request)
     {
-        $decentralization = User::all(); // Lấy danh sách users
+        $query = User::orderBy('id', 'desc');
+
+        // Tổng số bản ghi
+        $totalUsers = $query->count();
+        $perPage = 8;
+        $maxPages = ceil($totalUsers / $perPage);
+
+        // Xác định trang hiện tại
+        $page = $request->input('page', 1);
+
+        // Kiểm tra tính hợp lệ của page
+        if (!is_numeric($page) || $page < 1 || ($totalUsers > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.information')->with('error', 'Trang không hợp lệ! Đã chuyển về trang mặc định.');
+        }
+
+        // Lấy dữ liệu có phân trang
+        $decentralization = $query->paginate($perPage);
+
         return view('admin.information', compact('decentralization'));
     }
 
-  public function storeGuide(Request $request)
+
+    public function storeGuide(Request $request)
     {
         // Validate form data
         $validatedData = $request->validate([
@@ -254,7 +274,10 @@ class AddTourController extends Controller
 
     public function destroyGuide($id)
     {
-        $guide = Guide::findOrFail($id);
+        $guide = Guide::find($id);
+        if (!$guide) {
+            return redirect()->back()->with('error', 'Hướng dẫn viên không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
         $path = 'img/';
         if (File::exists(public_path($path . $guide->guide_Img))) {
             File::delete(public_path($path . $guide->guide_Img));
@@ -270,12 +293,22 @@ class AddTourController extends Controller
         return view('admin.editGuide', compact('guide'));
     }
 
-    public function showCRUDGuide()
+    public function showCrudGuide(Request $request)
     {
-        $guide = Guide::orderByDesc('guide_Id')->get();
+        $perPage = 6;
+        $totalGuides = Guide::count();
+        $maxPages = ceil($totalGuides / $perPage);
 
-        // Lấy các tour yêu thích của người dùng hiện tại
-        // $favoriteTours = FavoriteTour::where('user_id', $user_main->id)->get();
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1); // Mặc định là trang 1
+
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.showcrudguide')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+
+        // Lấy danh sách hướng dẫn viên với phân trang
+        $guide = Guide::orderByDesc('guide_Id')->paginate($perPage);
 
         return view('admin.crudGuide', [
             'data_guide' => $guide,
@@ -290,9 +323,18 @@ class AddTourController extends Controller
             'guide_Pno' => 'required|string',
             'guide_Mail' => 'required|string',
             'guide_Intro' => 'required|string',
+            'updated_at' => 'required|date',
         ]);
         // Tìm guide dựa trên id hoặc trả về null nếu không tìm thấy
-        $guide = Guide::findOrFail($id);
+        $guide = Guide::find($id);
+        // Kiểm tra xem guide có tồn tại không
+        if (!$guide) {
+            return redirect()->back()->with('error', 'Hướng dẫn viên không tồn tại hoặc đã được xóa. Vui lòng tải lại trang!');
+        }
+        // Kiểm tra xem bản ghi có bị thay đổi không
+        if ($guide->updated_at->toDateTimeString() !== $request->updated_at) {
+            return redirect()->back()->with('error', 'Dữ liệu đã được cập nhật bởi một phiên khác. Vui lòng tải lại trang trước khi cập nhật!');
+        }
         $get_imgae = $request->guide_image;
         if ($get_imgae) {
             $path = 'img/';
@@ -321,7 +363,7 @@ class AddTourController extends Controller
     {
         $query = Tour::query();
 
-        // Filter by destination (search in tour_name or tour_description)
+        // Áp dụng các bộ lọc
         if ($request->filled('destination')) {
             $destination = $request->input('destination');
             $query->where(function ($q) use ($destination) {
@@ -330,21 +372,31 @@ class AddTourController extends Controller
             });
         }
 
-        // Filter by price range
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->input('price_min'));
         }
+
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->input('price_max'));
         }
 
-        // Filter by start date
         if ($request->filled('start_date')) {
             $query->whereDate('start_day', '>=', $request->input('start_date'));
         }
 
-        // Paginate the results
-        $data = $query->paginate(6); // Adjust per-page value as needed
+        // Tính tổng số tour sau khi áp dụng bộ lọc
+        $totalTours = $query->count(); // Đếm số bản ghi sau khi lọc
+        $perPage = 6; // Số bản ghi mỗi trang
+        $maxPages = ceil($totalTours / $perPage); // Số trang tối đa
+
+        // Kiểm tra tham số page
+        $page = $request->input('page', 1);
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('user.package')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
+
+        // Lấy dữ liệu với phân trang
+        $data = $query->paginate($perPage);
 
         return view('user.package', compact('data'));
     }
@@ -352,36 +404,38 @@ class AddTourController extends Controller
     {
         $query = Tour::query();
 
-        // Filter by destination (search in tour_name or tour_description)
-        if ($request->filled('destination')) {
-            $destination = $request->input('destination');
-            $query->where(function ($q) use ($destination) {
-                $q->where('tour_name', 'like', '%' . $destination . '%')
-                    ->orWhere('tour_description', 'like', '%' . $destination . '%');
-            });
+        // Tính tổng số tour
+        $totalTours = $query->count();
+        $perPage = 6;
+        $maxPages = ceil($totalTours / $perPage);
+
+        // Kiểm tra tham số page
+        $page = $request->input('page', 1);
+        if (!is_numeric($page) || $page < 1 || ($totalTours > 0 && $page > $maxPages)) {
+            return redirect()->route('package')->with('error', 'Trang không hợp lệ! Đã chuyển về trang mặc định.');
         }
 
-        // Filter by price range
-        if ($request->filled('price_min')) {
-            $query->where('price', '>=', $request->input('price_min'));
-        }
-        if ($request->filled('price_max')) {
-            $query->where('price', '<=', $request->input('price_max'));
-        }
-
-        // Filter by start date
-        if ($request->filled('start_date')) {
-            $query->whereDate('start_day', '>=', $request->input('start_date'));
-        }
-
-        // Paginate the results
-        $data = $query->paginate(6); // Adjust per-page value as needed
+        // Lấy dữ liệu với phân trang
+        $data = $query->paginate($perPage);
 
         return view('package', compact('data'));
     }
+
     public function history(Request $request)
     {
-        $query = Booking::query();
+        $query = Booking::query()->orderBy('booking_id', 'desc');
+
+        $perPage = 10;
+        $totalBookings = Booking::count();
+        $maxPages = ceil($totalBookings / $perPage);
+
+        // Lấy tham số page từ request
+        $page = $request->input('page', 1); // Mặc định là trang 1
+
+        // Kiểm tra tham số page
+        if (!is_numeric($page) || $page < 1 || ($maxPages > 0 && $page > $maxPages)) {
+            return redirect()->route('admin.history')->with('error', 'Trang không hợp lệ! Vui lòng chọn một trang hợp lệ.');
+        }
 
         // Tìm kiếm theo tên khách hàng
         if ($search = $request->search) {
@@ -411,7 +465,7 @@ class AddTourController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $bookings = $query->with('tour')->paginate(10);
+        $bookings = $query->with('tour')->paginate($perPage);
 
         // Cache danh sách tour
         $tours = \Illuminate\Support\Facades\Cache::remember('booked_tours', 3600, function () {

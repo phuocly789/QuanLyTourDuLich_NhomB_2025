@@ -21,7 +21,7 @@ class ClientSeeder extends Seeder
         for ($i = 0; $i < 40; $i++) {
             DB::table('clients')->insert([
                 'client_name' => $faker->name,
-                'client_image' => $faker->imageUrl(640, 480, 'people', true, 'client'),
+                'client_image' => 'team-' . rand(1, 4) . '.jpg',
                 'client_address' => $faker->address,
                 'client_comment' => $faker->realText(200),
                 'user_id' => $faker->numberBetween(1, 10),

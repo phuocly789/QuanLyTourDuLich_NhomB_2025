@@ -46,9 +46,9 @@ class UserController extends Controller
                 $total_users = User::count();
                 $total_guides = Guide::count();
                 $total_bookings = Booking::count();
-                $bookings_today = Booking::whereDate('created_at', today())->count();
+                $bookings_today = Booking::whereDate('created_at', today())->count(); 
                 $tours = Tour::orderBy('tour_id')->paginate(10);
-                $guides = Guide::orderBy('guide_Id')->paginate(10);
+                $guides = Guide::orderBy('guide_Id')->paginate(8);
                 $users = User::orderBy('id')->paginate(10);
                 $bookings = Booking::orderBy('created_at', 'desc')->paginate(10);
 

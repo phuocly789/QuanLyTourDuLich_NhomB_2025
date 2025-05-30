@@ -13,6 +13,11 @@
 
     <div class="container-fluid py-5">
         <div class="container">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             @if (session('success'))
                 <div class="alert alert-success text-center" style="font-size: 30px;">
                     {{ session('success') }}
@@ -126,6 +131,40 @@
                             </tbody>
                         </table>
                     </div>
+                    @if ($data_guide->total() > 6)
+                        <div class="data_guide justify-content-center mt-4">
+                            <div class="col-auto">
+                                <ul class="pagination">
+                                    @if ($data_guide->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">«</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                                href="{{ $data_guide->previousPageUrl() }}#guides-list">«</a>
+                                        </li>
+                                    @endif
+                                    @foreach ($data_guide->getUrlRange(1, $data_guide->lastPage()) as $page => $url)
+                                        <li class="page-item {{ $page == $data_guide->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link"
+                                                href="{{ $url }}#guides-list">{{ $page }}</a>
+                                        </li>
+                                    @endforeach
+                                    @if ($data_guide->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $data_guide->nextPageUrl() }}"
+                                                id="#tours-list">»</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">»</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
@@ -216,6 +255,14 @@
 
         // Vô hiệu hóa submit nếu có lỗi
         document.getElementById('addGuideForm').addEventListener('submit', function(e) {
+            // Dọn sạch khoảng trắng trong các input
+            ['guide_name', 'guide_pno', 'guide_mail', 'guide_intro'].forEach(function(id) {
+                const input = document.getElementById(id);
+                if (input && input.value) {
+                    input.value = input.value.replace(/\s+/g, ' ').trim();
+                }
+            });
+
             const errors = document.querySelectorAll('.text-danger:not(:empty)');
             if (errors.length > 0) {
                 e.preventDefault();

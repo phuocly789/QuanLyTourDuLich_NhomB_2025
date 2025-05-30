@@ -65,6 +65,15 @@ body {
     color: #2e8b57;
 }
 
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+
 .revenue-card h3 {
     color: #2e8b57;
 }

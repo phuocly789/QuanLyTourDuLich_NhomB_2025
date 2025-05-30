@@ -18,6 +18,11 @@
     <!-- Filter Start -->
     <div class="container-xxl py-5">
         <div class="container">
+            @if (session('error'))
+                <div class="alert alert-danger text-center" style="font-size: 30px;">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="text-center mb-4 wow fadeInUp" data-wow-delay="0.1s">
                 <h3 class="text-primary fw-bold">Lọc Tour Du Lịch</h3>
                 <p class="text-muted">Tìm tour phù hợp với nhu cầu của bạn</p>
@@ -107,24 +112,26 @@
                                     $words = explode(' ', $tourDescription);
                                     $mota = implode(' ', array_slice($words, 0, 50));
                                     ?>
-                                    <p style="height: 130px;text-align: justify;padding: 10px">{{ $mota }} ... </p>
+                                    <p style="height: 130px;text-align: justify;padding: 10px">{{ $mota }} ...
+                                    </p>
                                     <p class="text-danger" style="font-size: 20px; font-weight: bold;">Số chỗ còn trống:
                                         {{ $row->total_seats - $row->booked_seats }} chỗ</p>
                                     <div class="d-flex justify-content-center mb-2 pb-2">
                                         <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
                                             class="btn btn-sm btn-primary px-3 border-end"
-                                            style="border-radius: 30px 0 0 30px;">Xem thêm</a>
-                                        <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
-                                            class="btn btn-sm btn-primary px-3 border-end {{ $row->total_seats - $row->booked_seats <= 0 ? 'disabled' : '' }}"
-                                            style="border-radius: 0 0 0 0;"
-                                            {{ $row->total_seats - $row->booked_seats <= 0 ? 'title="Tour đã hết chỗ"' : '' }}>
-                                            Đặt ngay
-                                        </a>
+                                            style="border-radius: 30px 0 0 30px;width: 150px">Xem thêm</a>
+                                        {{-- <a href="{{ route('user.tour.readmore', $row->tour_id) }}"
+                                        class="btn btn-sm btn-primary px-3 border-end {{ $row->total_seats - $row->booked_seats <= 0 ? 'disabled' : '' }}"
+                                        style="border-radius: 0 0 0 0;"
+                                        {{ $row->total_seats - $row->booked_seats <= 0 ? 'title="Tour đã hết chỗ"' : '' }}>
+                                        Đặt ngay
+                                    </a> --}}
                                         <form class="favorite-form" action="{{ route('favorite.add') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="tour_id" value="{{ $row->tour_id }}">
                                             <button type="submit" class="btn btn-sm btn-primary px-3 favorite-btn"
-                                                style="border-radius: 0 30px 30px 0;" data-tour-id="{{ $row->tour_id }}">
+                                                style="border-radius: 0 30px 30px 0;width: 60px"
+                                                data-tour-id="{{ $row->tour_id }}">
                                                 <i class="far fa-heart" id="favorite-btn-{{ $row->tour_id }}"></i>
                                             </button>
                                         </form>
