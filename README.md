@@ -27,7 +27,7 @@
 ## 🛠️ Công Nghệ Sử Dụng
 
 - **Ngôn ngữ lập trình:** PHP 8.x
-- **Framework:** Laravel 10.x
+- **Framework:** Laravel 11.x
 - **Database:** MySQL
 - **Frontend:** Blade Template, HTML/CSS, Bootstrap/Tailwind CSS
 - **Authentication:** Laravel Breeze / Jetstream (tuỳ chọn)
